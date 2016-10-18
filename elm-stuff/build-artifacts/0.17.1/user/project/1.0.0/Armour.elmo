@@ -1,0 +1,268 @@
+var _user$project$Armour$defences = {base: 125 / 2, $class: 142 / 2, special: 150 / 2, plate: 200 / 2, ancient: 300 / 2, uvLow: (_user$project$Armour$defences.uvMax * 1) / 4, uvMed: (_user$project$Armour$defences.uvMax * 2) / 4, uvHigh: (_user$project$Armour$defences.uvMax * 3) / 4, uvMax: 102 / 4};
+var _user$project$Armour$base = {
+	hearts: 5,
+	name: 'Base Armour',
+	defences: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Normal, _1: _user$project$Armour$defences.base}
+		]),
+	resistances: _elm_lang$core$Native_List.fromArray(
+		[]),
+	bonuses: _elm_lang$core$Native_List.fromArray(
+		[])
+};
+var _user$project$Armour$class = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$class,
+	{
+		defences: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Normal, _1: _user$project$Armour$defences.$class}
+			])
+	});
+var _user$project$Armour$plate = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$class,
+	{
+		defences: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Normal, _1: _user$project$Armour$defences.plate}
+			])
+	});
+var _user$project$Armour$skolver = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$class,
+	{
+		name: 'Skolver',
+		defences: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Piercing, _1: _user$project$Armour$defences.base},
+			_user$project$Armour$class.defences),
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Freeze, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordDmg, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$justifier = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$skolver,
+	{
+		name: 'Justifier',
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Stun, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunAsi, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$vog = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$class,
+	{
+		name: 'Vog Cub',
+		defences: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Elemental, _1: _user$project$Armour$defences.base},
+			_user$project$Armour$class.defences),
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Fire, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordAsi, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$nameless = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$vog,
+	{
+		name: 'Justifier',
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Freeze, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunAsi, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$bombastic = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$nameless,
+	{
+		name: 'Bombastic Demo',
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombDmg, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$volcDemo = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$vog,
+	{
+		name: 'Volcanic Demo',
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombCtr, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$mercDemo = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$volcDemo,
+	{
+		name: 'Mercurial Demo',
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shock, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombDmg, _1: _user$project$BaseTypes$Low},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Msi, _1: _user$project$BaseTypes$Low}
+			])
+	});
+var _user$project$Armour$snarby = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$skolver,
+	{
+		name: 'Snarbolax',
+		defences: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shadow, _1: _user$project$Armour$defences.base},
+			_user$project$Armour$class.defences),
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Freeze, _1: 3},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Poison, _1: 3}
+			])
+	});
+var _user$project$Armour$shadowsun = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$snarby,
+	{
+		name: 'Shadowsun',
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Poison, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunDmg, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$deadshot = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$shadowsun,
+	{
+		name: 'Deadshot',
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Curse, _1: 4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunAsi, _1: _user$project$BaseTypes$Low},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Undead, _1: _user$project$BaseTypes$Low}
+			])
+	});
+var _user$project$Armour$mad = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$base,
+	{
+		name: 'Mad Bomber',
+		defences: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Elemental, _1: _user$project$Armour$defences.base},
+			_user$project$Armour$base.defences),
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Fire, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Freeze, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shock, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Poison, _1: -2}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombDmg, _1: _user$project$BaseTypes$Medium},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombCtr, _1: _user$project$BaseTypes$Medium}
+			])
+	});
+var _user$project$Armour$chaos = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$mad,
+	{
+		name: 'Chaos',
+		resistances: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Curse, _1: -2},
+			_user$project$Armour$mad.resistances),
+		bonuses: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Native_List.fromArray(
+				[
+					{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordDmg, _1: _user$project$BaseTypes$Medium},
+					{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordCtr, _1: _user$project$BaseTypes$Medium},
+					{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunDmg, _1: _user$project$BaseTypes$Medium},
+					{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunCtr, _1: _user$project$BaseTypes$Medium}
+				]),
+			_user$project$Armour$mad.bonuses)
+	});
+var _user$project$Armour$kat = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$base,
+	{
+		name: 'Black Kat',
+		defences: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shadow, _1: _user$project$Armour$defences.base},
+			_user$project$Armour$base.defences),
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Freeze, _1: 4},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Fire, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shock, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Poison, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Curse, _1: -4}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordDmg, _1: _user$project$BaseTypes$High},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunDmg, _1: _user$project$BaseTypes$High},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombDmg, _1: _user$project$BaseTypes$High},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Msi, _1: _user$project$BaseTypes$High}
+			])
+	});
+var _user$project$Armour$claw = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$base,
+	{
+		name: 'Kat Claw',
+		defences: A2(
+			_elm_lang$core$List_ops['::'],
+			{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shadow, _1: _user$project$Armour$defences.special},
+			_user$project$Armour$base.defences),
+		resistances: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Freeze, _1: 4},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Shock, _1: -2},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$Curse, _1: -1}
+			]),
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordDmg, _1: _user$project$BaseTypes$Low},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$SwordAsi, _1: _user$project$BaseTypes$Low}
+			])
+	});
+var _user$project$Armour$eye = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$claw,
+	{
+		name: 'Kat Eye',
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunDmg, _1: _user$project$BaseTypes$Low},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$GunAsi, _1: _user$project$BaseTypes$Low}
+			])
+	});
+var _user$project$Armour$hiss = _elm_lang$core$Native_Utils.update(
+	_user$project$Armour$claw,
+	{
+		name: 'Kat Hiss',
+		bonuses: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombDmg, _1: _user$project$BaseTypes$Low},
+				{ctor: '_Tuple2', _0: _user$project$BaseTypes$BombCtr, _1: _user$project$BaseTypes$Low}
+			])
+	});
+var _user$project$Armour$armours = _elm_lang$core$Native_List.fromArray(
+	[_user$project$Armour$skolver, _user$project$Armour$vog, _user$project$Armour$snarby, _user$project$Armour$justifier, _user$project$Armour$nameless, _user$project$Armour$shadowsun, _user$project$Armour$deadshot, _user$project$Armour$volcDemo, _user$project$Armour$bombastic, _user$project$Armour$mad, _user$project$Armour$mercDemo, _user$project$Armour$chaos, _user$project$Armour$kat, _user$project$Armour$claw, _user$project$Armour$eye, _user$project$Armour$hiss]);

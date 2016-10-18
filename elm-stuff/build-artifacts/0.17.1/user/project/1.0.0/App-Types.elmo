@@ -1,0 +1,202 @@
+var _user$project$App_Types$defences = {base: 125 / 2, $class: 142 / 2, special: 150 / 2, plate: 200 / 2, ancient: 300 / 2, uvLow: (_user$project$App_Types$defences.uvMax * 1) / 4, uvMed: (_user$project$App_Types$defences.uvMax * 2) / 4, uvHigh: (_user$project$App_Types$defences.uvMax * 3) / 4, uvMax: 102 / 4};
+var _user$project$App_Types$attacks = {sword: 415 / 1.24, swordFinish: 477 / 1.24, swordCharge: 623 / 1.24, swordChargeFinish: 668 / 1.24, swordSpecial: 266 / 1.24, swordLight: 358 / 1.24, swordLightFinish: 411 / 1.24, swordLightCharge: 537 / 1.24, swordLightChargeFinish: 587 / 1.24, swordHeavy: _user$project$App_Types$attacks.swordFinish, swordHeavyFinish: 548 / 1.24, swordHeavyCharge: _user$project$App_Types$attacks.swordChargeFinish, swordHeavyChargeFinish: 715 / 1.24, brandish: 609 / 1.24, brandishFinish: 711 / 1.24, brandishCharge: 959 / 1.24, brandishSpecial: 447 / 1.24, brandishHeavy: 656 / 1.24, brandishHeavyFinish: 774 / 1.24, brandishHeavyCharge: 1.24 / 1.24, brandishHeavySpecial: 480 / 1.24, fang: 566 / 1.24, fangFinish: 666 / 1.24, fangCharge: 897 / 1.24};
+var _user$project$App_Types$Model = F3(
+	function (a, b, c) {
+		return {weapon: a, helmet: b, armor: c};
+	});
+var _user$project$App_Types$WeaponEquip = F2(
+	function (a, b) {
+		return {weapon: a, uvs: b};
+	});
+var _user$project$App_Types$ArmourEquip = F3(
+	function (a, b, c) {
+		return {armour: a, defenceUvs: b, statusUvs: c};
+	});
+var _user$project$App_Types$WeaponUv = F2(
+	function (a, b) {
+		return {bonus: a, strength: b};
+	});
+var _user$project$App_Types$DefenceUv = F2(
+	function (a, b) {
+		return {bonus: a, strength: b};
+	});
+var _user$project$App_Types$StatusUv = F2(
+	function (a, b) {
+		return {bonus: a, strength: b};
+	});
+var _user$project$App_Types$Attack = function (a) {
+	return {damage: a};
+};
+var _user$project$App_Types$Weapon = F5(
+	function (a, b, c, d, e) {
+		return {name: a, damageType: b, split: c, status: d, attacks: e};
+	});
+var _user$project$App_Types$Armour = F4(
+	function (a, b, c, d) {
+		return {name: a, hearts: b, defences: c, resistances: d};
+	});
+var _user$project$App_Types$Shadow = {ctor: 'Shadow'};
+var _user$project$App_Types$Elemental = {ctor: 'Elemental'};
+var _user$project$App_Types$Piercing = {ctor: 'Piercing'};
+var _user$project$App_Types$Normal = {ctor: 'Normal'};
+var _user$project$App_Types$Special = {ctor: 'Special'};
+var _user$project$App_Types$Charge = {ctor: 'Charge'};
+var _user$project$App_Types$Heavy = {ctor: 'Heavy'};
+var _user$project$App_Types$Basic = {ctor: 'Basic'};
+var _user$project$App_Types$Random = {ctor: 'Random'};
+var _user$project$App_Types$Curse = {ctor: 'Curse'};
+var _user$project$App_Types$Stun = {ctor: 'Stun'};
+var _user$project$App_Types$rigadoon = {
+	name: 'Fearless Rigadoon',
+	damageType: _user$project$App_Types$Piercing,
+	split: false,
+	status: _user$project$App_Types$Stun,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.sword},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.swordFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.swordCharge},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.swordSpecial}
+		])
+};
+var _user$project$App_Types$suda = {
+	name: 'Sudaruska',
+	damageType: _user$project$App_Types$Normal,
+	split: false,
+	status: _user$project$App_Types$Stun,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.swordHeavy},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.swordHeavyFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.swordHeavyCharge},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.swordHeavyChargeFinish}
+		])
+};
+var _user$project$App_Types$Poison = {ctor: 'Poison'};
+var _user$project$App_Types$Shock = {ctor: 'Shock'};
+var _user$project$App_Types$Freeze = {ctor: 'Freeze'};
+var _user$project$App_Types$triglav = _elm_lang$core$Native_Utils.update(
+	_user$project$App_Types$suda,
+	{name: 'Triglav', status: _user$project$App_Types$Freeze});
+var _user$project$App_Types$Fire = {ctor: 'Fire'};
+var _user$project$App_Types$flamberge = _elm_lang$core$Native_Utils.update(
+	_user$project$App_Types$rigadoon,
+	{name: 'Furious Flamberge', status: _user$project$App_Types$Fire});
+var _user$project$App_Types$combuster = {
+	name: 'Combuster',
+	damageType: _user$project$App_Types$Elemental,
+	split: true,
+	status: _user$project$App_Types$Fire,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.brandish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.brandishFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.brandishCharge},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.brandishSpecial}
+		])
+};
+var _user$project$App_Types$glacius = _elm_lang$core$Native_Utils.update(
+	_user$project$App_Types$combuster,
+	{name: 'Glacius', status: _user$project$App_Types$Freeze});
+var _user$project$App_Types$voltedge = _elm_lang$core$Native_Utils.update(
+	_user$project$App_Types$combuster,
+	{name: 'Voltedge', status: _user$project$App_Types$Shock});
+var _user$project$App_Types$fang = {
+	name: 'Fang of Vog',
+	damageType: _user$project$App_Types$Elemental,
+	split: true,
+	status: _user$project$App_Types$Fire,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.fang},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.fangFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.fangCharge}
+		])
+};
+var _user$project$App_Types$None = {ctor: 'None'};
+var _user$project$App_Types$leviathan = {
+	name: 'Leviathan Blade',
+	damageType: _user$project$App_Types$Normal,
+	split: false,
+	status: _user$project$App_Types$None,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.sword},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.swordFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.swordCharge}
+		])
+};
+var _user$project$App_Types$flourish = {
+	name: 'Final Flourish',
+	damageType: _user$project$App_Types$Piercing,
+	split: false,
+	status: _user$project$App_Types$None,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.sword},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.swordFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.swordCharge},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.swordChargeFinish}
+		])
+};
+var _user$project$App_Types$btb = {
+	name: 'Barbarous Thorn Blade',
+	damageType: _user$project$App_Types$Piercing,
+	split: false,
+	status: _user$project$App_Types$None,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.sword},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.swordFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.swordCharge},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.swordSpecial}
+		])
+};
+var _user$project$App_Types$hammer = {
+	name: 'Warmaster Rocket Hammer',
+	damageType: _user$project$App_Types$Elemental,
+	split: false,
+	status: _user$project$App_Types$None,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.swordHeavy},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.swordLight},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.swordHeavyFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.swordHeavyChargeFinish}
+		])
+};
+var _user$project$App_Types$acheron = {
+	name: 'Acheron',
+	damageType: _user$project$App_Types$Shadow,
+	split: true,
+	status: _user$project$App_Types$None,
+	attacks: _elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Basic, _1: _user$project$App_Types$attacks.brandishHeavy},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Heavy, _1: _user$project$App_Types$attacks.brandishHeavyFinish},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Charge, _1: _user$project$App_Types$attacks.brandishHeavyCharge},
+			{ctor: '_Tuple2', _0: _user$project$App_Types$Special, _1: _user$project$App_Types$attacks.brandishHeavySpecial}
+		])
+};
+var _user$project$App_Types$avenger = _elm_lang$core$Native_Utils.update(
+	_user$project$App_Types$acheron,
+	{name: 'Divine Avenger', damageType: _user$project$App_Types$Elemental});
+var _user$project$App_Types$faust = _elm_lang$core$Native_Utils.update(
+	_user$project$App_Types$acheron,
+	{name: 'Gran Faust', status: _user$project$App_Types$Curse});
+var _user$project$App_Types$swords = _elm_lang$core$Native_List.fromArray(
+	[_user$project$App_Types$leviathan, _user$project$App_Types$flourish, _user$project$App_Types$btb, _user$project$App_Types$rigadoon, _user$project$App_Types$flamberge, _user$project$App_Types$suda, _user$project$App_Types$triglav, _user$project$App_Types$hammer, _user$project$App_Types$combuster, _user$project$App_Types$glacius, _user$project$App_Types$voltedge, _user$project$App_Types$acheron, _user$project$App_Types$avenger, _user$project$App_Types$faust, _user$project$App_Types$fang]);
+var _user$project$App_Types$Undead = {ctor: 'Undead'};
+var _user$project$App_Types$Construct = {ctor: 'Construct'};
+var _user$project$App_Types$Slime = {ctor: 'Slime'};
+var _user$project$App_Types$Gremlin = {ctor: 'Gremlin'};
+var _user$project$App_Types$Fiend = {ctor: 'Fiend'};
+var _user$project$App_Types$Beast = {ctor: 'Beast'};
+var _user$project$App_Types$Ctr = {ctor: 'Ctr'};
+var _user$project$App_Types$Asi = {ctor: 'Asi'};
+var _user$project$App_Types$Maximum = {ctor: 'Maximum'};
+var _user$project$App_Types$Ultra = {ctor: 'Ultra'};
+var _user$project$App_Types$VeryHigh = {ctor: 'VeryHigh'};
+var _user$project$App_Types$High = {ctor: 'High'};
+var _user$project$App_Types$Medium = {ctor: 'Medium'};
+var _user$project$App_Types$Low = {ctor: 'Low'};
