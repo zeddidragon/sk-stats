@@ -1,7 +1,8 @@
-module Armour exposing (armours, defences)
+module Armour exposing (..)
 
 import BaseTypes exposing (..)
 
+uvMax = 102 / 4
 
 defences =
   { base = 125 / 2
@@ -9,10 +10,10 @@ defences =
   , special = 150 / 2
   , plate = 200 / 2
   , ancient = 300 / 2
-  , uvLow = defences.uvMax  * 1 / 4
-  , uvMed = defences.uvMax  * 2 / 4
-  , uvHigh = defences.uvMax * 3 / 4
-  , uvMax = 102 / 4
+  , uvLow = uvMax  * 1 / 4
+  , uvMed = uvMax  * 2 / 4
+  , uvHigh = uvMax * 3 / 4
+  , uvMax = uvMax
   }
 
 base =
@@ -23,10 +24,15 @@ base =
   , bonuses = []
   }
 
-class = { class | defences = [ (Normal, defences.class) ] }
+class = { base | defences = [ (Normal, defences.class) ] }
 
 plate = { class | defences = [ (Normal, defences.plate) ] }
 
+cobalt =
+  { base
+  | name = "Cobalt"
+  , defences = [ (Piercing, defences.base), (Normal, defences.special) ]
+  }
 
 skolver =
   { class
@@ -191,7 +197,9 @@ hiss =
 
 
 armours =
-  [ skolver
+  [ cobalt
+
+  , skolver
   , vog
   , snarby
 

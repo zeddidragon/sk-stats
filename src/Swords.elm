@@ -1,4 +1,4 @@
-module Swords exposing (swords)
+module Swords exposing (..)
 
 import BaseTypes exposing (..)
 
@@ -14,9 +14,9 @@ attacks =
   , swordLightCharge = 537 / 1.24
   , swordLightChargeFinish = 587 / 1.24
 
-  , swordHeavy = attacks.swordFinish
+  , swordHeavy = 477 / 1.24
   , swordHeavyFinish = 548 / 1.24
-  , swordHeavyCharge = attacks.swordChargeFinish
+  , swordHeavyCharge = 668 / 1.24
   , swordHeavyChargeFinish = 715 / 1.24
 
   , brandish = 609 / 1.24
