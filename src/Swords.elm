@@ -171,6 +171,7 @@ fang =
     ]
   }
 
+swords : List(Weapon)
 swords =
   [ leviathan
   , flourish

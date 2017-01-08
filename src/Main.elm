@@ -1,25 +1,32 @@
-import Html exposing (div, button, text)
-import Html.Events exposing (onClick)
-import Swords exposing (swords)
-import Armour exposing (armours)
-import Types exposing (Model, WeaponEquip, ArmourEquip)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Knight exposing (..)
+import Knight.View
 
 main =
   Html.beginnerProgram {model = model, view = view, update = update}
 
+type alias Model =
+  { you : Knight
+  }
+
+model : Model
 model =
-  { weapon = Swords.leviathan
-  , helmet = Armour.cobalt
-  , armour = Armour.cobalt
+  { you = Knight.you
   }
 
 view model =
-  div []
-    [ div [] [text model.weapon.name]
-    , div [] [text model.helmet.name]
-    , div [] [text model.armour.name]
+  div
+    [ style
+      [ ("display", "flex")
+      , ("color", "white")
+      , ("background-color", "black")
+      , ("height", "100%")
+      ]
+    ]
+    [ Knight.View.form model.you
+    , Knight.View.stats model.you
     ]
 
 update msg model =
   model
-

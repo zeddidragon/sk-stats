@@ -44,15 +44,13 @@ type Bonus
   | Undead
 
 type BonusStrength = Low | Medium | High | VeryHigh | Ultra | Maximum
-type alias Attack =
-  { damage: Float }
 
 type alias Weapon =
   { name: String
   , damageType: DamageType
   , split: Bool
   , status: Status
-  , attacks: List((Stage, Attack))
+  , attacks: List((Stage, Float))
   }
 
 type alias Armour =

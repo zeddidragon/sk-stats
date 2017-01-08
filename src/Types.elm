@@ -4,12 +4,6 @@ import BaseTypes exposing (..)
 import Swords exposing (..)
 import Armour exposing (..)
 
-type alias Model =
-  { weapon: WeaponEquip
-  , helmet: ArmourEquip
-  , armor: ArmourEquip
-  }
-
 type alias WeaponEquip =
   { weapon: Weapon
   , uvs: List(WeaponUv)
