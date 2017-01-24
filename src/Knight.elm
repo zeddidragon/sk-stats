@@ -31,6 +31,8 @@ defences knight =
   in
     filter nonZero (map total [Normal, Piercing, Elemental, Shadow])
 
+maxDefence = 402
+
 stockArmour : ArmourEquip
 stockArmour =
   { armour = Armour.cobalt

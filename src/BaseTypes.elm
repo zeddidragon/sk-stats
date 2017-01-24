@@ -43,7 +43,7 @@ type Bonus
   | Construct
   | Undead
 
-type BonusStrength = Low | Medium | High | VeryHigh | Ultra | Maximum
+type BonusStrength = Low | Medium | High | VeryHigh | Ultra | Maximum | NegLow
 
 type alias Weapon =
   { name: String
@@ -60,4 +60,9 @@ type alias Armour =
   , resistances: List((Status, Float))
   , bonuses: List((Bonus, BonusStrength))
   }
+
+type Msg
+  = EquipWeapon Weapon
+  | EquipHelmet Armour
+  | EquipArmour Armour
 

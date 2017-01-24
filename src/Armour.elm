@@ -195,6 +195,30 @@ hiss =
     ]
   }
 
+ironmight =
+  { plate
+  | name = "Ironmight Plate"
+  , defences = plate.defences ++ [ (Piercing, defences.base) ]
+  , bonuses =
+    [ (SwordAsi, NegLow)
+    , (GunAsi, NegLow)
+    , (BombAsi, NegLow)
+    ]
+  }
+
+volcPlate =
+  { plate
+  | name = "Volcanic Plate"
+  , defences = plate.defences ++ [ (Elemental, defences.base) ]
+  , resistances = [ (Fire, 4) ]
+  }
+
+ancient =
+  { plate
+  | name = "Ancient Plate"
+  , defences = [ (Normal, defences.ancient) ]
+  , bonuses = ironmight.bonuses ++ [ (Msi, NegLow) ]
+  }
 
 armours =
   [ cobalt
@@ -212,6 +236,10 @@ armours =
   , bombastic
   , mad
   , mercDemo
+
+  , ironmight
+  , volcPlate
+  , ancient
 
   , chaos
   , kat
