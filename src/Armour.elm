@@ -70,7 +70,7 @@ justifier =
 
 nameless =
   { vog
-  | name = "Justifier"
+  | name = "Nameless"
   , resistances = [ (Freeze, 4) ]
   , bonuses = [ (GunAsi, Medium) ]
   }
