@@ -7,7 +7,7 @@ import Knight
 import Swords exposing (swords)
 import Armour exposing (armours)
 import View.Shortcuts exposing (selectList, bar)
-import List exposing (map)
+import List
 import Msg exposing (..)
 
 form knight =
@@ -20,8 +20,9 @@ form knight =
 
 stats knight =
   div [] (
-    [ item "Health" (health knight)
-    ] ++ (defences knight)
+    [ item "Health" (health knight) ]
+    ++ (defences knight)
+    ++ (resistances knight)
   )
 
 defences knight =
@@ -33,6 +34,25 @@ defences knight =
         ])
   in
     List.map defence (Knight.defences knight)
+
+resistances knight =
+  let
+    pip = div [ class "pip" ] []
+    pips status amount =
+      let
+        n = truncate amount
+      in
+        div [ class ("graphic " ++ (toString status)) ]
+          [ div [ class "graphic negative" ] ( List.repeat -n pip )
+          , div [ class "graphic positive" ] ( List.repeat n pip )
+          ]
+    resistance (status, amount) =
+      item (toString status) (div [ class "graphic" ]
+        [ pips status amount
+        , div [ class "value" ] [ text (toString amount) ]
+        ])
+  in
+    List.map resistance (Knight.resistances knight)
 
 health knight =
   div [ class "row" ]

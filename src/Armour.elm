@@ -26,7 +26,11 @@ base =
 
 class = { base | defences = [ (Normal, defences.class) ] }
 
-plate = { class | defences = [ (Normal, defences.plate) ] }
+plate =
+  { class
+  | defences = [ (Normal, defences.plate) ]
+  , resistances = [ (Stun, 4) ]
+  }
 
 cobalt =
   { base
@@ -198,7 +202,7 @@ hiss =
 ironmight =
   { plate
   | name = "Ironmight Plate"
-  , defences = plate.defences ++ [ (Piercing, defences.base) ]
+  , defences = (Piercing, defences.base) :: plate.defences
   , bonuses =
     [ (SwordAsi, NegLow)
     , (GunAsi, NegLow)
@@ -209,8 +213,9 @@ ironmight =
 volcPlate =
   { plate
   | name = "Volcanic Plate"
-  , defences = plate.defences ++ [ (Elemental, defences.base) ]
-  , resistances = [ (Fire, 4) ]
+  , defences = (Elemental, defences.base) :: plate.defences
+  , resistances = (Fire, 4) :: plate.resistances
+  , bonuses = ironmight.bonuses
   }
 
 ancient =

@@ -19,19 +19,28 @@ hearts knight =
 
 health knight = 40 * hearts knight
 
+sum = foldr (+) 0
+fst (a, _) = a
+snd (_, b) = b
+isType x y = x == fst y
+nonZero x = 0 /= snd x
+
 defences knight =
   let
     defs = knight.helmet.armour.defences ++ knight.armour.armour.defences
-    sum = foldr (+) 0
-    fst (a, _) = a
-    snd (_, b) = b
-    isType x y = x == fst y
-    nonZero x = 0 < snd x
     total dtype = (dtype, sum (map snd (filter (isType dtype) defs)))
   in
     filter nonZero (map total [Normal, Piercing, Elemental, Shadow])
 
+resistances knight =
+  let
+    resistances = knight.helmet.armour.resistances ++ knight.armour.armour.resistances
+    total status = (status, sum (map snd (filter (isType status) resistances)))
+  in
+    filter nonZero (map total [Fire, Freeze, Shock, Poison, Stun, Curse])
+
 maxDefence = 402
+maxResistance = 16
 
 stockArmour : ArmourEquip
 stockArmour =

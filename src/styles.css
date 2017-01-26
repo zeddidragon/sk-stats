@@ -18,6 +18,7 @@
 
 .value {
   padding-left: 1em;
+  min-width: 4em;
 }
 
 .item {
@@ -64,4 +65,24 @@ label {
 .Elemental .bar-fill { background-color: #21fa21; }
 .Shadow .bar-bg { background-color: #210048; }
 .Shadow .bar-fill { background-color: #8221fa; }
+
+.pip {
+  margin-right: 2px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  flex: 1;
+  max-width: 0.5em;
+}
+
+.negative {
+  flex-direction: row-reverse;
+  opacity: 0.5;
+}
+
+.Fire .pip { background-color: #fa8221; }
+.Freeze .pip { background-color: #fafafa; }
+.Shock .pip { background-color: #8282fa; }
+.Poison .pip { background-color: #218221; }
+.Stun .pip { background-color: #fafa82; }
+.Curse .pip { background-color: #822182; }
 
