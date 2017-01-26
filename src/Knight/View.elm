@@ -8,14 +8,14 @@ import Swords exposing (swords)
 import Armour exposing (armours)
 import View.Shortcuts exposing (selectList, bar)
 import List exposing (map)
-
+import Msg exposing (..)
 
 form knight =
   div []
     [ item knight.name (div[][])
     , item "Helmet" (selectList EquipHelmet armours knight.helmet.armour)
     , item "Armour" (selectList EquipArmour armours knight.armour.armour)
-    , item "Weapon" (selectList EquipWeapon swords knight.weapon.weapon)
+    , item "Weapon" (selectList EquipWeapon  swords knight.weapon.weapon)
     ]
 
 stats knight =

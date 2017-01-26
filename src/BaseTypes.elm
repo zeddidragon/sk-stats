@@ -61,8 +61,3 @@ type alias Armour =
   , bonuses: List((Bonus, BonusStrength))
   }
 
-type Msg
-  = EquipWeapon Weapon
-  | EquipHelmet Armour
-  | EquipArmour Armour
-
