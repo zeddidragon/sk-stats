@@ -15,20 +15,19 @@ type Bonus
   = Msi
 
   | Dmg
-  | Ctr
-  | Asi
+  | CTR
+  | ASI
 
   | SwordDmg
-  | SwordCtr
-  | SwordAsi
+  | SwordCTR
+  | SwordASI
 
   | GunDmg
-  | GunAsi
-  | GunCtr
+  | GunASI
+  | GunCTR
 
   | BombDmg
-  | BombAsi
-  | BombCtr
+  | BombCTR
 
   | Beast
   | Fiend

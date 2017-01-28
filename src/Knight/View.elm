@@ -97,8 +97,8 @@ weaponUvForms message uvs =
     existingNames =
       List.map uvName uvs
     bonuses =
-      [ Ctr
-      , Asi
+      [ CTR
+      , ASI
       , Beast
       , Fiend
       , Gremlin

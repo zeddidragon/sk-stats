@@ -67,7 +67,7 @@ vog =
   | name = "Vog Cub"
   , defences = (Elemental, defences.base) :: class.defences
   , resistances = [ (Fire, 4) ]
-  , bonuses = [ (SwordAsi, Medium) ]
+  , bonuses = [ (SwordASI, Medium) ]
   }
 
 snarby =
@@ -85,14 +85,14 @@ justifier =
   { skolver
   | name = "Justifier"
   , resistances = [ (Stun, 4) ]
-  , bonuses = [ (GunAsi, Medium) ]
+  , bonuses = [ (GunASI, Medium) ]
   }
 
 nameless =
   { vog
   | name = "Nameless"
   , resistances = [ (Freeze, 4) ]
-  , bonuses = [ (GunAsi, Medium) ]
+  , bonuses = [ (GunASI, Medium) ]
   }
 
 shadowsun =
@@ -107,7 +107,7 @@ deadshot =
   | name = "Deadshot"
   , resistances = [ (Curse, 4) ]
   , bonuses =
-    [ (GunAsi, Low)
+    [ (GunASI, Low)
     , (Undead, Low)
     ]
   }
@@ -116,7 +116,7 @@ deadshot =
 volcDemo =
   { vog
   | name = "Volcanic Demo"
-  , bonuses = [ (BombCtr, Medium) ]
+  , bonuses = [ (BombCTR, Medium) ]
   }
 
 bombastic =
@@ -147,7 +147,7 @@ mad =
     ]
   , bonuses =
     [ (BombDmg, Medium)
-    , (BombCtr, Medium)
+    , (BombCTR, Medium)
     ]
   }
 
@@ -156,11 +156,9 @@ chaos =
   | name = "Chaos"
   , resistances = (Curse, -2) :: mad.resistances
   , bonuses = 
-    [ (SwordDmg, Medium)
-    , (SwordCtr, Medium)
-    , (GunDmg, Medium)
-    , (GunCtr, Medium)
-    ] ++ mad.bonuses
+    [ (Dmg, Medium)
+    , (CTR, Medium)
+    ]
   }
 
 kat =
@@ -175,9 +173,7 @@ kat =
     , (Curse, -4)
     ]
   , bonuses =
-    [ (SwordDmg, High)
-    , (GunDmg, High)
-    , (BombDmg, High)
+    [ (Dmg, High)
     , (Msi, High)
     ]
   }
@@ -193,7 +189,7 @@ claw =
     ]
   , bonuses =
     [ (SwordDmg, Low)
-    , (SwordAsi, Low)
+    , (SwordASI, Low)
     ]
   }
 
@@ -202,7 +198,7 @@ eye =
   | name = "Kat Eye"
   , bonuses =
     [ (GunDmg, Low)
-    , (GunAsi, Low)
+    , (GunASI, Low)
     ]
   }
 
@@ -211,7 +207,7 @@ hiss =
   | name = "Kat Hiss"
   , bonuses =
     [ (BombDmg, Low)
-    , (BombCtr, Low)
+    , (BombCTR, Low)
     ]
   }
 
@@ -220,9 +216,7 @@ ironmight =
   | name = "Ironmight Plate"
   , defences = (Piercing, defences.base) :: plate.defences
   , bonuses =
-    [ (SwordAsi, NegLow)
-    , (GunAsi, NegLow)
-    , (BombAsi, NegLow)
+    [ (ASI, NegLow)
     ]
   }
 
