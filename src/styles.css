@@ -39,6 +39,10 @@ h3 {
   display: flex;
 }
 
+.item.sub {
+  text-align: right;
+}
+
 label {
   font-weight: bold;
   font-size: 0.8em;

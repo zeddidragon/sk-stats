@@ -5,6 +5,7 @@ import Armour exposing (uvToDefence, uvToResistance)
 import Swords
 import Armour
 import List exposing (filter, map, foldr)
+import Tuple exposing (first, second)
 
 type alias Knight =
   { name: String
@@ -21,10 +22,9 @@ hearts knight =
 health knight = 40 * hearts knight
 
 sum = foldr (+) 0
-fst (a, _) = a
-snd (_, b) = b
-isType x y = x == fst y
-nonZero x = 0 /= snd x
+isType x y = x == first y
+nonZero x = 0 /= second x
+secondTo x y = (x, y)
 
 toDefence uv =
   case uv of
@@ -45,7 +45,12 @@ defences knight =
     defs
       =  knight.helmet.armour.defences ++ knight.armour.armour.defences
       ++ (knight.helmet.uvs ++ knight.armour.uvs |> toDefences)
-    total dtype = (dtype, sum (map snd (filter (isType dtype) defs)))
+    total dtype
+      = defs
+      |> filter (isType dtype)
+      |> map second
+      |> sum
+      |> secondTo dtype
   in
     [Normal, Piercing, Elemental, Shadow]
       |> map total
@@ -56,7 +61,12 @@ resistances knight =
     resistances
       = knight.helmet.armour.resistances ++ knight.armour.armour.resistances
       ++ (knight.helmet.uvs ++ knight.armour.uvs |> toResistances)
-    total status = (status, sum (map snd (filter (isType status) resistances)))
+    total status
+      = resistances
+      |> filter (isType status)
+      |> map second
+      |> sum
+      |> secondTo status
   in
     [Fire, Freeze, Shock, Poison, Stun, Curse]
       |> map total
