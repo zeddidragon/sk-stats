@@ -31,7 +31,6 @@ toDefence uv =
     DefenceUv (dType, strength) -> (dType, Armour.uvToDefence strength)
     _ -> (Normal, 0)
 
-toDefences : List ArmourUv -> List (DamageType, Float)
 toDefences uvs = List.map toDefence uvs
 
 toResistance uv =
@@ -48,7 +47,9 @@ defences knight =
       ++ (knight.helmet.uvs ++ knight.armour.uvs |> toDefences)
     total dtype = (dtype, sum (map snd (filter (isType dtype) defs)))
   in
-    filter nonZero (map total [Normal, Piercing, Elemental, Shadow])
+    [Normal, Piercing, Elemental, Shadow]
+      |> map total
+      |> filter nonZero
 
 resistances knight =
   let
@@ -57,9 +58,11 @@ resistances knight =
       ++ (knight.helmet.uvs ++ knight.armour.uvs |> toResistances)
     total status = (status, sum (map snd (filter (isType status) resistances)))
   in
-    filter nonZero (map total [Fire, Freeze, Shock, Poison, Stun, Curse])
+    [Fire, Freeze, Shock, Poison, Stun, Curse]
+      |> map total
+      |> filter nonZero
 
-maxDefence = 402
+maxDefence = 350
 maxResistance = 16
 
 stockArmour : ArmourEquip
