@@ -1,7 +1,7 @@
 module Knight exposing (..)
 import BaseTypes exposing (..)
 import Types exposing (WeaponEquip, ArmourEquip)
-import Armour exposing (uvToDefence)
+import Armour exposing (uvToDefence, uvToResistance)
 import Swords
 import Armour
 import List exposing (filter, map, foldr)
@@ -34,6 +34,13 @@ toDefence uv =
 toDefences : List ArmourUv -> List (DamageType, Float)
 toDefences uvs = List.map toDefence uvs
 
+toResistance uv =
+  case uv of
+    StatusUv (status, strength) -> (status, Armour.uvToResistance strength)
+    _ -> (Fire, 0)
+
+toResistances uvs = List.map toResistance uvs
+
 defences knight =
   let
     defs
@@ -45,7 +52,9 @@ defences knight =
 
 resistances knight =
   let
-    resistances = knight.helmet.armour.resistances ++ knight.armour.armour.resistances
+    resistances
+      = knight.helmet.armour.resistances ++ knight.armour.armour.resistances
+      ++ (knight.helmet.uvs ++ knight.armour.uvs |> toResistances)
     total status = (status, sum (map snd (filter (isType status) resistances)))
   in
     filter nonZero (map total [Fire, Freeze, Shock, Poison, Stun, Curse])

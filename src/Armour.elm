@@ -24,6 +24,14 @@ uvToDefence strength =
     Maximum -> defences.uvMax
     _ -> 0
 
+uvToResistance strength =
+  case strength of
+    Low -> 1
+    Medium -> 2
+    High -> 3
+    Maximum -> 4
+    _ -> 0
+
 base =
   { hearts = 5
   , name = "Base Armour"
