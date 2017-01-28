@@ -107,7 +107,7 @@ opponent =
   { name = "The guy she tells you not to worry about"
   , weapon =
     { weapon = Swords.acheron
-    , uvs = [(SwordAsi, VeryHigh)]
+    , uvs = [(Asi, VeryHigh)]
     }
   , helmet = p2wSkolver
   , armour = p2wSkolver }

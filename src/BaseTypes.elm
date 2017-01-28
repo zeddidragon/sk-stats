@@ -14,6 +14,10 @@ type Status = None | Fire | Freeze | Shock | Poison | Stun | Curse | Random
 type Bonus
   = Msi
 
+  | Dmg
+  | Ctr
+  | Asi
+
   | SwordDmg
   | SwordCtr
   | SwordAsi
