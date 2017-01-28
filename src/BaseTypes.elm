@@ -1,19 +1,9 @@
 module BaseTypes exposing (..)
 
-type alias WeaponUv =
-  { bonus: Bonus
-  , strength: BonusStrength
-  }
-
-type alias DefenceUv =
-  { bonus: DamageType
-  , strength: BonusStrength
-  }
-  
-type alias StatusUv =
-  { bonus: Status
-  , strength: BonusStrength
-  }
+type alias WeaponUv = (Bonus, BonusStrength)
+type ArmourUv
+  = StatusUv (Status, BonusStrength)
+  | DefenceUv (DamageType, BonusStrength)
 
 type DamageType = Normal | Piercing | Elemental | Shadow
 

@@ -3,18 +3,13 @@ import Html.Attributes exposing (..)
 import Knight exposing (..)
 import Knight.View
 import BaseTypes exposing (..)
-import Msg exposing (..)
 
 main =
   Html.beginnerProgram {model = model, view = view, update = update}
 
-type alias Model =
-  { you : Knight
-  }
-
-model : Model
 model =
   { you = Knight.you
+  , opponent = Knight.opponent
   }
 
 view model =
@@ -25,30 +20,28 @@ view model =
       , attribute "href" "styles.css"
       ]
      []
+    , node "meta"
+      [ name "viewport"
+      , content "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      ]
+    []
     , div [class "main"]
-      [ Knight.View.form model.you
-      , Knight.View.stats model.you
+      [ div [class "knight"]
+        [ Knight.View.form EquipYou model.you
+        , Knight.View.stats model.you
+        ]
+      , div [class "knight"]
+        [ Knight.View.form EquipOpponent model.opponent
+        , Knight.View.stats model.opponent
+        ]
       ]
     ]
 
 update msg model =
   case msg of
-    EquipWeapon equip ->
-      let
-        you = model.you
-        weapon = you.weapon
-      in
-        {model | you = {you | weapon = {weapon | weapon = equip}}}
-    EquipHelmet equip ->
-      let
-        you = model.you
-        helmet = you.helmet
-      in
-        {model | you = {you | helmet = {helmet | armour = equip}}}
-    EquipArmour equip ->
-      let
-        you = model.you
-        armour = you.armour
-      in
-        {model | you = {you | armour = {armour | armour = equip}}}
+    EquipYou new -> {model | you = new}
+    EquipOpponent new -> {model | opponent = new}
 
+type Msg
+  = EquipYou Knight
+  | EquipOpponent Knight

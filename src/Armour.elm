@@ -2,7 +2,7 @@ module Armour exposing (..)
 
 import BaseTypes exposing (..)
 
-uvMax = 102 / 4
+uvMax = 25.6
 
 defences =
   { base = 125 / 2
@@ -15,6 +15,14 @@ defences =
   , uvHigh = uvMax * 3 / 4
   , uvMax = uvMax
   }
+
+uvToDefence strength =
+  case strength of
+    Low -> defences.uvLow
+    Medium -> defences.uvMed
+    High -> defences.uvHigh
+    Maximum -> defences.uvMax
+    _ -> 0
 
 base =
   { hearts = 5
@@ -221,6 +229,7 @@ volcPlate =
 ancient =
   { plate
   | name = "Ancient Plate"
+  , hearts = 8
   , defences = [ (Normal, defences.ancient) ]
   , bonuses = ironmight.bonuses ++ [ (Msi, NegLow) ]
   }

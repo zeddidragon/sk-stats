@@ -11,8 +11,7 @@ type alias WeaponEquip =
 
 type alias ArmourEquip =
   { armour: Armour
-  , defenceUvs: List(DefenceUv)
-  , statusUvs: List(StatusUv)
+  , uvs: List(ArmourUv)
   }
 
 uvMax = 102 / 4

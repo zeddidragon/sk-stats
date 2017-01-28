@@ -6,17 +6,24 @@ import BaseTypes exposing (..)
 import Knight
 import Swords exposing (swords)
 import Armour exposing (armours)
-import View.Shortcuts exposing (selectList, bar)
+import View.Shortcuts exposing (selectList, bar, toText)
 import List
-import Msg exposing (..)
 
-form knight =
-  div []
-    [ item knight.name (div[][])
-    , item "Helmet" (selectList EquipHelmet armours knight.helmet.armour)
-    , item "Armour" (selectList EquipArmour armours knight.armour.armour)
-    , item "Weapon" (selectList EquipWeapon  swords knight.weapon.weapon)
-    ]
+form message knight =
+  let
+    helmet = knight.helmet
+    armour = knight.armour
+    weapon = knight.weapon
+    equipHelmet equip = message {knight | helmet = {helmet | armour = equip}}
+    equipArmour equip = message {knight | armour = {armour | armour = equip}}
+    equipWeapon equip = message {knight | weapon = {weapon | weapon = equip}}
+  in
+    div []
+      [ h1 [] [ text knight.name ]
+      , item "Helmet" (selectList equipHelmet armours knight.helmet.armour)
+      , item "Armour" (selectList equipArmour armours knight.armour.armour)
+      , item "Weapon" (selectList equipWeapon  swords knight.weapon.weapon)
+      ]
 
 stats knight =
   div [] (
@@ -30,10 +37,10 @@ defences knight =
     defence (dtype, amount) =
       item (toString dtype) (div [ class "graphic" ]
         [ bar (toString dtype) amount Knight.maxDefence
-        , div [ class "value" ] [ text (toString amount) ]
+        , div [ class "value" ] [ toText amount ]
         ])
   in
-    List.map defence (Knight.defences knight)
+    Knight.defences knight |> List.map defence
 
 resistances knight =
   let
@@ -49,21 +56,21 @@ resistances knight =
     resistance (status, amount) =
       item (toString status) (div [ class "graphic" ]
         [ pips status amount
-        , div [ class "value" ] [ text (toString amount) ]
+        , div [ class "value" ] [ toText amount ]
         ])
   in
     List.map resistance (Knight.resistances knight)
 
 health knight =
   div [ class "row" ]
-    [ div [ class "hearts" ] [ text (String.repeat (Knight.hearts knight) "♥") ]
-    , div [ class "value" ] [ text (toString (Knight.health knight)) ]
+    [ div [ class "hearts" ] [ String.repeat (Knight.hearts knight) "♥" |> text ]
+    , div [ class "value" ] [ Knight.health knight |> toText ]
     ]
 
 
 item label content =
   div [ class "item" ]
-    [ Html.label [] [text label]
+    [ Html.label [] [ text label ]
     , content
     ]
 

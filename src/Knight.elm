@@ -1,6 +1,7 @@
 module Knight exposing (..)
 import BaseTypes exposing (..)
 import Types exposing (WeaponEquip, ArmourEquip)
+import Armour exposing (uvToDefence)
 import Swords
 import Armour
 import List exposing (filter, map, foldr)
@@ -25,9 +26,19 @@ snd (_, b) = b
 isType x y = x == fst y
 nonZero x = 0 /= snd x
 
+toDefence uv =
+  case uv of
+    DefenceUv (dType, strength) -> (dType, Armour.uvToDefence strength)
+    _ -> (Normal, 0)
+
+toDefences : List ArmourUv -> List (DamageType, Float)
+toDefences uvs = List.map toDefence uvs
+
 defences knight =
   let
-    defs = knight.helmet.armour.defences ++ knight.armour.armour.defences
+    defs
+      =  knight.helmet.armour.defences ++ knight.armour.armour.defences
+      ++ (knight.helmet.uvs ++ knight.armour.uvs |> toDefences)
     total dtype = (dtype, sum (map snd (filter (isType dtype) defs)))
   in
     filter nonZero (map total [Normal, Piercing, Elemental, Shadow])
@@ -45,19 +56,16 @@ maxResistance = 16
 stockArmour : ArmourEquip
 stockArmour =
   { armour = Armour.cobalt
-  , defenceUvs = []
-  , statusUvs = []
+  , uvs = []
   }
 
 p2wSkolver : ArmourEquip
 p2wSkolver =
   { armour = Armour.skolver
-  , defenceUvs =
-    [ {bonus = Normal, strength = Maximum}
-    , {bonus = Piercing, strength = Maximum}
-    ] 
-  , statusUvs =
-    [ {bonus = Shock, strength = Maximum}
+  , uvs =
+    [ DefenceUv (Normal, Maximum)
+    , DefenceUv (Piercing, Maximum)
+    , StatusUv (Shock, Maximum)
     ]
   }
 
@@ -76,8 +84,8 @@ opponent : Knight
 opponent =
   { name = "The guy she tells you not to worry about"
   , weapon =
-    { weapon = Swords.flourish
-    , uvs = [{ bonus = SwordAsi, strength = VeryHigh }]
+    { weapon = Swords.acheron
+    , uvs = [(SwordAsi, VeryHigh)]
     }
   , helmet = p2wSkolver
   , armour = p2wSkolver }

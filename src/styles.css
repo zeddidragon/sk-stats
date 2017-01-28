@@ -1,3 +1,13 @@
+h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.knight {
+  flex: 1;
+}
+
 .body {
   color: white;
   background-color: black;
@@ -6,6 +16,7 @@
 
 .main {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .row {
@@ -13,6 +24,8 @@
 }
 
 .hearts {
+  display: flex;
+  flex-wrap: wrap;
   color: red;
 }
 
