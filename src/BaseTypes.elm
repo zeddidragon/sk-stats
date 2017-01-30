@@ -1,8 +1,8 @@
 module BaseTypes exposing (..)
 
-type alias WeaponUv = (Bonus, BonusStrength)
-type ArmourUv
-  = StatusUv (Status, BonusStrength)
+type Uv
+  = WeaponUv (Bonus, BonusStrength)
+  | StatusUv (Status, BonusStrength)
   | DefenceUv (DamageType, BonusStrength)
 
 type DamageType = Normal | Piercing | Elemental | Shadow
