@@ -9,6 +9,7 @@ import Armour exposing (armours)
 import View.Shortcuts exposing (selectList, bar, toText, selectListExclude)
 import List
 import Tuple exposing (first, second)
+import Util exposing (lIndex)
 
 replace list index new =
   List.indexedMap (\i old -> if i == index then new else old) list
@@ -89,8 +90,28 @@ armourUvForms message uvs =
             Nothing -> StatusUv (Fire, Maximum)
       in
         message index uv
+    uvForm index equip =
+      div [ class "item sub" ]
+        [ Html.label [] [ text ("UV" ++ (index + 1 |> toString)) ]
+        , selectListExclude
+          (uvs |> List.map uvName |> List.map asName)
+          (swapType equip index)
+          (uvNames |> List.map asName)
+          (equip |> uvName |> asName)
+        , input
+          [ type_ "range"
+          , Html.Attributes.min "0"
+          , Html.Attributes.max "3"
+          , equip
+            |> uvStrength
+            |> (flip lIndex) [Low, Medium, High, Maximum]
+            |> Maybe.withDefault 0
+            |> toString
+            |> value
+          ] []
+        ]
   in
-    List.indexedMap (uvForm uvs swapType uvNames uvName) uvs
+    List.indexedMap uvForm uvs
 
 weaponUvForms message uvs =
   let
@@ -121,18 +142,28 @@ weaponUvForms message uvs =
             Nothing -> equip
       in
         message index uv
+    uvForm index equip =
+      div [ class "item sub" ]
+        [ Html.label [] [ text ("UV" ++ (index + 1 |> toString)) ]
+        , selectListExclude
+          (uvs |> List.map uvName |> List.map asName)
+          (swapType equip index)
+          (uvNames |> List.map asName)
+          (equip |> uvName |> asName)
+        , input
+          [ type_ "range"
+          , Html.Attributes.min "0"
+          , Html.Attributes.max "3"
+          , equip
+            |> uvStrength
+            |> (flip lIndex) [Low, Medium, High, VeryHigh]
+            |> Maybe.withDefault 0
+            |> toString
+            |> value
+          ] []
+        ]
   in
-    List.indexedMap (uvForm uvs swapType uvNames uvName) uvs
-
-uvForm uvs swapType uvNames uvName index equip =
-  div [ class "item sub" ]
-    [ Html.label [] [ text ("UV" ++ (index + 1 |> toString)) ]
-    , selectListExclude
-      (uvs |> List.map uvName |> List.map asName)
-      (swapType equip index)
-      (uvNames |> List.map asName)
-      (equip |> uvName |> asName)
-    ]
+    List.indexedMap uvForm uvs
 
 stats knight =
   List.concat
