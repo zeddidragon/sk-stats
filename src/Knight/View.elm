@@ -6,10 +6,8 @@ import BaseTypes exposing (..)
 import Knight
 import Swords exposing (swords)
 import Armour exposing (armours)
-import View.Shortcuts exposing (selectList, bar, toText, selectListExclude)
-import List
-import Tuple exposing (first, second)
-import Util exposing (lIndex)
+import View.Shortcuts exposing (selectList, bar, toText)
+import Knight.UvForm exposing (weaponUvForm, armourUvForm)
 
 replace list index new =
   List.indexedMap (\i old -> if i == index then new else old) list
@@ -33,137 +31,17 @@ form message knight =
       [ h1 [] [ text knight.name ]
       , div [ class "slot" ]
         ( [ selectList equipHPiece armours knight.helmet.armour |> item "Helmet" ]
-          ++ armourUvForms equipHUv knight.helmet.uvs
+          ++ armourUvForm equipHUv knight.helmet.uvs
         )
       , div [ class "slot" ]
         ( [ selectList equipAPiece armours knight.armour.armour |> item "Armour" ]
-          ++ armourUvForms equipAUv knight.armour.uvs
+          ++ armourUvForm equipAUv knight.armour.uvs
         )
       , div [ class "slot" ]
         ( [ selectList equipWPiece  swords knight.weapon.weapon |> item "Weapon" ]
-          ++ weaponUvForms equipWUv knight.weapon.uvs
+          ++ weaponUvForm equipWUv knight.weapon.uvs
         )
       ]
-
-asName name = {name = name}
-
-armourUvForms message uvs =
-  let
-    existingNames =
-      List.map uvName uvs
-    uvNames =
-      [ "Normal"
-      , "Piercing"
-      , "Elemental"
-      , "Shadow"
-      , "Fire"
-      , "Freeze"
-      , "Shock"
-      , "Poison"
-      , "Stun"
-      , "Curse"
-      ]
-    uvName equip =
-      case equip of
-        DefenceUv (dType, strength)-> toString dType
-        StatusUv (status, strength)-> toString status
-    uvStrength equip =
-      case equip of
-        DefenceUv (dType, strength) -> strength
-        StatusUv (status, strength) -> strength
-    swapType equip index option =
-      let
-        defence
-          = [Normal, Piercing, Elemental, Shadow]
-          |> List.filter (\dType -> option.name == (toString dType))
-          |> List.head
-        status
-          = [Fire, Freeze, Shock, Poison, Stun, Curse]
-          |> List.filter (\sType -> option.name == (toString sType))
-          |> List.head
-        uv =
-          case defence of
-            Just thing -> DefenceUv (thing, uvStrength equip)
-            Nothing ->
-          case status of
-            Just thing -> StatusUv (thing, uvStrength equip)
-            Nothing -> StatusUv (Fire, Maximum)
-      in
-        message index uv
-    uvForm index equip =
-      div [ class "item sub" ]
-        [ Html.label [] [ text ("UV" ++ (index + 1 |> toString)) ]
-        , selectListExclude
-          (uvs |> List.map uvName |> List.map asName)
-          (swapType equip index)
-          (uvNames |> List.map asName)
-          (equip |> uvName |> asName)
-        , input
-          [ type_ "range"
-          , Html.Attributes.min "0"
-          , Html.Attributes.max "3"
-          , equip
-            |> uvStrength
-            |> (flip lIndex) [Low, Medium, High, Maximum]
-            |> Maybe.withDefault 0
-            |> toString
-            |> value
-          ] []
-        ]
-  in
-    List.indexedMap uvForm uvs
-
-weaponUvForms message uvs =
-  let
-    existingNames =
-      List.map uvName uvs
-    bonuses =
-      [ CTR
-      , ASI
-      , Beast
-      , Fiend
-      , Gremlin
-      , Slime
-      , Construct
-      , Undead
-      ]
-    uvNames = List.map toString bonuses
-    uvName equip = equip |> first |> toString
-    uvStrength equip = equip |> second
-    swapType equip index option =
-      let
-        bonus
-          = bonuses
-          |> List.filter (\b -> option.name == (toString b))
-          |> List.head
-        uv =
-          case bonus of
-            Just thing -> (thing, uvStrength equip)
-            Nothing -> equip
-      in
-        message index uv
-    uvForm index equip =
-      div [ class "item sub" ]
-        [ Html.label [] [ text ("UV" ++ (index + 1 |> toString)) ]
-        , selectListExclude
-          (uvs |> List.map uvName |> List.map asName)
-          (swapType equip index)
-          (uvNames |> List.map asName)
-          (equip |> uvName |> asName)
-        , input
-          [ type_ "range"
-          , Html.Attributes.min "0"
-          , Html.Attributes.max "3"
-          , equip
-            |> uvStrength
-            |> (flip lIndex) [Low, Medium, High, VeryHigh]
-            |> Maybe.withDefault 0
-            |> toString
-            |> value
-          ] []
-        ]
-  in
-    List.indexedMap uvForm uvs
 
 stats knight =
   List.concat

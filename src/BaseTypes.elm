@@ -1,9 +1,9 @@
 module BaseTypes exposing (..)
 
-type Uv
-  = WeaponUv (Bonus, BonusStrength)
-  | StatusUv (Status, BonusStrength)
-  | DefenceUv (DamageType, BonusStrength)
+type UV
+  = WeaponUV (Bonus, BonusStrength)
+  | StatusUV (Status, BonusStrength)
+  | DefenceUV (DamageType, BonusStrength)
 
 type DamageType = Normal | Piercing | Elemental | Shadow
 

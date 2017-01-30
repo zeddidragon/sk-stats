@@ -28,14 +28,14 @@ secondTo x y = (x, y)
 
 toDefence uv =
   case uv of
-    DefenceUv (dType, strength) -> (dType, Armour.uvToDefence strength)
+    DefenceUV (dType, strength) -> (dType, Armour.uvToDefence strength)
     _ -> (Normal, 0)
 
 toDefences uvs = List.map toDefence uvs
 
 toResistance uv =
   case uv of
-    StatusUv (status, strength) -> (status, Armour.uvToResistance strength)
+    StatusUV (status, strength) -> (status, Armour.uvToResistance strength)
     _ -> (Fire, 0)
 
 toResistances uvs = List.map toResistance uvs
@@ -85,9 +85,9 @@ p2wSkolver : ArmourEquip
 p2wSkolver =
   { armour = Armour.skolver
   , uvs =
-    [ DefenceUv (Normal, Maximum)
-    , DefenceUv (Piercing, Maximum)
-    , StatusUv (Shock, Maximum)
+    [ DefenceUV (Normal, Maximum)
+    , DefenceUV (Piercing, Maximum)
+    , StatusUV (Shock, Maximum)
     ]
   }
 
@@ -107,7 +107,7 @@ opponent =
   { name = "The guy she tells you not to worry about"
   , weapon =
     { weapon = Swords.acheron
-    , uvs = [(ASI, VeryHigh)]
+    , uvs = [WeaponUV (ASI, VeryHigh)]
     }
   , helmet = p2wSkolver
   , armour = p2wSkolver }

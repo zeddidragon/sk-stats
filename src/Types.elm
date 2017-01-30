@@ -6,12 +6,12 @@ import Armour exposing (..)
 
 type alias WeaponEquip =
   { weapon: Weapon
-  , uvs: List(WeaponUv)
+  , uvs: List(UV)
   }
 
 type alias ArmourEquip =
   { armour: Armour
-  , uvs: List(ArmourUv)
+  , uvs: List(UV)
   }
 
 uvMax = 102 / 4
