@@ -9,9 +9,6 @@ import Armour exposing (armours)
 import View.Shortcuts exposing (selectList, bar, toText)
 import Knight.UvForm exposing (weaponUvForm, armourUvForm)
 
-replace list index new =
-  List.indexedMap (\i old -> if i == index then new else old) list
-
 form message knight =
   let
     helmet = knight.helmet
@@ -23,23 +20,23 @@ form message knight =
     equipHPiece piece = equipHelmet {helmet | piece = piece}
     equipAPiece piece = equipArmour {armour | piece = piece}
     equipWPiece piece = equipWeapon {weapon | piece = piece}
-    equipHUv index uv = equipHelmet {helmet | uvs = replace helmet.uvs index uv}
-    equipAUv index uv = equipArmour {armour | uvs = replace armour.uvs index uv}
-    equipWUv index uv = equipWeapon {weapon | uvs = replace weapon.uvs index uv}
+    equipHUv uvs = equipHelmet {helmet | uvs = uvs}
+    equipAUv uvs = equipArmour {armour | uvs = uvs}
+    equipWUv uvs = equipWeapon {weapon | uvs = uvs}
   in
     div []
       [ h1 [] [ text knight.name ]
       , div [ class "slot" ]
         ( [ selectList equipHPiece armours knight.helmet.piece |> item "Helmet" ]
-          ++ armourUvForm equipHUv knight.helmet.uvs
+          ++ armourUvForm equipHUv knight.helmet
         )
       , div [ class "slot" ]
         ( [ selectList equipAPiece armours knight.armour.piece |> item "Armour" ]
-          ++ armourUvForm equipAUv knight.armour.uvs
+          ++ armourUvForm equipAUv knight.armour
         )
       , div [ class "slot" ]
         ( [ selectList equipWPiece  swords knight.weapon.piece |> item "Weapon" ]
-          ++ weaponUvForm equipWUv knight.weapon.uvs
+          ++ weaponUvForm equipWUv knight.weapon
         )
       ]
 

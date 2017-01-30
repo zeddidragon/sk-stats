@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import BaseTypes exposing (..)
-import Util exposing (lIndex, atIndex)
+import Util exposing (lIndex, atIndex, replace)
 import View.Shortcuts exposing (selectListExclude)
 
 weaponUvForm = uvForms
@@ -54,8 +54,9 @@ uvStrength equip =
     DefenceUV (dType, strength) -> strength
     StatusUV (status, strength) -> strength
 
-uvForms uvNames uvStrengths message uvs =
+uvForms uvNames uvStrengths message equipment =
   let
+    uvs = equipment.uvs
     existingNames =
       List.map uvName uvs
     swapType equip index option =
@@ -83,7 +84,7 @@ uvForms uvNames uvStrengths message uvs =
             Just thing -> StatusUV (thing, uvStrength equip)
             Nothing -> StatusUV (None, Low)
       in
-        message index uv
+        message <| replace uvs index uv
     swapStrength equip index value =
       let
         strength =
@@ -97,7 +98,7 @@ uvForms uvNames uvStrengths message uvs =
             DefenceUV (bonus, str) -> DefenceUV (bonus, strength)
             StatusUV (bonus, str) -> StatusUV (bonus, strength)
       in
-        message index uv
+        message <| replace uvs index uv
     uvForm index equip =
       div [ class "item sub" ]
         [ Html.label [] [ "UV" ++ (index + 1 |> toString) |> text ]

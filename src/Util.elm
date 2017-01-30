@@ -22,3 +22,8 @@ rIndex item list =
     |> List.map Tuple.first
     |> List.reverse
     |> List.head
+
+replace : List a -> Int -> a -> List a
+replace list index new =
+  List.indexedMap (\i old -> if i == index then new else old) list
+
