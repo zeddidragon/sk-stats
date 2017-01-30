@@ -5,12 +5,12 @@ import Swords exposing (..)
 import Armour exposing (..)
 
 type alias WeaponEquip =
-  { weapon: Weapon
+  { piece: Weapon
   , uvs: List(UV)
   }
 
 type alias ArmourEquip =
-  { armour: Armour
+  { piece: Armour
   , uvs: List(UV)
   }
 

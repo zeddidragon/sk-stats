@@ -20,9 +20,9 @@ form message knight =
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}
     equipWeapon equip = message {knight | weapon = equip}
-    equipHPiece piece = equipHelmet {helmet | armour = piece}
-    equipAPiece piece = equipArmour {armour | armour = piece}
-    equipWPiece piece = equipWeapon {weapon | weapon = piece}
+    equipHPiece piece = equipHelmet {helmet | piece = piece}
+    equipAPiece piece = equipArmour {armour | piece = piece}
+    equipWPiece piece = equipWeapon {weapon | piece = piece}
     equipHUv index uv = equipHelmet {helmet | uvs = replace helmet.uvs index uv}
     equipAUv index uv = equipArmour {armour | uvs = replace armour.uvs index uv}
     equipWUv index uv = equipWeapon {weapon | uvs = replace weapon.uvs index uv}
@@ -30,15 +30,15 @@ form message knight =
     div []
       [ h1 [] [ text knight.name ]
       , div [ class "slot" ]
-        ( [ selectList equipHPiece armours knight.helmet.armour |> item "Helmet" ]
+        ( [ selectList equipHPiece armours knight.helmet.piece |> item "Helmet" ]
           ++ armourUvForm equipHUv knight.helmet.uvs
         )
       , div [ class "slot" ]
-        ( [ selectList equipAPiece armours knight.armour.armour |> item "Armour" ]
+        ( [ selectList equipAPiece armours knight.armour.piece |> item "Armour" ]
           ++ armourUvForm equipAUv knight.armour.uvs
         )
       , div [ class "slot" ]
-        ( [ selectList equipWPiece  swords knight.weapon.weapon |> item "Weapon" ]
+        ( [ selectList equipWPiece  swords knight.weapon.piece |> item "Weapon" ]
           ++ weaponUvForm equipWUv knight.weapon.uvs
         )
       ]

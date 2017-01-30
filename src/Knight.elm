@@ -16,8 +16,8 @@ type alias Knight =
 
 hearts knight =
   5
-  + knight.helmet.armour.hearts
-  + knight.armour.armour.hearts
+  + knight.helmet.piece.hearts
+  + knight.armour.piece.hearts
 
 health knight = 40 * hearts knight
 
@@ -43,7 +43,7 @@ toResistances uvs = List.map toResistance uvs
 defences knight =
   let
     defs
-      =  knight.helmet.armour.defences ++ knight.armour.armour.defences
+      =  knight.helmet.piece.defences ++ knight.armour.piece.defences
       ++ (knight.helmet.uvs ++ knight.armour.uvs |> toDefences)
     total dtype
       = defs
@@ -59,7 +59,7 @@ defences knight =
 resistances knight =
   let
     resistances
-      = knight.helmet.armour.resistances ++ knight.armour.armour.resistances
+      = knight.helmet.piece.resistances ++ knight.armour.piece.resistances
       ++ (knight.helmet.uvs ++ knight.armour.uvs |> toResistances)
     total status
       = resistances
@@ -77,13 +77,13 @@ maxResistance = 16
 
 stockArmour : ArmourEquip
 stockArmour =
-  { armour = Armour.cobalt
+  { piece = Armour.cobalt
   , uvs = []
   }
 
 p2wSkolver : ArmourEquip
 p2wSkolver =
-  { armour = Armour.skolver
+  { piece = Armour.skolver
   , uvs =
     [ DefenceUV (Normal, Maximum)
     , DefenceUV (Piercing, Maximum)
@@ -95,7 +95,7 @@ you : Knight
 you =
   { name = "You"
   , weapon =
-    { weapon = Swords.leviathan
+    { piece = Swords.leviathan
     , uvs = []
     }
   , helmet = stockArmour
@@ -106,7 +106,7 @@ opponent : Knight
 opponent =
   { name = "The guy she tells you not to worry about"
   , weapon =
-    { weapon = Swords.acheron
+    { piece = Swords.acheron
     , uvs = [WeaponUV (ASI, VeryHigh)]
     }
   , helmet = p2wSkolver
