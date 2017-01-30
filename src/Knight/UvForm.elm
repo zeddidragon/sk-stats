@@ -2,16 +2,16 @@ module Knight.UvForm exposing (weaponUvForm, armourUvForm)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (onInput, onClick)
 import BaseTypes exposing (..)
 import Util exposing (lIndex, atIndex, replace)
 import View.Shortcuts exposing (selectListExclude)
 
 weaponUvForm = uvForms
-  (List.map toString weaponUvs)
+  composedWeaponUvs
   [Low, Medium, High, VeryHigh]
 armourUvForm = uvForms
-  ((List.map toString defenceUvs) ++ (List.map toString statusUvs))
+  (composedDefenceUvs ++ composedStatusUvs)
   [Low, Medium, High, Maximum]
 
 asName name = {name = name}
@@ -43,6 +43,15 @@ weaponUvs =
   , Undead
   ]
 
+composedWeaponUvs =
+  List.map (\bonus -> WeaponUV(bonus, Low)) weaponUvs
+
+composedDefenceUvs =
+  List.map (\dType -> DefenceUV(dType, Low)) defenceUvs
+
+composedStatusUvs =
+  List.map (\status -> StatusUV(status, Low)) statusUvs
+
 uvName equip =
   case equip of
     WeaponUV  (bonus, strength)-> toString bonus
@@ -54,11 +63,11 @@ uvStrength equip =
     DefenceUV (dType, strength) -> strength
     StatusUV (status, strength) -> strength
 
-uvForms uvNames uvStrengths message equipment =
+uvForms availableUvs uvStrengths message equipment =
   let
+    uvNames = availableUvs |> List.map uvName
     uvs = equipment.uvs
-    existingNames =
-      List.map uvName uvs
+    existingNames = List.map uvName uvs
     swapType equip index option =
       let
         bonus
@@ -99,6 +108,16 @@ uvForms uvNames uvStrengths message equipment =
             StatusUV (bonus, str) -> StatusUV (bonus, strength)
       in
         message <| replace uvs index uv
+    addUv =
+      let
+        excluded = uvs |> List.map uvName
+        uv =
+          availableUvs
+            |> List.filter (\uv -> List.member (uvName uv) excluded |> not)
+            |> List.head
+            |> Maybe.withDefault( StatusUV (None, Low) )
+      in
+        message <| uvs ++ [ uv ]
     uvForm index equip =
       div [ class "item sub" ]
         [ Html.label [] [ "UV" ++ (index + 1 |> toString) |> text ]
@@ -122,4 +141,12 @@ uvForms uvNames uvStrengths message equipment =
           ] []
         ]
   in
-    List.indexedMap uvForm uvs
+    List.indexedMap uvForm uvs ++
+      ( if List.length uvs < 3 then
+        [ button
+          [ onClick addUv ]
+          [ text "+ UV" ]
+        ]
+      else
+        []
+      )
