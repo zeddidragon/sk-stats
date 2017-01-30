@@ -46,7 +46,7 @@ h3 {
 label {
   font-weight: bold;
   font-size: 0.8em;
-  padding-right: 1em;
+  padding: 0 1em;
   width: 4em;
 }
 
@@ -71,6 +71,10 @@ label {
 
 .graphic {
   display: flex;
+  flex: 1;
+}
+
+.spacer {
   flex: 1;
 }
 

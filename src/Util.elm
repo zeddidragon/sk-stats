@@ -27,3 +27,6 @@ replace : List a -> Int -> a -> List a
 replace list index new =
   List.indexedMap (\i old -> if i == index then new else old) list
 
+remove : Int -> List a -> List a
+remove index list =
+  (List.take index list) ++ (List.drop (index + 1) list)

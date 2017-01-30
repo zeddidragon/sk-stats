@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import BaseTypes exposing (..)
-import Util exposing (lIndex, atIndex, replace)
+import Util exposing (lIndex, atIndex, replace, remove)
 import View.Shortcuts exposing (selectListExclude)
 
 weaponUvForm = uvForms
@@ -118,6 +118,8 @@ uvForms availableUvs uvStrengths message equipment =
             |> Maybe.withDefault( StatusUV (None, Low) )
       in
         message <| uvs ++ [ uv ]
+    removeUv index =
+      message <| remove index uvs
     uvForm index equip =
       div [ class "item sub" ]
         [ Html.label [] [ "UV" ++ (index + 1 |> toString) |> text ]
@@ -139,6 +141,10 @@ uvForms availableUvs uvStrengths message equipment =
             |> toString
             |> value
           ] []
+        , div [ class "spacer" ] []
+        , button
+          [ onClick <| removeUv index ]
+          [ text "-" ]
         ]
   in
     List.indexedMap uvForm uvs ++
