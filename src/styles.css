@@ -1,4 +1,5 @@
-h3 { white-space: nowrap;
+h3 {
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -7,7 +8,7 @@ h3 { white-space: nowrap;
   flex: 1;
 }
 
-.body {
+body {
   color: white;
   background-color: black;
   height: 100%;
