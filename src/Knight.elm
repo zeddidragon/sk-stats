@@ -1,5 +1,6 @@
 module Knight exposing (..)
 import BaseTypes exposing (..)
+import UV exposing (..)
 import Types exposing (WeaponEquip, ArmourEquip)
 import Armour exposing (uvToDefence, uvToResistance)
 import Swords
@@ -20,6 +21,7 @@ hearts knight =
   5
   + knight.helmet.piece.hearts
   + knight.armour.piece.hearts
+  + Trinket.hearts knight.trinkets
 
 health knight = 40 * hearts knight
 

@@ -1,6 +1,7 @@
 module Armour exposing (..)
 
 import BaseTypes exposing (..)
+import UV exposing (..)
 
 uvMax = 25.6
 

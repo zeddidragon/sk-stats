@@ -3,6 +3,7 @@ import Html.Attributes exposing (..)
 import Knight exposing (..)
 import Knight.View
 import BaseTypes exposing (..)
+import UV exposing (..)
 
 main =
   Html.beginnerProgram {model = model, view = view, update = update}

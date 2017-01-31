@@ -3,6 +3,7 @@ module Knight.View exposing (form, stats)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import BaseTypes exposing (..)
+import UV exposing (..)
 import Knight
 import Swords exposing (swords)
 import Armour exposing (armours)

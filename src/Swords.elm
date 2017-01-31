@@ -1,6 +1,7 @@
 module Swords exposing (..)
 
 import BaseTypes exposing (..)
+import UV exposing (..)
 
 attacks =
   { sword = 415 / 1.24

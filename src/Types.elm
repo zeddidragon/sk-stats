@@ -1,6 +1,7 @@
 module Types exposing (..)
 
 import BaseTypes exposing (..)
+import UV exposing (..)
 import Swords exposing (..)
 import Armour exposing (..)
 
