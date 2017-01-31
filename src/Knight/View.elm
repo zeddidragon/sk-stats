@@ -7,8 +7,9 @@ import Knight.UV exposing (..)
 import Knight
 import Knight.Swords exposing (swords)
 import Knight.Armour exposing (armours)
+import Knight.Shield exposing (shields)
 import View.Shortcuts exposing (selectList, bar, toText)
-import Knight.UV.View exposing (weaponUvForm, armourUvForm, trinketForms)
+import Knight.UV.View as UvForm
 
 form message knight =
   let
@@ -20,10 +21,11 @@ form message knight =
   in
     div []
       ([ h1 [] [ text knight.name ]
-      , slot equipHelmet knight.helmet armours "Helmet" armourUvForm
-      , slot equipArmour knight.armour armours "Armour" armourUvForm
-      , slot equipWeapon knight.weapon swords  "Weapon" weaponUvForm
-      ] ++ trinketForms equipTrinkets knight.trinkets)
+      , slot equipShield knight.shield shields "Shield" UvForm.armourForm
+      , slot equipHelmet knight.helmet armours "Helmet" UvForm.armourForm
+      , slot equipArmour knight.armour armours "Armour" UvForm.armourForm
+      , slot equipWeapon knight.weapon swords  "Weapon" UvForm.weaponForm
+      ] ++ UvForm.trinketForms equipTrinkets knight.trinkets)
 
 slot message equipment items title uvForm =
   let

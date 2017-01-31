@@ -102,7 +102,7 @@ mercDemo =
   , resistances = [ (Shock, 4) ]
   , bonuses =
     [ (BombDmg, Low)
-    , (Msi, Low)
+    , (MSI, Low)
     ]
   }
 
@@ -145,7 +145,7 @@ kat =
     ]
   , bonuses =
     [ (Dmg, High)
-    , (Msi, High)
+    , (MSI, High)
     ]
   }
 
@@ -204,7 +204,7 @@ ancient =
   | name = "Ancient Plate"
   , hearts = 8
   , defences = [ (Normal, defences.ancient) ]
-  , bonuses = ironmight.bonuses ++ [ (Msi, NegLow) ]
+  , bonuses = ironmight.bonuses ++ [ (MSI, NegLow) ]
   }
 
 armours =

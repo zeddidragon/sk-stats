@@ -7,6 +7,7 @@ import Knight.Types exposing (..)
 import Knight.UV as UV exposing (..)
 import Knight.Swords as Swords
 import Knight.Armour as Armour
+import Knight.Shield as Shield
 import Knight.Trinket as Trinket
 
 type alias Knight =
@@ -37,6 +38,7 @@ hearts knight =
   5
   + knight.helmet.piece.hearts
   + knight.armour.piece.hearts
+  + (List.sum <| List.map UV.toHearts knight.shield.piece.effects)
   + Trinket.hearts knight.trinkets
 
 health knight = 40 * hearts knight
@@ -91,6 +93,7 @@ resistances knight =
       List.concat
         [ knight.helmet.uvs
         , knight.armour.uvs
+        , knight.shield.piece.effects
         , Trinket.effects knight.trinkets
         ]
     resistances =
@@ -135,7 +138,10 @@ you =
     { piece = Swords.leviathan
     , uvs = []
     }
-  , shield = { piece = Shield.recon }
+  , shield =
+    { piece = Shield.recon
+    , uvs = []
+    }
   , helmet = stockArmour
   , armour = stockArmour
   , trinkets = []
@@ -148,7 +154,10 @@ opponent =
     { piece = Swords.acheron
     , uvs = [WeaponUV (ASI, VeryHigh)]
     }
-  , shield = { piece = Shield.striker }
+  , shield =
+    { piece = Shield.striker
+    , uvs = []
+    }
   , helmet = p2wSkolver
   , armour = p2wSkolver
   , trinkets = List.repeat 2 Trinket.penta

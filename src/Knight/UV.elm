@@ -1,4 +1,5 @@
 module Knight.UV exposing (..)
+import Util exposing (lIndex)
 
 type DamageType = Normal | Piercing | Elemental | Shadow
 
@@ -7,7 +8,7 @@ type Stage = Basic | Heavy | Charge | Special
 type Status = None | Fire | Freeze | Shock | Poison | Stun | Curse | Random
 
 type Bonus
-  = Msi
+  = MSI
 
   | Dmg
   | CTR
@@ -31,7 +32,38 @@ type Bonus
   | Construct
   | Undead
 
-type BonusStrength = Low | Medium | High | VeryHigh | Ultra | Maximum | NegLow
+type BonusStrength
+  = Low
+  | Medium
+  | High
+  | VeryHigh
+  | Ultra
+  | Maximum
+
+  | NegLow
+  | NegMedium
+  | NegHigh
+  | NegVeryHigh
+  | NegUltra
+  | NegMaximum
+
+strengths =
+  [ Low
+  , Medium
+  , High
+  , VeryHigh
+  , Ultra
+  , Maximum
+  ]
+
+penalties =
+  [ NegLow
+  , NegMedium
+  , NegHigh
+  , NegVeryHigh
+  , NegUltra
+  , NegMaximum
+  ]
 
 type UV
   = Hearts Int
@@ -57,6 +89,13 @@ toHearts effect =
   case effect of
     Hearts n -> n
     _ -> 0
+
+toBonus strength =
+  let
+    bonus = lIndex strength strengths |> Maybe.withDefault 0
+    penalty = lIndex strength penalties |> Maybe.withDefault 0
+  in
+    bonus - penalty
 
 toDefence strength =
   case strength of

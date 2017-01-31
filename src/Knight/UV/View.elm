@@ -1,4 +1,4 @@
-module Knight.UV.View exposing (weaponUvForm, armourUvForm, trinketForms)
+module Knight.UV.View exposing (weaponForm, armourForm, trinketForms)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -11,10 +11,10 @@ import View.Shortcuts exposing (selectList, selectListExclude, spacer)
 
 strengths = [Low, Medium, High, VeryHigh, Ultra, Maximum]
 
-weaponUvForm = uvForms
+weaponForm = uvForms
   composedWeaponUvs
   [Low, Medium, High, VeryHigh]
-armourUvForm = uvForms
+armourForm = uvForms
   (composedDefenceUvs ++ composedStatusUvs)
   [Low, Medium, High, Maximum]
 
