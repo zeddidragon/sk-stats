@@ -1,12 +1,12 @@
-module Trinket exposing (..)
+module Knight.Trinket exposing (..)
 
 import BaseTypes exposing (..)
-import UV exposing (..)
+import Knight.UV exposing (..)
 
 hearts trinkets =
   let
     toHearts trinket =
-      List.map UV.toHearts trinket.effects
+      List.map Knight.UV.toHearts trinket.effects
   in
     trinkets
       |> List.concatMap toHearts

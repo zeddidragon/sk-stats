@@ -1,7 +1,7 @@
-module Armour exposing (..)
+module Knight.Armour exposing (..)
 
 import BaseTypes exposing (..)
-import UV exposing (..)
+import Knight.UV exposing (..)
 
 base =
   { hearts = 5

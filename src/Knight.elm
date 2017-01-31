@@ -1,12 +1,13 @@
 module Knight exposing (..)
-import BaseTypes exposing (..)
-import UV exposing (..)
-import Types exposing (WeaponEquip, ArmourEquip)
-import Swords
-import Armour
-import Trinket
+
 import List exposing (filter, map, foldr)
 import Tuple exposing (first, second)
+
+import BaseTypes exposing (..)
+import Knight.UV as UV exposing (..)
+import Knight.Swords as Swords
+import Knight.Armour as Armour
+import Knight.Trinket as Trinket
 
 type alias Knight =
   { name: String
@@ -14,6 +15,16 @@ type alias Knight =
   , helmet: ArmourEquip
   , armour: ArmourEquip
   , trinkets: List Trinket
+  }
+
+type alias WeaponEquip =
+  { piece: Weapon
+  , uvs: List(UV)
+  }
+
+type alias ArmourEquip =
+  { piece: Armour
+  , uvs: List(UV)
   }
 
 hearts knight =

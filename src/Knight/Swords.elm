@@ -1,7 +1,7 @@
-module Swords exposing (..)
+module Knight.Swords exposing (..)
 
 import BaseTypes exposing (..)
-import UV exposing (..)
+import Knight.UV exposing (..)
 
 attacks =
   { sword = 415 / 1.24

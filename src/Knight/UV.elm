@@ -1,4 +1,4 @@
-module UV exposing (..)
+module Knight.UV exposing (..)
 
 type DamageType = Normal | Piercing | Elemental | Shadow
 

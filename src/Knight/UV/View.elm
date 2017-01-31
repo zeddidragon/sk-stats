@@ -1,11 +1,11 @@
-module Knight.UvForm exposing (weaponUvForm, armourUvForm, trinketForms)
+module Knight.UV.View exposing (weaponUvForm, armourUvForm, trinketForms)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import BaseTypes exposing (..)
-import UV exposing (..)
-import Trinket
+import Knight.UV exposing (..)
+import Knight.Trinket as Trinket
 import Util exposing (lIndex, atIndex, replace, remove)
 import View.Shortcuts exposing (selectList, selectListExclude, spacer)
 

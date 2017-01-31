@@ -1,6 +1,6 @@
 module BaseTypes exposing (..)
 
-import UV exposing (..)
+import Knight.UV exposing (..)
 
 type alias Weapon =
   { name: String

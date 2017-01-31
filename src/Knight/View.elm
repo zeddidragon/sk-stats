@@ -3,12 +3,12 @@ module Knight.View exposing (form, stats)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import BaseTypes exposing (..)
-import UV exposing (..)
+import Knight.UV exposing (..)
 import Knight
-import Swords exposing (swords)
-import Armour exposing (armours)
+import Knight.Swords exposing (swords)
+import Knight.Armour exposing (armours)
 import View.Shortcuts exposing (selectList, bar, toText)
-import Knight.UvForm exposing (weaponUvForm, armourUvForm, trinketForms)
+import Knight.UV.View exposing (weaponUvForm, armourUvForm, trinketForms)
 
 form message knight =
   let
