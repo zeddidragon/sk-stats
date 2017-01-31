@@ -1,6 +1,6 @@
 module Knight.Swords exposing (..)
 
-import BaseTypes exposing (..)
+import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 
 attacks =

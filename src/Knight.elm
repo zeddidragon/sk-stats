@@ -3,7 +3,7 @@ module Knight exposing (..)
 import List exposing (filter, map, foldr)
 import Tuple exposing (first, second)
 
-import BaseTypes exposing (..)
+import Knight.Types exposing (..)
 import Knight.UV as UV exposing (..)
 import Knight.Swords as Swords
 import Knight.Armour as Armour
@@ -14,6 +14,7 @@ type alias Knight =
   , weapon: WeaponEquip
   , helmet: ArmourEquip
   , armour: ArmourEquip
+  , shield: ShieldEquip
   , trinkets: List Trinket
   }
 
@@ -24,6 +25,11 @@ type alias WeaponEquip =
 
 type alias ArmourEquip =
   { piece: Armour
+  , uvs: List(UV)
+  }
+
+type alias ShieldEquip =
+  { piece: Shield
   , uvs: List(UV)
   }
 
@@ -129,6 +135,7 @@ you =
     { piece = Swords.leviathan
     , uvs = []
     }
+  , shield = { piece = Shield.recon }
   , helmet = stockArmour
   , armour = stockArmour
   , trinkets = []
@@ -141,6 +148,7 @@ opponent =
     { piece = Swords.acheron
     , uvs = [WeaponUV (ASI, VeryHigh)]
     }
+  , shield = { piece = Shield.striker }
   , helmet = p2wSkolver
   , armour = p2wSkolver
   , trinkets = List.repeat 2 Trinket.penta

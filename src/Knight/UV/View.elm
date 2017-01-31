@@ -3,7 +3,7 @@ module Knight.UV.View exposing (weaponUvForm, armourUvForm, trinketForms)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
-import BaseTypes exposing (..)
+import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Trinket as Trinket
 import Util exposing (lIndex, atIndex, replace, remove)

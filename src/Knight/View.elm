@@ -2,7 +2,7 @@ module Knight.View exposing (form, stats)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import BaseTypes exposing (..)
+import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight
 import Knight.Swords exposing (swords)
@@ -12,6 +12,7 @@ import Knight.UV.View exposing (weaponUvForm, armourUvForm, trinketForms)
 
 form message knight =
   let
+    equipShield equip = message {knight | shield = equip}
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}
     equipWeapon equip = message {knight | weapon = equip}

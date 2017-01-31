@@ -1,6 +1,6 @@
 module Knight.Armour exposing (..)
 
-import BaseTypes exposing (..)
+import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 
 base =
