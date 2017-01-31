@@ -29,6 +29,14 @@ body {
   color: red;
 }
 
+.hearts.silver {
+  color: silver;
+}
+
+.hearts.gold {
+  color: gold;
+}
+
 .value {
   padding-left: 1em;
   min-width: 4em;

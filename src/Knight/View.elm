@@ -75,10 +75,26 @@ resistances knight =
     List.map resistance (Knight.resistances knight)
 
 health knight =
-  div [ class "row" ]
-    [ div [ class "hearts" ] [ String.repeat (Knight.hearts knight) "♥" |> text ]
-    , div [ class "value" ] [ Knight.health knight |> toText ]
-    ]
+  let
+    hearts = Knight.hearts knight
+    golds =
+      if hearts > 60 then hearts - 60
+      else 0
+    silvers =
+      if golds > 0 then 30 - golds
+      else if hearts > 30 then hearts - 30
+      else 0
+    reds =
+      if golds > 0 then 0
+      else if silvers > 0 then 30 - silvers
+      else hearts
+  in
+    div [ class "row" ]
+      [ div [ class "hearts gold" ] [ String.repeat golds "♥" |> text ]
+      , div [ class "hearts silver" ] [ String.repeat silvers "♥" |> text ]
+      , div [ class "hearts" ] [ String.repeat reds "♥" |> text ]
+      , div [ class "value" ] [ Knight.health knight |> toText ]
+      ]
 
 item label content =
   div [ class "item" ]
