@@ -1,11 +1,12 @@
-module Knight.UvForm exposing (weaponUvForm, armourUvForm)
+module Knight.UvForm exposing (weaponUvForm, armourUvForm, trinketForms)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import BaseTypes exposing (..)
+import Trinket
 import Util exposing (lIndex, atIndex, replace, remove)
-import View.Shortcuts exposing (selectListExclude, spacer)
+import View.Shortcuts exposing (selectList, selectListExclude, spacer)
 
 strengths = [Low, Medium, High, VeryHigh, Ultra, Maximum]
 
@@ -157,12 +158,37 @@ uvForms availableUvs uvStrengths message equipment =
           [ text "-" ]
         ]
   in
-    List.indexedMap uvForm uvs ++
-      ( if List.length uvs < 3 then
-        [ button
-          [ onClick addUv ]
-          [ text "+ UV" ]
-        ]
+    List.indexedMap uvForm uvs ++ (
+      if List.length uvs < 3 then
+        [ button [ onClick addUv ] [ text "+ UV" ] ]
       else
         []
-      )
+    )
+
+trinketForm swap remove index trinket =
+  let
+    label = "Trinket " ++ (toString <| index + 1)
+  in
+    div [ class "item slot" ]
+      [ Html.label [] [ text label ]
+      , selectList (swap index) Trinket.trinkets trinket
+      , spacer
+      , button [ onClick <| remove index ] [ text "-" ]
+      ]
+
+trinketForms message trinkets =
+  let
+    swapTrinket index trinket =
+      message <| replace trinkets index trinket
+    addTrinket =
+      message <| trinkets ++ [ Trinket.penta ]
+    removeTrinket index =
+      message <| remove index trinkets
+    form = trinketForm swapTrinket removeTrinket
+  in
+    List.indexedMap form trinkets ++ (
+      if List.length trinkets < 2 then
+        [ button [ onClick addTrinket ] [ text "+ Trinket" ] ]
+      else
+        []
+    )

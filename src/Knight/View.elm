@@ -7,7 +7,7 @@ import Knight
 import Swords exposing (swords)
 import Armour exposing (armours)
 import View.Shortcuts exposing (selectList, bar, toText)
-import Knight.UvForm exposing (weaponUvForm, armourUvForm)
+import Knight.UvForm exposing (weaponUvForm, armourUvForm, trinketForms)
 
 form message knight =
   let
@@ -17,11 +17,11 @@ form message knight =
     equipTrinkets equip = message {knight | trinkets = equip}
   in
     div []
-      [ h1 [] [ text knight.name ]
+      ([ h1 [] [ text knight.name ]
       , slot equipHelmet knight.helmet armours "Helmet" armourUvForm
       , slot equipArmour knight.armour armours "Armour" armourUvForm
       , slot equipWeapon knight.weapon swords  "Weapon" weaponUvForm
-      ] ++ trinketForm
+      ] ++ trinketForms equipTrinkets knight.trinkets)
 
 slot message equipment items title uvForm =
   let
@@ -75,7 +75,6 @@ health knight =
     [ div [ class "hearts" ] [ String.repeat (Knight.hearts knight) "♥" |> text ]
     , div [ class "value" ] [ Knight.health knight |> toText ]
     ]
-
 
 item label content =
   div [ class "item" ]

@@ -1,5 +1,4 @@
-h3 {
-  white-space: nowrap;
+h3 { white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -76,6 +75,10 @@ label {
 
 .spacer {
   flex: 1;
+}
+
+.trinket {
+  display: flex;
 }
 
 .Normal .bar-bg { background-color: #210000; }
