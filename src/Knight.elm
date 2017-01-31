@@ -4,6 +4,7 @@ import Types exposing (WeaponEquip, ArmourEquip)
 import Armour exposing (uvToDefence, uvToResistance)
 import Swords
 import Armour
+import Trinket
 import List exposing (filter, map, foldr)
 import Tuple exposing (first, second)
 
@@ -12,6 +13,7 @@ type alias Knight =
   , weapon: WeaponEquip
   , helmet: ArmourEquip
   , armour: ArmourEquip
+  , trinkets: List Trinket
   }
 
 hearts knight =
@@ -100,6 +102,7 @@ you =
     }
   , helmet = stockArmour
   , armour = stockArmour
+  , trinkets = []
   }
 
 opponent : Knight
@@ -110,4 +113,6 @@ opponent =
     , uvs = [WeaponUV (ASI, VeryHigh)]
     }
   , helmet = p2wSkolver
-  , armour = p2wSkolver }
+  , armour = p2wSkolver
+  , trinkets = List.repeat 2 Trinket.penta
+  }

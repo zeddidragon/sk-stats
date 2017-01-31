@@ -11,34 +11,27 @@ import Knight.UvForm exposing (weaponUvForm, armourUvForm)
 
 form message knight =
   let
-    helmet = knight.helmet
-    armour = knight.armour
-    weapon = knight.weapon
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}
     equipWeapon equip = message {knight | weapon = equip}
-    equipHPiece piece = equipHelmet {helmet | piece = piece}
-    equipAPiece piece = equipArmour {armour | piece = piece}
-    equipWPiece piece = equipWeapon {weapon | piece = piece}
-    equipHUv uvs = equipHelmet {helmet | uvs = uvs}
-    equipAUv uvs = equipArmour {armour | uvs = uvs}
-    equipWUv uvs = equipWeapon {weapon | uvs = uvs}
+    equipTrinkets equip = message {knight | trinkets = equip}
   in
     div []
       [ h1 [] [ text knight.name ]
-      , div [ class "slot" ]
-        ( [ selectList equipHPiece armours knight.helmet.piece |> item "Helmet" ]
-          ++ armourUvForm equipHUv knight.helmet
-        )
-      , div [ class "slot" ]
-        ( [ selectList equipAPiece armours knight.armour.piece |> item "Armour" ]
-          ++ armourUvForm equipAUv knight.armour
-        )
-      , div [ class "slot" ]
-        ( [ selectList equipWPiece  swords knight.weapon.piece |> item "Weapon" ]
-          ++ weaponUvForm equipWUv knight.weapon
-        )
-      ]
+      , slot equipHelmet knight.helmet armours "Helmet" armourUvForm
+      , slot equipArmour knight.armour armours "Armour" armourUvForm
+      , slot equipWeapon knight.weapon swords  "Weapon" weaponUvForm
+      ] ++ trinketForm
+
+slot message equipment items title uvForm =
+  let
+    equipPiece piece = message <| {equipment | piece = piece}
+    equipUv uvs = message <| {equipment | uvs = uvs}
+  in
+    div [ class "slot" ]
+      ( [ selectList equipPiece items equipment.piece |> item title ]
+        ++ uvForm equipUv equipment
+      )
 
 stats knight =
   List.concat
