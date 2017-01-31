@@ -1,7 +1,8 @@
 module BaseTypes exposing (..)
 
 type UV
-  = WeaponUV (Bonus, BonusStrength)
+  = Hearts Int
+  | WeaponUV (Bonus, BonusStrength)
   | StatusUV (Status, BonusStrength)
   | DefenceUV (DamageType, BonusStrength)
 
@@ -49,8 +50,12 @@ type alias Weapon =
 type alias Armour =
   { name: String
   , hearts: Int
-  , defences: List((DamageType, Float))
-  , resistances: List((Status, Float))
-  , bonuses: List((Bonus, BonusStrength))
+  , defences: List (DamageType, Float)
+  , resistances: List (Status, Float)
+  , bonuses: List (Bonus, BonusStrength)
   }
 
+type alias Trinket =
+  { name: String
+  , effects: List UV
+  }

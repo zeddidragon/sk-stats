@@ -5,7 +5,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import BaseTypes exposing (..)
 import Util exposing (lIndex, atIndex, replace, remove)
-import View.Shortcuts exposing (selectListExclude)
+import View.Shortcuts exposing (selectListExclude, spacer)
+
+strengths = [Low, Medium, High, VeryHigh, Ultra, Maximum]
 
 weaponUvForm = uvForms
   composedWeaponUvs
@@ -57,11 +59,13 @@ uvName equip =
     WeaponUV  (bonus, strength)-> toString bonus
     DefenceUV (dType, strength)-> toString dType
     StatusUV (status, strength)-> toString status
+    Hearts num -> "HP"
 uvStrength equip =
   case equip of
     WeaponUV  (bonus, strength) -> strength
     DefenceUV (dType, strength) -> strength
     StatusUV (status, strength) -> strength
+    Hearts num -> atIndex (num - 1) strengths |> Maybe.withDefault Low
 
 uvForms availableUvs uvStrengths message equipment =
   let
@@ -106,6 +110,11 @@ uvForms availableUvs uvStrengths message equipment =
             WeaponUV (bonus, str) -> WeaponUV (bonus, strength)
             DefenceUV (bonus, str) -> DefenceUV (bonus, strength)
             StatusUV (bonus, str) -> StatusUV (bonus, strength)
+            Hearts num ->
+              lIndex strength strengths
+                |> Maybe.withDefault 0
+                |> (+) 1
+                |> Hearts
       in
         message <| replace uvs index uv
     addUv =
@@ -128,6 +137,7 @@ uvForms availableUvs uvStrengths message equipment =
           (swapType equip index)
           (uvNames |> List.map asName)
           (equip |> uvName |> asName)
+        , spacer
         , Html.label [] [ equip |> uvStrength |> toString |> text ]
         , input
           [ type_ "range"
@@ -141,7 +151,7 @@ uvForms availableUvs uvStrengths message equipment =
             |> toString
             |> value
           ] []
-        , div [ class "spacer" ] []
+        , spacer
         , button
           [ onClick <| removeUv index ]
           [ text "-" ]

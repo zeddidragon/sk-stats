@@ -41,3 +41,5 @@ bar color value max =
     ]
 
 toText arg = arg |> toString |> text
+
+spacer = div [ class "spacer" ] []
