@@ -3,36 +3,6 @@ module Armour exposing (..)
 import BaseTypes exposing (..)
 import UV exposing (..)
 
-uvMax = 25.6
-
-defences =
-  { base = 125 / 2
-  , class = 142 / 2
-  , special = 150 / 2
-  , plate = 200 / 2
-  , ancient = 300 / 2
-  , uvLow = uvMax  * 1 / 4
-  , uvMed = uvMax  * 2 / 4
-  , uvHigh = uvMax * 3 / 4
-  , uvMax = uvMax
-  }
-
-uvToDefence strength =
-  case strength of
-    Low -> defences.uvLow
-    Medium -> defences.uvMed
-    High -> defences.uvHigh
-    Maximum -> defences.uvMax
-    _ -> 0
-
-uvToResistance strength =
-  case strength of
-    Low -> 1
-    Medium -> 2
-    High -> 3
-    Maximum -> 4
-    _ -> 0
-
 base =
   { hearts = 5
   , name = "Base Armour"

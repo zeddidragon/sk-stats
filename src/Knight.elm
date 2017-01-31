@@ -2,7 +2,6 @@ module Knight exposing (..)
 import BaseTypes exposing (..)
 import UV exposing (..)
 import Types exposing (WeaponEquip, ArmourEquip)
-import Armour exposing (uvToDefence, uvToResistance)
 import Swords
 import Armour
 import Trinket
@@ -32,23 +31,32 @@ secondTo x y = (x, y)
 
 toDefence uv =
   case uv of
-    DefenceUV (dType, strength) -> (dType, Armour.uvToDefence strength)
+    DefenceUV (dType, strength) -> (dType, UV.toDefence strength)
     _ -> (Normal, 0)
 
 toDefences uvs = List.map toDefence uvs
 
 toResistance uv =
   case uv of
-    StatusUV (status, strength) -> (status, Armour.uvToResistance strength)
+    StatusUV (status, strength) -> (status, UV.toResistance strength)
     _ -> (Fire, 0)
 
 toResistances uvs = List.map toResistance uvs
 
 defences knight =
   let
-    defs
-      =  knight.helmet.piece.defences ++ knight.armour.piece.defences
-      ++ (knight.helmet.uvs ++ knight.armour.uvs |> toDefences)
+    uvs =
+      List.concat
+        [ knight.helmet.uvs
+        , knight.armour.uvs
+        , Trinket.effects knight.trinkets
+        ]
+    defs =
+      List.concat
+        [ knight.helmet.piece.defences
+        , knight.armour.piece.defences
+        , toDefences uvs
+        ]
     total dtype
       = defs
       |> filter (isType dtype)
@@ -62,9 +70,18 @@ defences knight =
 
 resistances knight =
   let
-    resistances
-      = knight.helmet.piece.resistances ++ knight.armour.piece.resistances
-      ++ (knight.helmet.uvs ++ knight.armour.uvs |> toResistances)
+    uvs =
+      List.concat
+        [ knight.helmet.uvs
+        , knight.armour.uvs
+        , Trinket.effects knight.trinkets
+        ]
+    resistances =
+      List.concat
+        [ knight.helmet.piece.resistances
+        , knight.armour.piece.resistances
+        , toResistances uvs
+        ]
     total status
       = resistances
       |> filter (isType status)
@@ -77,7 +94,6 @@ resistances knight =
       |> filter nonZero
 
 maxDefence = 350
-maxResistance = 16
 
 stockArmour : ArmourEquip
 stockArmour =

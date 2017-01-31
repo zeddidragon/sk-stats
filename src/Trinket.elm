@@ -1,23 +1,19 @@
 module Trinket exposing (..)
 
-import Armour exposing (defences)
 import BaseTypes exposing (..)
 import UV exposing (..)
 
 hearts trinkets =
   let
-    toHeart effect =
-      case effect of
-        DefenceUV (dType, str)-> 0
-        StatusUV (status, str)-> 0
-        WeaponUV (bonus, str)-> 0
-        Hearts n -> n
     toHearts trinket =
-      List.map toHeart trinket.effects
+      List.map UV.toHearts trinket.effects
   in
     trinkets
       |> List.concatMap toHearts
       |> List.sum
+
+effects trinkets =
+  List.concatMap .effects trinkets
 
 jelly =
   { name = "Royal Jelly Band"
