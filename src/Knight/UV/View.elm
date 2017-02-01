@@ -78,15 +78,15 @@ uvForms availableUvs uvStrengths message equipment =
       let
         bonus
           = weaponUvs
-          |> List.filter (\bType -> option.name == (toString bType))
+          |> List.filter (\bType -> option == toString bType)
           |> List.head
         defence
           = defenceUvs
-          |> List.filter (\dType -> option.name == (toString dType))
+          |> List.filter (\dType -> option == toString dType)
           |> List.head
         status
           = statusUvs
-          |> List.filter (\sType -> option.name == (toString sType))
+          |> List.filter (\sType -> option == toString sType)
           |> List.head
         uv =
           case bonus of
@@ -135,10 +135,11 @@ uvForms availableUvs uvStrengths message equipment =
       div [ class "item sub" ]
         [ Html.label [] [ "UV" ++ (index + 1 |> toString) |> text ]
         , selectListExclude
-          (uvs |> List.map uvName |> List.map asName)
+          (uvs |> List.map uvName)
+          identity
           (swapType equip index)
-          (uvNames |> List.map asName)
-          (equip |> uvName |> asName)
+          uvNames
+          (equip |> uvName)
         , spacer
         , Html.label [] [ equip |> uvStrength |> toString |> text ]
         , input
@@ -172,7 +173,7 @@ trinketForm swap remove index trinket =
   in
     div [ class "item slot" ]
       [ Html.label [] [ text label ]
-      , selectList (swap index) Trinket.trinkets trinket
+      , selectList .name (swap index) Trinket.trinkets trinket
       , spacer
       , button [ onClick <| remove index ] [ text "-" ]
       ]

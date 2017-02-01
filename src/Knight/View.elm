@@ -36,7 +36,7 @@ slot message equipment items title uvForm =
     equipUv uvs = message <| {equipment | uvs = uvs}
   in
     div [ class "slot" ]
-      ( [ selectList equipPiece items equipment.piece |> item title ]
+      ( [ selectList .name equipPiece items equipment.piece |> item title ]
         ++ uvForm equipUv equipment
       )
 

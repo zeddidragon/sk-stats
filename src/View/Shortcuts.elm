@@ -4,29 +4,29 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (on, targetValue)
 import Json.Decode
 
-signal message things current name =
-  case List.head (List.filter (\t -> t.name == name) things) of
+signal message label things current selected =
+  case List.head (List.filter (\t -> label t == selected) things) of
     Just thing -> message thing
     Nothing -> message current
 
-selectListExclude exclude message things current =
+selectListExclude : List a -> (a -> String) -> (a -> b) -> List a -> a -> Html b
+selectListExclude exclude label message things current =
   let
-    selectThing = signal message things current
+    selectThing = signal message label things current
   in
     select
       [ on "change" (Json.Decode.map selectThing targetValue) ]
-      (List.map (selectOption exclude current) things)
+      (List.map (selectOption exclude label current) things)
 
-selectOption excluded current thing =
+selectOption excluded label current thing =
   let
-    label = thing.name
-    isDisabled = List.any (\t -> thing.name == t.name) excluded
+    isDisabled = List.any (\t -> label thing == label t) excluded
   in
     option
-      [ current.name == thing.name |> selected
-      , current.name /= thing.name && isDisabled |> disabled
-      , value label
-      ] [text label]
+      [ label current == label thing |> selected
+      , label current /= label thing && isDisabled |> disabled
+      , value <| label thing
+      ] [text <| label thing]
 
 selectList = selectListExclude []
 
