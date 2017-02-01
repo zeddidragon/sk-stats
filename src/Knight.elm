@@ -34,6 +34,7 @@ type alias ShieldEquip =
   , uvs: List(UV)
   }
 
+hearts : Knight -> Int
 hearts knight =
   5
   + knight.helmet.piece.hearts
@@ -41,6 +42,7 @@ hearts knight =
   + (List.sum <| List.map UV.toHearts knight.shield.piece.effects)
   + Trinket.hearts knight.trinkets
 
+health : Knight -> Int
 health knight = 40 * hearts knight
 
 sum = foldr (+) 0
@@ -48,20 +50,25 @@ isType x y = x == first y
 nonZero x = 0 /= second x
 secondTo x y = (x, y)
 
+toDefence : UV -> (DamageType, Float)
 toDefence uv =
   case uv of
     DefenceUV (dType, strength) -> (dType, UV.toDefence strength)
     _ -> (Normal, 0)
 
+toDefences : List UV -> List (DamageType, Float)
 toDefences uvs = List.map toDefence uvs
 
+toResistance : UV -> (Status, Float)
 toResistance uv =
   case uv of
     StatusUV (status, strength) -> (status, UV.toResistance strength)
     _ -> (Fire, 0)
 
+toResistances : List UV -> List (Status, Float)
 toResistances uvs = List.map toResistance uvs
 
+defences : Knight -> List (DamageType, Float)
 defences knight =
   let
     uvs =
@@ -87,6 +94,7 @@ defences knight =
       |> map total
       |> filter nonZero
 
+resistances : Knight -> List (Status, Float)
 resistances knight =
   let
     uvs =
@@ -112,8 +120,6 @@ resistances knight =
     [Fire, Freeze, Shock, Poison, Stun, Curse]
       |> map total
       |> filter nonZero
-
-maxDefence = 350
 
 stockArmour : ArmourEquip
 stockArmour =

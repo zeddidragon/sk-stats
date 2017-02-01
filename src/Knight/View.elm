@@ -48,14 +48,16 @@ stats knight =
     , [ divisor ]
     , resistances knight
     , [ divisor ]
+    , attacks knight
     ]
   |> div [ class "knight-stats" ]
 
 defences knight =
   let
+    maxDefence = 350
     defence (dtype, amount) =
       item (toString dtype) (div [ class "graphic" ]
-        [ bar (toString dtype) amount Knight.maxDefence
+        [ bar (toString dtype) amount maxDefence
         , div [ class "value" ] [ toText amount ]
         ])
   in
@@ -79,6 +81,8 @@ resistances knight =
         ])
   in
     List.map resistance (Knight.resistances knight)
+ 
+attacks knight = []
 
 health knight =
   let
