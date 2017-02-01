@@ -35,22 +35,29 @@ attacks =
   , fangCharge = 897 / 1.24
   }
 
-leviathan =
-  { name = "Leviathan Blade"
+sword =
+  { weaponType = Sword
+  , name = "Stock Sword" 
   , damageType = Normal
   , split = False
   , status = None
+  , attacks = []
+  }
+
+leviathan =
+  { sword
+  | name = "Leviathan Blade"
   , attacks =
     [ (Basic, attacks.sword)
     , (Heavy, attacks.swordFinish)
     , (Charge, attacks.swordCharge)
     ]
   }
+
 flourish =
-  { name = "Final Flourish"
+  { sword
+  | name = "Final Flourish"
   , damageType = Piercing
-  , split = False
-  , status = None
   , attacks =
     [ (Basic, attacks.sword)
     , (Heavy, attacks.swordFinish)
@@ -58,11 +65,11 @@ flourish =
     , (Special, attacks.swordChargeFinish)
     ]
   }
+
 btb =
-  { name = "Barbarous Thorn Blade"
+  { sword
+  | name = "Barbarous Thorn Blade"
   , damageType = Piercing
-  , split = False
-  , status = None
   , attacks =
     [ (Basic, attacks.sword)
     , (Heavy, attacks.swordFinish)
@@ -70,27 +77,29 @@ btb =
     , (Special, attacks.swordSpecial)
     ]
   }
+
 rigadoon =
-  { name = "Fearless Rigadoon"
+  { sword
+  | name = "Fearless Rigadoon"
   , damageType = Piercing
-  , split = False
   , status = Stun
   , attacks =
-    [ (Basic, attacks.sword)
-    , (Heavy, attacks.swordFinish)
-    , (Charge, attacks.swordCharge)
-    , (Special, attacks.swordSpecial)
+    [ (Basic, attacks.swordLight)
+    , (Heavy, attacks.swordLightFinish)
+    , (Charge, attacks.swordLightCharge)
+    , (Special, attacks.swordLightChargeFinish)
     ]
   }
+
 flamberge =
   { rigadoon
   | name = "Furious Flamberge"
   , status = Fire
   }
+
 suda =
-  { name = "Sudaruska"
-  , damageType = Normal
-  , split = False
+  { sword
+  | name = "Sudaruska"
   , status = Stun
   , attacks =
     [ (Basic, attacks.swordHeavy)
@@ -99,16 +108,17 @@ suda =
     , (Special, attacks.swordHeavyChargeFinish)
     ]
   }
+
 triglav =
   { suda
   | name = "Triglav"
   , status = Freeze
   }
+
 hammer = 
-  { name = "Warmaster Rocket Hammer"
+  { sword
+  | name = "Warmaster Rocket Hammer"
   , damageType = Elemental
-  , split = False
-  , status = None
   , attacks =
     [ (Basic, attacks.swordHeavy)
     , (Special, attacks.swordLight)
@@ -116,8 +126,10 @@ hammer =
     , (Charge, attacks.swordHeavyChargeFinish)
     ]
   }
+
 combuster =
-  { name = "Combuster"
+  { sword
+  | name = "Combuster"
   , damageType = Elemental
   , split = True
   , status = Fire
@@ -128,18 +140,22 @@ combuster =
     , (Special, attacks.brandishSpecial)
     ]
   }
+
 glacius =
   { combuster
   | name = "Glacius"
   , status = Freeze
   }
+
 voltedge =
   { combuster
   | name = "Voltedge"
   , status = Shock
   }
+
 acheron =
-  { name = "Acheron"
+  { sword
+  | name = "Acheron"
   , damageType = Shadow
   , split = True
   , status = None
@@ -150,18 +166,22 @@ acheron =
     , (Special, attacks.brandishHeavySpecial)
     ]
   }
+
 avenger =
   { acheron
   | name = "Divine Avenger"
   , damageType = Elemental
   }
+
 faust =
   { acheron
   | name = "Gran Faust"
   , status = Curse
   }
+
 fang =
-  { name = "Fang of Vog"
+  { sword
+  | name = "Fang of Vog"
   , damageType = Elemental
   , split = True
   , status = Fire

@@ -59,15 +59,6 @@ toDefence uv =
 toDefences : List UV -> List (DamageType, Float)
 toDefences uvs = List.map toDefence uvs
 
-toResistance : UV -> (Status, Float)
-toResistance uv =
-  case uv of
-    StatusUV (status, strength) -> (status, UV.toResistance strength)
-    _ -> (Fire, 0)
-
-toResistances : List UV -> List (Status, Float)
-toResistances uvs = List.map toResistance uvs
-
 defences : Knight -> List (DamageType, Float)
 defences knight =
   let
@@ -93,6 +84,15 @@ defences knight =
     [Normal, Piercing, Elemental, Shadow]
       |> map total
       |> filter nonZero
+
+toResistance : UV -> (Status, Float)
+toResistance uv =
+  case uv of
+    StatusUV (status, strength) -> (status, UV.toResistance strength)
+    _ -> (Fire, 0)
+
+toResistances : List UV -> List (Status, Float)
+toResistances uvs = List.map toResistance uvs
 
 resistances : Knight -> List (Status, Float)
 resistances knight =

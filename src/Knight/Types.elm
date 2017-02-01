@@ -2,8 +2,11 @@ module Knight.Types exposing (..)
 
 import Knight.UV exposing (..)
 
+type WeaponType = Sword | Gun | Bomb
+
 type alias Weapon =
   { name: String
+  , weaponType: WeaponType
   , damageType: DamageType
   , split: Bool
   , status: Status
