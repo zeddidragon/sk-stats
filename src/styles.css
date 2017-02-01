@@ -75,6 +75,7 @@ label {
 .bar-container {
   position: relative;
   flex: 1;
+  height: 1em;
 }
 
 .bar-bg {
@@ -102,6 +103,10 @@ label {
 
 .trinket {
   display: flex;
+}
+
+.splitbar {
+  flex: 1;
 }
 
 .Normal .bar-bg { background-color: #210000; }

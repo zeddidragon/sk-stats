@@ -57,8 +57,8 @@ defences knight =
     maxDefence = 350
     defence (dtype, amount) =
       item (toString dtype) (div [ class "graphic" ]
-        [ bar (toString dtype) amount maxDefence
-        , div [ class "value" ] [ toText amount ]
+        [ bar maxDefence (toString dtype) amount
+        , div [ class "value" ] [ toText <| round amount ]
         ])
   in
     Knight.defences knight |> List.map defence
@@ -80,9 +80,27 @@ resistances knight =
         , div [ class "value" ] [ toText amount ]
         ])
   in
-    List.map resistance (Knight.resistances knight)
+    Knight.resistances knight |> List.map resistance
  
-attacks knight = []
+attacks knight =
+  let
+    piece = knight.weapon.piece
+    maxDamage = 715
+    bar dType = View.Shortcuts.bar maxDamage (toString dType)
+    singlebar damage = bar piece.damageType damage
+    splitbar damage =
+      div [ class "splitbar" ]
+        [ bar piece.damageType <| damage / 2
+        , bar Normal <| damage / 2
+        ]
+    attack (stage, damage) =
+      item (toString stage) (div [ class "graphic" ]
+        [ if piece.split then splitbar damage else singlebar damage
+        , div [ class "value" ] [ toText <| round damage ]
+        ]
+      )
+  in
+    Knight.attacks knight |> List.map attack
 
 health knight =
   let

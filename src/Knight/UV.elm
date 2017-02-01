@@ -92,8 +92,8 @@ toHearts effect =
 
 toBonus strength =
   let
-    bonus = lIndex strength strengths |> Maybe.withDefault 0
-    penalty = lIndex strength penalties |> Maybe.withDefault 0
+    bonus = lIndex strength strengths |> Maybe.withDefault -1 |> (+) 1
+    penalty = lIndex strength penalties |> Maybe.withDefault -1 |> (+) 1
   in
     bonus - penalty
 

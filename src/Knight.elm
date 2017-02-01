@@ -121,8 +121,8 @@ toDamageBoost uv =
     WeaponUV (bonus, strength) -> (bonus, UV.toDamageBonus strength)
     _ -> (Dmg, 0)
 
-damages : Knight -> List (Stage, Float)
-damages knight =
+attacks : Knight -> List (Stage, Float)
+attacks knight =
   let
     uvs =
       List.map toDamageBoost <| List.concat
@@ -140,6 +140,7 @@ damages knight =
       |> filter (\(b, strength) -> b == bonus || b == Dmg)
       |> map second
       |> sum
+      |> Basics.min 24
     bonusType =
       case knight.weapon.piece.weaponType of
         Sword -> SwordDmg

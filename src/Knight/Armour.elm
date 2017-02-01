@@ -145,7 +145,7 @@ kat =
     ]
   , bonuses =
     [ (Dmg, High)
-    , (MSI, High)
+    , (MSI, Low)
     ]
   }
 

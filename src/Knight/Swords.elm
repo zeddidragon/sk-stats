@@ -27,7 +27,7 @@ attacks =
 
   , brandishHeavy = 656 / 1.24
   , brandishHeavyFinish = 774 / 1.24
-  , brandishHeavyCharge = 1.24 / 1.24
+  , brandishHeavyCharge = 1040 / 1.24
   , brandishHeavySpecial = 480 / 1.24
 
   , fang = 566 / 1.24

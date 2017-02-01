@@ -30,7 +30,7 @@ selectOption excluded current thing =
 
 selectList = selectListExclude []
 
-bar color value max =
+bar max color value =
   div [ class ("bar-container " ++ color) ]
     [ div [ class "bar-bg" ] []
     , div
