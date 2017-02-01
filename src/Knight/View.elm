@@ -19,12 +19,15 @@ form message knight =
     equipWeapon equip = message {knight | weapon = equip}
     equipTrinkets equip = message {knight | trinkets = equip}
   in
-    div []
+    div [ class "knight-form" ]
       ([ h1 [] [ text knight.name ]
       , slot equipShield knight.shield shields "Shield" UvForm.armourForm
+      , divisor
       , slot equipHelmet knight.helmet armours "Helmet" UvForm.armourForm
       , slot equipArmour knight.armour armours "Armour" UvForm.armourForm
+      , divisor
       , slot equipWeapon knight.weapon swords  "Weapon" UvForm.weaponForm
+      , divisor
       ] ++ UvForm.trinketForms equipTrinkets knight.trinkets)
 
 slot message equipment items title uvForm =
@@ -40,10 +43,13 @@ slot message equipment items title uvForm =
 stats knight =
   List.concat
     [ [ item "Health" (health knight) ]
+    , [ divisor ]
     , defences knight
+    , [ divisor ]
     , resistances knight
+    , [ divisor ]
     ]
-  |> div []
+  |> div [ class "knight-stats" ]
 
 defences knight =
   let
@@ -102,3 +108,5 @@ item label content =
     , content
     ]
 
+divisor =
+  div [ class "divisor" ] []

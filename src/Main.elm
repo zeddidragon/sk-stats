@@ -29,10 +29,6 @@ view model =
         [ Knight.View.form EquipYou model.you
         , Knight.View.stats model.you
         ]
-      , div [class "knight"]
-        [ Knight.View.form EquipOpponent model.opponent
-        , Knight.View.stats model.opponent
-        ]
       ]
     ]
 
