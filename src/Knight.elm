@@ -56,9 +56,6 @@ toDefence uv =
     DefenceUV (dType, strength) -> (dType, UV.toDefence strength)
     _ -> (Normal, 0)
 
-toDefences : List UV -> List (DamageType, Float)
-toDefences uvs = List.map toDefence uvs
-
 defences : Knight -> List (DamageType, Float)
 defences knight =
   let
@@ -72,7 +69,7 @@ defences knight =
       List.concat
         [ knight.helmet.piece.defences
         , knight.armour.piece.defences
-        , toDefences uvs
+        , List.map toDefence uvs
         ]
     total dtype
       = defs
@@ -91,9 +88,6 @@ toResistance uv =
     StatusUV (status, strength) -> (status, UV.toResistance strength)
     _ -> (Fire, 0)
 
-toResistances : List UV -> List (Status, Float)
-toResistances uvs = List.map toResistance uvs
-
 resistances : Knight -> List (Status, Float)
 resistances knight =
   let
@@ -108,7 +102,7 @@ resistances knight =
       List.concat
         [ knight.helmet.piece.resistances
         , knight.armour.piece.resistances
-        , toResistances uvs
+        , List.map toResistance uvs
         ]
     total status
       = resistances
@@ -120,6 +114,42 @@ resistances knight =
     [Fire, Freeze, Shock, Poison, Stun, Curse]
       |> map total
       |> filter nonZero
+
+toDamageBoost : UV -> (Bonus, Int)
+toDamageBoost uv =
+  case uv of
+    WeaponUV (bonus, strength) -> (bonus, UV.toDamageBonus strength)
+    _ -> (Dmg, 0)
+
+damages : Knight -> List (Stage, Float)
+damages knight =
+  let
+    uvs =
+      List.map toDamageBoost <| List.concat
+        [ knight.shield.piece.effects
+        , Trinket.effects knight.trinkets
+        ]
+    bonuses =
+      List.map toIntBoost <| List.concat
+        [ knight.helmet.piece.bonuses
+        , knight.armour.piece.bonuses
+        ]
+    toIntBoost (bonus, strength) = (bonus, UV.toDamageBonus strength)
+    total bonus
+      = uvs ++ bonuses
+      |> filter (\(b, strength) -> b == bonus || b == Dmg)
+      |> map second
+      |> sum
+    bonusType =
+      case knight.weapon.piece.weaponType of
+        Sword -> SwordDmg
+        Gun -> GunDmg
+        Bomb -> BombDmg
+    boosted damage =
+      damage * toFloat(100 + total bonusType) / 100
+    boost (attack, damage) = (attack, boosted damage)
+  in
+    List.map boost knight.weapon.piece.attacks
 
 stockArmour : ArmourEquip
 stockArmour =

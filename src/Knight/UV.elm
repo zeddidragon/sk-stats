@@ -113,3 +113,5 @@ toResistance strength =
     Maximum -> 4
     _ -> 0
 
+toDamageBonus strength = 4 * toBonus strength
+
