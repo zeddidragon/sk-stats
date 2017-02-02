@@ -121,9 +121,10 @@ toDamageBoost uv =
     WeaponUV (bonus, strength) -> (bonus, UV.toDamageBonus strength)
     _ -> (Dmg, 0)
 
-attacks : Knight -> List (Stage, Float)
+attacks : Knight -> List ((Stage, Float), Maybe (Int, Int))
 attacks knight =
   let
+    weapon = knight.weapon.piece
     uvs =
       List.map toDamageBoost <| List.concat
         [ knight.shield.piece.effects
@@ -142,19 +143,32 @@ attacks knight =
       |> sum
       |> Basics.min 24
     bonusType =
-      case knight.weapon.piece.weaponType of
+      case weapon.weaponType of
         Sword -> SwordDmg
         Gun -> GunDmg
         Bomb -> BombDmg
     boosted damage =
       damage * toFloat(100 + total bonusType) / 100
-    boost (attack, damage) = (attack, boosted damage)
+    boost (attack, damage) =
+      let
+        isStage stage (s, chance, strength) = stage == s
+        toStatusValues infliction =
+          case infliction of
+            Just (stage, chance, strength) ->
+              Just (statusChance chance, statusStrength strength)
+            _ -> Nothing
+        infliction = weapon.inflictions
+          |> List.filter (isStage attack)
+          |> List.head
+          |> toStatusValues
+      in
+        ((attack, boosted damage), infliction)
   in
-    List.map boost knight.weapon.piece.attacks
+    List.map boost weapon.attacks
 
 stockArmour : ArmourEquip
 stockArmour =
-  { piece = Armour.cobalt
+  { piece = Armour.ironmight
   , uvs = []
   }
 
@@ -172,11 +186,11 @@ you : Knight
 you =
   { name = "You"
   , weapon =
-    { piece = Swords.leviathan
+    { piece = Swords.triglav
     , uvs = []
     }
   , shield =
-    { piece = Shield.recon
+    { piece = Shield.guardian
     , uvs = []
     }
   , helmet = stockArmour

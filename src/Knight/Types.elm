@@ -33,3 +33,16 @@ type alias Trinket =
   { name: String
   , effects: List UV
   }
+
+statusChance chance =
+  case chance of
+    Slight -> 15
+    Fair -> 30
+    Good -> 45
+
+statusStrength strength =
+  case strength of
+    Minor -> 0
+    Moderate -> 2
+    Strong -> 4
+

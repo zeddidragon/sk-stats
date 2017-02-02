@@ -93,7 +93,7 @@ attacks knight =
         [ bar piece.damageType <| damage / 2
         , bar Normal <| damage / 2
         ]
-    attack (stage, damage) =
+    attack ((stage, damage), infliction) =
       item (toString stage) (div [ class "graphic" ]
         [ if piece.split then splitbar damage else singlebar damage
         , div [ class "value" ] [ toText <| round damage ]
