@@ -101,6 +101,8 @@ attacks knight =
       case piece.status of
         Just status -> status
         Nothing -> Fire
+    value label =
+      div [ class "value" ] [ text label ]
     status infliction =
       case infliction of
         Just (chance, strength) ->
@@ -116,12 +118,18 @@ attacks knight =
         Nothing -> []
     attack ((stage, damage), infliction) =
       item (toString stage) (div [ class "graphic" ]
-        [ if piece.split then
-            splitbar damage infliction
+        ( if piece.split then
+            [ splitbar damage infliction
+            , div [class "value"]
+              [ value <| (toString (round (damage / 2))) ++ " +"
+              , value <| toString <| round (damage / 2)
+              ]
+            ]
           else
-            singlebar damage infliction
-        , div [ class "value" ] [ toText <| round damage ]
-        ]
+            [ singlebar damage infliction
+            , value <| toString <| round damage
+            ]
+        )
       )
   in
     Knight.attacks knight |> List.map attack
