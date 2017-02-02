@@ -9,6 +9,11 @@ h3 {
   flex: 1;
 }
 
+@media (max-width: 800px) {
+  .knight {
+    flex-direction: column;
+  }
+}
 .knight-form {
   flex: 1;
 }
@@ -137,4 +142,23 @@ label {
 .Poison .pip { background-color: #218221; }
 .Stun .pip { background-color: #fafa82; }
 .Curse .pip { background-color: #822182; }
+
+.status-blurb .status {
+  font-weight: bold;
+}
+
+.status-blurb .chance {
+  padding: 0.5em;
+}
+
+.status-blurb .strength {
+  padding: 0.5em;
+}
+
+.status.Fire { color: #fa8221; }
+.status.Freeze { color: #fafafa; }
+.status.Shock { color: #8282fa; }
+.status.Poison { color: #218221; }
+.status.Stun { color: #fafa82; }
+.status.Curse { color: #822182; }
 
