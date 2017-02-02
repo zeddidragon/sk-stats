@@ -9,6 +9,11 @@ h3 {
   flex: 1;
 }
 
+@media (max-width: 800px) {
+  .knight {
+    flex-direction: column;
+  }
+}
 .knight-form {
   flex: 1;
 }
