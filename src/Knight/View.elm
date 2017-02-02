@@ -66,6 +66,7 @@ defences knight =
 resistances knight =
   let
     pip = div [ class "pip" ] []
+    sign amount = if amount > 0 then "+" else ""
     pips status amount =
       let
         n = truncate amount
@@ -77,7 +78,7 @@ resistances knight =
     resistance (status, amount) =
       item (toString status) (div [ class "graphic" ]
         [ pips status amount
-        , div [ class "value" ] [ toText amount ]
+        , div [ class "value" ] [ sign amount ++ toString amount |> text ]
         ])
   in
     Knight.resistances knight |> List.map resistance
@@ -87,15 +88,38 @@ attacks knight =
     piece = knight.weapon.piece
     maxDamage = 715
     bar dType = View.Shortcuts.bar maxDamage (toString dType)
-    singlebar damage = bar piece.damageType damage
-    splitbar damage =
-      div [ class "splitbar" ]
+    singlebar damage infliction =
+      div [ class "splitbar"]
+        ([ bar piece.damageType damage ] ++ status infliction)
+    splitbar damage infliction =
+      div [ class "splitbar" ] (
         [ bar piece.damageType <| damage / 2
         , bar Normal <| damage / 2
-        ]
+        ] ++ status infliction
+      )
+    actualStatus =
+      case piece.status of
+        Just status -> status
+        Nothing -> Fire
+    status infliction =
+      case infliction of
+        Just (chance, strength) ->
+          [
+            div [ class "status-blurb" ]
+              [ span [ class "chance" ] [ (toString chance) ++ "%" |> text]
+              , span [] [ text "chance of" ]
+              , span [ class "strength" ] [ "+" ++ (toString strength) |> text ]
+              , span [ class ("status " ++ (toString actualStatus)) ]
+                [ toString actualStatus |> text ]
+              ]
+          ]
+        Nothing -> []
     attack ((stage, damage), infliction) =
       item (toString stage) (div [ class "graphic" ]
-        [ if piece.split then splitbar damage else singlebar damage
+        [ if piece.split then
+            splitbar damage infliction
+          else
+            singlebar damage infliction
         , div [ class "value" ] [ toText <| round damage ]
         ]
       )

@@ -168,7 +168,7 @@ attacks knight =
 
 stockArmour : ArmourEquip
 stockArmour =
-  { piece = Armour.ironmight
+  { piece = Armour.cobalt
   , uvs = []
   }
 
@@ -186,11 +186,11 @@ you : Knight
 you =
   { name = "You"
   , weapon =
-    { piece = Swords.triglav
+    { piece = Swords.leviathan
     , uvs = []
     }
   , shield =
-    { piece = Shield.guardian
+    { piece = Shield.striker
     , uvs = []
     }
   , helmet = stockArmour

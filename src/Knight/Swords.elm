@@ -168,7 +168,9 @@ combuster =
     , (Special, attacks.brandishSpecial)
     ]
   , inflictions =
-    [ (Charge, Good, Strong) ]
+    [ (Charge, Good, Strong)
+    , (Special, Good, Strong)
+    ]
   }
 
 glacius : Weapon
@@ -231,8 +233,8 @@ fang =
     , (Charge, attacks.fangCharge)
     ]
   , inflictions =
-    [ (Basic, Fair, Moderate)
-    , (Heavy, Fair, Moderate)
+    [ (Basic, Slight, Moderate)
+    , (Heavy, Slight, Moderate)
     , (Charge, Good, Strong)
     ]
   }
