@@ -97,7 +97,7 @@ uvForms availableUvs uvStrengths message equipment =
             Nothing ->
           case status of
             Just thing -> StatusUV (thing, uvStrength equip)
-            Nothing -> StatusUV (None, Low)
+            Nothing -> StatusUV (Fire, Low)
       in
         message <| replace uvs index uv
     swapStrength equip index value =
@@ -126,7 +126,7 @@ uvForms availableUvs uvStrengths message equipment =
           availableUvs
             |> List.filter (\uv -> List.member (uvName uv) excluded |> not)
             |> List.head
-            |> Maybe.withDefault( StatusUV (None, Low) )
+            |> Maybe.withDefault( StatusUV (Fire, NegMaximum) )
       in
         message <| uvs ++ [ uv ]
     removeUv index =

@@ -3,14 +3,17 @@ module Knight.Types exposing (..)
 import Knight.UV exposing (..)
 
 type WeaponType = Sword | Gun | Bomb
+type StatusChance = Slight | Fair | Good
+type StatusStrength = Minor | Moderate | Strong
 
 type alias Weapon =
   { name: String
   , weaponType: WeaponType
   , damageType: DamageType
   , split: Bool
-  , status: Status
-  , attacks: List((Stage, Float))
+  , status: Maybe Status
+  , attacks: List (Stage, Float)
+  , inflictions: List (Stage, StatusChance, StatusStrength)
   }
 
 type alias Armour =

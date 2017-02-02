@@ -35,15 +35,18 @@ attacks =
   , fangCharge = 897 / 1.24
   }
 
+sword : Weapon
 sword =
   { weaponType = Sword
   , name = "Stock Sword" 
   , damageType = Normal
   , split = False
-  , status = None
+  , status = Nothing
   , attacks = []
+  , inflictions = []
   }
 
+leviathan : Weapon
 leviathan =
   { sword
   | name = "Leviathan Blade"
@@ -54,6 +57,7 @@ leviathan =
     ]
   }
 
+flourish : Weapon
 flourish =
   { sword
   | name = "Final Flourish"
@@ -66,6 +70,7 @@ flourish =
     ]
   }
 
+btb : Weapon
 btb =
   { sword
   | name = "Barbarous Thorn Blade"
@@ -78,43 +83,65 @@ btb =
     ]
   }
 
-rigadoon =
-  { sword
-  | name = "Fearless Rigadoon"
-  , damageType = Piercing
-  , status = Stun
-  , attacks =
-    [ (Basic, attacks.swordLight)
-    , (Heavy, attacks.swordLightFinish)
-    , (Charge, attacks.swordLightCharge)
-    , (Special, attacks.swordLightChargeFinish)
-    ]
-  }
+everyAttack (chance, strength) attacks =
+  let
+    merge (stage, damage) = (stage, chance, strength)
+  in
+    List.map merge attacks
 
+rigadoon : Weapon
+rigadoon =
+  let
+    rigadoonAttacks = 
+      [ (Basic, attacks.swordLight)
+      , (Heavy, attacks.swordLightFinish)
+      , (Charge, attacks.swordLightCharge)
+      , (Special, attacks.swordLightChargeFinish)
+      ]
+  in
+    { sword
+    | name = "Fearless Rigadoon"
+    , damageType = Piercing
+    , status = Just Stun
+    , attacks = rigadoonAttacks
+    , inflictions =
+      everyAttack (Slight, Moderate) rigadoonAttacks
+    }
+
+flamberge : Weapon
 flamberge =
   { rigadoon
   | name = "Furious Flamberge"
-  , status = Fire
+  , status = Just Fire
+  , inflictions =
+    everyAttack (Fair, Moderate) rigadoon.attacks
   }
 
+suda : Weapon
 suda =
   { sword
   | name = "Sudaruska"
-  , status = Stun
+  , status = Just Stun
   , attacks =
     [ (Basic, attacks.swordHeavy)
     , (Heavy, attacks.swordHeavyFinish)
     , (Charge, attacks.swordHeavyCharge)
     , (Special, attacks.swordHeavyChargeFinish)
     ]
+  , inflictions =
+    [ (Special, Fair, Moderate) ]
   }
 
+triglav : Weapon
 triglav =
   { suda
   | name = "Triglav"
-  , status = Freeze
+  , status = Just Freeze
+  , inflictions =
+    (Heavy, Slight, Moderate) :: suda.inflictions
   }
 
+hammer : Weapon
 hammer = 
   { sword
   | name = "Warmaster Rocket Hammer"
@@ -127,38 +154,43 @@ hammer =
     ]
   }
 
+combuster : Weapon
 combuster =
   { sword
   | name = "Combuster"
   , damageType = Elemental
   , split = True
-  , status = Fire
+  , status = Just Fire
   , attacks =
     [ (Basic, attacks.brandish)
     , (Heavy, attacks.brandishFinish)
     , (Charge, attacks.brandishCharge)
     , (Special, attacks.brandishSpecial)
     ]
+  , inflictions =
+    [ (Charge, Good, Strong) ]
   }
 
+glacius : Weapon
 glacius =
   { combuster
   | name = "Glacius"
-  , status = Freeze
+  , status = Just Freeze
   }
 
+voltedge : Weapon
 voltedge =
   { combuster
   | name = "Voltedge"
-  , status = Shock
+  , status = Just Shock
   }
 
+acheron : Weapon
 acheron =
   { sword
   | name = "Acheron"
   , damageType = Shadow
   , split = True
-  , status = None
   , attacks =
     [ (Basic, attacks.brandishHeavy)
     , (Heavy, attacks.brandishHeavyFinish)
@@ -167,32 +199,45 @@ acheron =
     ]
   }
 
+avenger : Weapon
 avenger =
   { acheron
   | name = "Divine Avenger"
   , damageType = Elemental
   }
 
+faust : Weapon
 faust =
   { acheron
   | name = "Gran Faust"
-  , status = Curse
+  , status = Just Curse
+  , inflictions =
+    [ (Heavy, Slight, Strong)
+    , (Charge, Fair, Strong)
+    , (Special, Fair, Strong)
+    ]
   }
 
+fang : Weapon
 fang =
   { sword
   | name = "Fang of Vog"
   , damageType = Elemental
   , split = True
-  , status = Fire
+  , status = Just Fire
   , attacks =
     [ (Basic, attacks.fang)
     , (Heavy, attacks.fangFinish)
     , (Charge, attacks.fangCharge)
     ]
+  , inflictions =
+    [ (Basic, Fair, Moderate)
+    , (Heavy, Fair, Moderate)
+    , (Charge, Good, Strong)
+    ]
   }
 
-swords : List(Weapon)
+swords : List Weapon
 swords =
   [ leviathan
   , flourish
