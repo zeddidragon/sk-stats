@@ -189,9 +189,9 @@ chargeSpeed knight weapon =
     speed = Knight.chargeSpeed knight weapon
     pretty num =
       let
-        full = num * 100 |> floor |> toString
+        full = num * 10 |> floor |> toString
       in
-        String.dropRight 2 full ++ "." ++ String.right 2 full
+        String.dropRight 1 full ++ "." ++ String.right 1 full
   in
     div [ class "row graphic" ]
       [ bar (maxTime - minTime) "" (maxTime - speed)

@@ -89,6 +89,7 @@ attackSpeed knight weapon =
         [ knight.helmet.piece.bonuses
         , knight.armour.piece.bonuses
         , List.map toBonus knight.shield.piece.effects
+        , List.map toBonus weapon.uvs
         ]
     boost =
       bonuses
@@ -117,6 +118,7 @@ chargeSpeed knight weapon =
         [ knight.helmet.piece.bonuses
         , knight.armour.piece.bonuses
         , List.map toBonus knight.shield.piece.effects
+        , List.map toBonus weapon.uvs
         ]
     boost =
       bonuses
