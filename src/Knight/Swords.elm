@@ -10,6 +10,9 @@ attacks =
   , swordChargeFinish = 668 / 1.24
   , swordSpecial = 266 / 1.24
 
+  , civ = 315
+  , civHeavy = 353
+
   , swordLight = 358 / 1.24
   , swordLightFinish = 411 / 1.24
   , swordLightCharge = 537 / 1.24
@@ -33,6 +36,15 @@ attacks =
   , fang = 566 / 1.24
   , fangFinish = 666 / 1.24
   , fangCharge = 897 / 1.24
+
+  , blaster = 314 / 1.24
+  , blasterCharge = 532 / 1.24
+
+  , antigua = 231 / 1.24
+  , antiguaCharge = 392 / 1.24
+
+  , magnus = 360 / 1.24
+  , magnusCharge = 611 / 1.24
   }
 
 sword : Weapon
@@ -44,6 +56,7 @@ sword =
   , status = Nothing
   , attacks = []
   , inflictions = []
+  , bonuses = []
   }
 
 leviathan : Weapon
@@ -55,6 +68,31 @@ leviathan =
     , (Heavy, attacks.swordFinish)
     , (Charge, attacks.swordCharge)
     ]
+  }
+
+civ =
+  { sword
+  | name = "Cold Iron Vanquisher"
+  , attacks =
+    [ (Basic, attacks.civ)
+    , (Basic, attacks.civHeavy)
+    , (Charge, attacks.swordLightChargeFinish)
+    ]
+  , bonuses =
+    [ (Undead, High) ]
+  }
+
+dreams : Weapon
+dreams =
+  { sword
+  | name = "Sweet Dreams"
+  , attacks =
+    [ (Basic, attacks.civ)
+    , (Basic, attacks.civHeavy)
+    , (Charge, attacks.swordLightChargeFinish)
+    ]
+  , bonuses =
+    [ (Undead, Medium) ]
   }
 
 flourish : Weapon
@@ -115,6 +153,27 @@ flamberge =
   , status = Just Fire
   , inflictions =
     everyAttack (Fair, Moderate) rigadoon.attacks
+  }
+
+hunting : Weapon
+hunting =
+  { sword
+  | name = "Wild Hunting Blade"
+  , attacks =
+    [ (Basic, attacks.blaster)
+    , (Special, attacks.antigua)
+    , (Charge, attacks.magnus)
+    ]
+  , bonuses = [ (Beast, High) ]
+  }
+
+dvs : Weapon
+dvs =
+  { hunting
+  | name = "Dread Venom Striker"
+  , status = Just Poison
+  , bonuses = []
+  , inflictions = everyAttack (Slight, Strong) hunting.attacks
   }
 
 suda : Weapon
@@ -242,10 +301,13 @@ fang =
 swords : List Weapon
 swords =
   [ leviathan
+  , civ
   , flourish
   , btb
   , rigadoon
   , flamberge
+  , hunting
+  , dvs
   , suda
   , triglav
   , hammer

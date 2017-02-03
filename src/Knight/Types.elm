@@ -14,6 +14,7 @@ type alias Weapon =
   , status: Maybe Status
   , attacks: List (Stage, Float)
   , inflictions: List (Stage, StatusChance, StatusStrength)
+  , bonuses: List (Bonus, BonusStrength)
   }
 
 type alias Armour =
