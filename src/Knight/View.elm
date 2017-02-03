@@ -42,7 +42,9 @@ slot message equipment items title uvForm =
 
 stats knight =
   List.concat
-    [ [ item "Health" (health knight) ]
+    [ [ health knight |> item "Health"
+      , movement knight |> item "Movement Speed"
+      ]
     , [ divisor ]
     , defences knight
     , [ divisor ]
@@ -132,7 +134,8 @@ attacks knight =
         )
       )
   in
-    Knight.attacks knight |> List.map attack
+    [ h3 [] [ text piece.name ]
+    ] ++ (Knight.attacks knight |> List.map attack)
 
 health knight =
   let
@@ -154,6 +157,16 @@ health knight =
       , div [ class "hearts silver" ] [ String.repeat silvers "♥" |> text ]
       , div [ class "hearts" ] [ String.repeat reds "♥" |> text ]
       , div [ class "value" ] [ Knight.health knight |> toText ]
+      ]
+
+movement knight =
+  let
+    maxMobility = 130
+    speed = Knight.mobility knight
+  in
+    div [ class "row" ]
+      [ bar maxMobility "" speed
+      , div [ class "value" ] [ (toString speed) ++ "%" |> text ]
       ]
 
 item label content =

@@ -50,6 +50,23 @@ isType x y = x == first y
 nonZero x = 0 /= second x
 secondTo x y = (x, y)
 
+mobility : Knight -> Int
+mobility knight =
+  let
+    bonuses =
+      List.concat
+        [ knight.helmet.piece.bonuses
+        , knight.armour.piece.bonuses
+        ]
+    boost =
+      bonuses
+        |> List.filter (\(bonus, strength)-> bonus == MSI)
+        |> List.map Tuple.second
+        |> List.map UV.toDamageBonus
+        |> sum
+  in
+    100 + boost
+
 toDefence : UV -> (DamageType, Float)
 toDefence uv =
   case uv of
