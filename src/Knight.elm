@@ -73,7 +73,32 @@ mobility knight =
     100 + boost
 
 attackSpeed : Knight -> WeaponEquip -> Int
-attackSpeed knight weapon = 100
+attackSpeed knight weapon =
+  let
+    toBonus uv =
+      case uv of
+        WeaponUV (bonus, strength) -> (bonus, strength)
+        _ -> (Dmg, Low)
+    bonusType =
+      case weapon.piece.weaponType of
+        Sword -> SwordASI
+        Gun -> GunASI
+        Bomb -> ASI
+    bonuses =
+      List.concat
+        [ knight.helmet.piece.bonuses
+        , knight.armour.piece.bonuses
+        , List.map toBonus knight.shield.piece.effects
+        ]
+    boost =
+      bonuses
+        |> List.filter (\(bonus, strength)-> bonus == ASI || bonus == bonusType)
+        |> List.map Tuple.second
+        |> List.map UV.toDamageBonus
+        |> sum
+        |> Basics.min 24
+  in
+    100 + boost
 
 toDefence : UV -> (DamageType, Float)
 toDefence uv =
