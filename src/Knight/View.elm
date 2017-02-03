@@ -137,6 +137,7 @@ attacks knight =
       )
   in
     [ h3 [] [ text piece.name ]
+    , attackSpeed knight knight.weapon |> item "Speed"
     ] ++ (Knight.attacks knight |> List.map attack)
 
 health knight =
@@ -165,6 +166,15 @@ mobility knight =
   let
     maxMobility = 130
     speed = Knight.mobility knight
+  in
+    div [ class "row graphic" ]
+      [ pips "speed" ((toFloat speed - 100) / 4)
+      , div [ class "value" ] [ (toString speed) ++ "%" |> text ]
+      ]
+
+attackSpeed knight weapon =
+  let
+    speed = Knight.attackSpeed knight weapon
   in
     div [ class "row graphic" ]
       [ pips "speed" ((toFloat speed - 100) / 4)

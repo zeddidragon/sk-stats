@@ -53,10 +53,15 @@ secondTo x y = (x, y)
 mobility : Knight -> Int
 mobility knight =
   let
+    toBonus uv =
+      case uv of
+        WeaponUV (bonus, strength) -> (bonus, strength)
+        _ -> (Dmg, Low)
     bonuses =
       List.concat
         [ knight.helmet.piece.bonuses
         , knight.armour.piece.bonuses
+        , List.map toBonus knight.shield.piece.effects
         ]
     boost =
       bonuses
@@ -66,6 +71,9 @@ mobility knight =
         |> sum
   in
     100 + boost
+
+attackSpeed : Knight -> WeaponEquip -> Int
+attackSpeed knight weapon = 100
 
 toDefence : UV -> (DamageType, Float)
 toDefence uv =
