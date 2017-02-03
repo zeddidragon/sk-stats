@@ -43,7 +43,7 @@ slot message equipment items title uvForm =
 stats knight =
   List.concat
     [ [ health knight |> item "Health"
-      , movement knight |> item "Movement Speed"
+      , mobility knight |> item "Mobility"
       ]
     , [ divisor ]
     , defences knight
@@ -65,21 +65,23 @@ defences knight =
   in
     Knight.defences knight |> List.map defence
 
+pip = div [ class "pip" ] []
+pips klass amount =
+  let
+    n = truncate amount
+  in
+    div [ class ("graphic " ++ klass) ]
+      [ div [ class "graphic negative" ] ( List.repeat -n pip )
+      , div [ class "hdivisor"] []
+      , div [ class "graphic positive" ] ( List.repeat n pip )
+      ]
+
 resistances knight =
   let
-    pip = div [ class "pip" ] []
     sign amount = if amount > 0 then "+" else ""
-    pips status amount =
-      let
-        n = truncate amount
-      in
-        div [ class ("graphic " ++ (toString status)) ]
-          [ div [ class "graphic negative" ] ( List.repeat -n pip )
-          , div [ class "graphic positive" ] ( List.repeat n pip )
-          ]
     resistance (status, amount) =
       item (toString status) (div [ class "graphic" ]
-        [ pips status amount
+        [ pips (toString status) amount
         , div [ class "value" ] [ sign amount ++ toString amount |> text ]
         ])
   in
@@ -159,13 +161,13 @@ health knight =
       , div [ class "value" ] [ Knight.health knight |> toText ]
       ]
 
-movement knight =
+mobility knight =
   let
     maxMobility = 130
     speed = Knight.mobility knight
   in
-    div [ class "row" ]
-      [ bar maxMobility "" speed
+    div [ class "row graphic" ]
+      [ pips "speed" ((toFloat speed - 100) / 4)
       , div [ class "value" ] [ (toString speed) ++ "%" |> text ]
       ]
 
