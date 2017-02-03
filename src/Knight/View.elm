@@ -138,6 +138,7 @@ attacks knight =
   in
     [ h3 [] [ text piece.name ]
     , attackSpeed knight knight.weapon |> item "Speed"
+    , chargeSpeed knight knight.weapon |> item "CT"
     ] ++ (Knight.attacks knight |> List.map attack)
 
 health knight =
@@ -179,6 +180,22 @@ attackSpeed knight weapon =
     div [ class "row graphic" ]
       [ pips "speed" ((toFloat speed - 100) / 4)
       , div [ class "value" ] [ (toString speed) ++ "%" |> text ]
+      ]
+
+chargeSpeed knight weapon =
+  let
+    minTime = 1.2
+    maxTime = 8
+    speed = Knight.chargeSpeed knight weapon
+    pretty num =
+      let
+        full = num * 100 |> floor |> toString
+      in
+        String.dropRight 2 full ++ "." ++ String.right 2 full
+  in
+    div [ class "row graphic" ]
+      [ bar (maxTime - minTime) "" (maxTime - speed)
+      , div [ class "value" ] [ (pretty speed) ++ "s" |> text ]
       ]
 
 item label content =

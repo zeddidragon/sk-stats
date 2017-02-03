@@ -100,6 +100,34 @@ attackSpeed knight weapon =
   in
     100 + boost
 
+chargeSpeed : Knight -> WeaponEquip -> Float
+chargeSpeed knight weapon =
+  let
+    toBonus uv =
+      case uv of
+        WeaponUV (bonus, strength) -> (bonus, strength)
+        _ -> (Dmg, Low)
+    bonusType =
+      case weapon.piece.weaponType of
+        Sword -> SwordCTR
+        Gun -> GunCTR
+        Bomb -> BombCTR
+    bonuses =
+      (CTR, Medium) :: List.concat
+        [ knight.helmet.piece.bonuses
+        , knight.armour.piece.bonuses
+        , List.map toBonus knight.shield.piece.effects
+        ]
+    boost =
+      bonuses
+        |> List.filter (\(bonus, strength)-> bonus == CTR || bonus == bonusType)
+        |> List.map Tuple.second
+        |> List.map UV.toBonus
+        |> sum
+        |> Basics.min 6
+  in
+    weapon.piece.chargeTime * (1 - (toFloat boost) * 0.075)
+
 toDefence : UV -> (DamageType, Float)
 toDefence uv =
   case uv of

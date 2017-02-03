@@ -10,6 +10,7 @@ type alias Weapon =
   { name: String
   , weaponType: WeaponType
   , damageType: DamageType
+  , chargeTime: Float
   , split: Bool
   , status: Maybe Status
   , attacks: List (Stage, Float)

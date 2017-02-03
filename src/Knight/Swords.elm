@@ -3,6 +3,12 @@ module Knight.Swords exposing (..)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 
+charge =
+  { normal = 2
+  , long = 3
+  , painful = 6
+  }
+
 attacks =
   { sword = 415 / 1.24
   , swordFinish = 477 / 1.24
@@ -54,6 +60,7 @@ sword =
   , damageType = Normal
   , split = False
   , status = Nothing
+  , chargeTime = 2.2
   , attacks = []
   , inflictions = []
   , bonuses = []
@@ -70,6 +77,7 @@ leviathan =
     ]
   }
 
+civ : Weapon
 civ =
   { sword
   | name = "Cold Iron Vanquisher"
@@ -181,6 +189,7 @@ suda =
   { sword
   | name = "Sudaruska"
   , status = Just Stun
+  , chargeTime = charge.long
   , attacks =
     [ (Basic, attacks.swordHeavy)
     , (Heavy, attacks.swordHeavyFinish)
@@ -264,6 +273,7 @@ avenger : Weapon
 avenger =
   { acheron
   | name = "Divine Avenger"
+  , chargeTime = charge.long
   , damageType = Elemental
   }
 
@@ -272,6 +282,7 @@ faust =
   { acheron
   | name = "Gran Faust"
   , status = Just Curse
+  , chargeTime = charge.painful
   , inflictions =
     [ (Heavy, Slight, Strong)
     , (Charge, Fair, Strong)
