@@ -282,9 +282,9 @@ seerus =
   | name = "Perfect Mask of Seerus"
   , defences = (Elemental, defences.class) :: class.defences
   , resistances =
-    [ (Fire, 2)
+    [ (Fire, 4)
     , (Freeze, -2)
-    , (Shock, 2)
+    , (Shock, 4)
     , (Poison, -2)
     ]
   , bonuses =
@@ -497,7 +497,7 @@ gunnerSets =
       , defences = (defence, defences.base) :: base.defences
       , resistances =
         [ (status, 4)
-        , (counter status, -4)
+        , (counter status, -3)
         ]
       , bonuses =
         [ (GunCTR, Low)
