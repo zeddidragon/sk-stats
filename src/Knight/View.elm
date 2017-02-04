@@ -65,7 +65,7 @@ defences knight =
   in
     Knight.defences knight |> List.map defence
 
-immunePips immune klass amount =
+highlightPips highlights klass amount =
   let
     n = truncate amount
     description tuple =
@@ -74,16 +74,19 @@ immunePips immune klass amount =
         Nothing -> ""
     pip i =
       let
-        isImmune = List.member i <| List.map Tuple.first immune
-        immunity = 
-          immune
+        isHighlight =
+          highlights
+            |> List.map Tuple.first
+            |> List.member i
+        highlight = 
+          highlights
             |> List.filter (\(lvl, desc) -> lvl == i)
             |> List.head
             |> description
       in
         div (
-        [ class <| "pip" ++ (if isImmune then " immune" else "")
-        ] ++ (if isImmune then [ title immunity ] else [])
+        [ class <| "pip" ++ (if isHighlight then " highlight" else "")
+        ] ++ (if isHighlight then [ title highlight ] else [])
         ) []
   in
     div [ class ("graphic " ++ klass) ]
@@ -93,7 +96,7 @@ immunePips immune klass amount =
       , div [ class "graphic positive" ]
         ( List.range 1 n |> List.map pip)
       ]
-pips = immunePips []
+pips = highlightPips []
 
 resistances knight =
   let
@@ -104,7 +107,7 @@ resistances knight =
       ]
     resistance (status, amount) =
       item (toString status) (div [ class "graphic" ]
-        [ immunePips immunities (toString status) amount
+        [ highlightPips immunities (toString status) amount
         , div [ class "value" ] [ sign amount ++ toString amount |> text ]
         ])
   in

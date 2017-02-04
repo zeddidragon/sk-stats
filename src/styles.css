@@ -152,7 +152,7 @@ label {
 .Stun .pip { background-color: #fafa82; }
 .Curse .pip { background-color: #822182; }
 .Sleep .pip { background-color: #82fafa; }
-.pip.immune {
+.pip.highlight {
   transform: scale(1.2);
   filter: brightness(150%);
 }
