@@ -101,13 +101,16 @@ pips = highlightPips []
 resistances knight =
   let
     sign amount = if amount > 0 then "+" else ""
-    immunities =
-      [ (7, "Immune to Minor")
-      , (9, "Immune to Moderate")
-      ]
+    immunities status =
+      (
+        if status == Curse then
+          (10, "Immune to Faust's self-curse (but not Gran Faust)")
+        else
+          (7, "Immune to Minor " ++ (toString status))
+      ) :: [ (9, "Immune to Moderate " ++ (toString status)) ]
     resistance (status, amount) =
       item (toString status) (div [ class "graphic" ]
-        [ highlightPips immunities (toString status) amount
+        [ highlightPips (immunities status) (toString status) amount
         , div [ class "value" ] [ sign amount ++ toString amount |> text ]
         ])
   in
