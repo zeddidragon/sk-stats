@@ -9020,6 +9020,549 @@ var _user$project$Knight_Swords$swords = {
 		}
 	}
 };
+var _user$project$Knight_Guns$gun = {
+	weaponType: _user$project$Knight_Types$Gun,
+	name: 'Stock Gun',
+	damageType: _user$project$Knight_UV$Normal,
+	split: _elm_lang$core$Maybe$Nothing,
+	status: _elm_lang$core$Maybe$Nothing,
+	chargeTime: _user$project$Knight_Values$charge.normal,
+	attacks: {ctor: '[]'},
+	inflictions: {ctor: '[]'},
+	bonuses: {ctor: '[]'}
+};
+var _user$project$Knight_Guns$valiance = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Valiance',
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.blaster},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.blasterCharge},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$blasters = function () {
+	var copy = function (_p0) {
+		var _p1 = _p0;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$valiance,
+			{name: _p1._0, damageType: _p1._1});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'Riftlocker', _1: _user$project$Knight_UV$Piercing},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'Arcana', _1: _user$project$Knight_UV$Elemental},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'Phantomos', _1: _user$project$Knight_UV$Shadow},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$arcana = function () {
+	var _p2 = _elm_lang$core$List$head(
+		A2(_elm_lang$core$List$drop, 1, _user$project$Knight_Guns$blasters));
+	if (_p2.ctor === 'Just') {
+		return _p2._0;
+	} else {
+		return _user$project$Knight_Guns$valiance;
+	}
+}();
+var _user$project$Knight_Guns$nova = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Nova Driver',
+		damageType: _user$project$Knight_UV$Elemental,
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.nova},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.novaCharge},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$umbra = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$nova,
+	{name: 'Umbra Driver', damageType: _user$project$Knight_UV$Shadow});
+var _user$project$Knight_Guns$alchemers = function () {
+	var copy = function (_p3) {
+		var _p4 = _p3;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$nova,
+			{
+				name: _p4._0,
+				status: _elm_lang$core$Maybe$Just(_p4._1),
+				attacks: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.driverCharge},
+						_1: {ctor: '[]'}
+					}
+				},
+				inflictions: {
+					ctor: '::',
+					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'Magma Driver', _1: _user$project$Knight_UV$Fire},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'Hail Driver', _1: _user$project$Knight_UV$Freeze},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'Storm Driver', _1: _user$project$Knight_UV$Shock},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$pepper = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Volcanic Pepperbox',
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Fire),
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.pepper},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.pepperCharge},
+				_1: {ctor: '[]'}
+			}
+		},
+		inflictions: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Moderate},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Moderate},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$plague = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$pepper,
+	{
+		name: 'Plague Needle',
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Poison),
+		inflictions: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Strong},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Strong},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$autoguns = function () {
+	var copy = function (_p5) {
+		var _p6 = _p5;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$gun,
+			{
+				name: _p6._0,
+				damageType: _p6._1,
+				attacks: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'Blitz Needle', _1: _user$project$Knight_UV$Piercing},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'Grim Repeater', _1: _user$project$Knight_UV$Shadow},
+			_1: {ctor: '[]'}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$antiguas = function () {
+	var copy = function (_p7) {
+		var _p8 = _p7;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$gun,
+			{
+				name: _p8._0,
+				damageType: _p8._1,
+				attacks: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
+						_1: {ctor: '[]'}
+					}
+				},
+				bonuses: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _p8._2, _1: _user$project$Knight_UV$High},
+					_1: {ctor: '[]'}
+				}
+			});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple3', _0: 'Gilded Griffin', _1: _user$project$Knight_UV$Piercing, _2: _user$project$Knight_UV$Beast},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: 'Argent Peacemaker', _1: _user$project$Knight_UV$Elemental, _2: _user$project$Knight_UV$Undead},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: 'Sentenza', _1: _user$project$Knight_UV$Shadow, _2: _user$project$Knight_UV$Gremlin},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$obsidian = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Obsidian Carbine',
+		damageType: _user$project$Knight_UV$Shadow,
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Poison),
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
+				_1: {ctor: '[]'}
+			}
+		},
+		inflictions: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Moderate},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Fair, _2: _user$project$Knight_Types$Moderate},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$magnuses = function () {
+	var copy = function (_p9) {
+		var _p10 = _p9;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$gun,
+			{
+				name: _p10._0,
+				damageType: _p10._1,
+				status: _elm_lang$core$Maybe$Just(_p10._2),
+				attacks: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.magnus},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.magnusCharge},
+						_1: {ctor: '[]'}
+					}
+				},
+				inflictions: {
+					ctor: '::',
+					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Fair, _2: _user$project$Knight_Types$Moderate},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple3', _0: 'Callahan', _1: _user$project$Knight_UV$Piercing, _2: _user$project$Knight_UV$Stun},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: 'Iron Slug', _1: _user$project$Knight_UV$Normal, _2: _user$project$Knight_UV$Stun},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: 'Winter Grave', _1: _user$project$Knight_UV$Shadow, _2: _user$project$Knight_UV$Freeze},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$supernova = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Supernova',
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Values$attacks.magnus},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.novaCharge},
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
+var _user$project$Knight_Guns$polaris = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Polaris',
+		damageType: _user$project$Knight_UV$Elemental,
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Shock),
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Values$attacks.nova},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.blasterCharge},
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		inflictions: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
+var _user$project$Knight_Guns$wildfire = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$polaris,
+	{
+		name: 'Wildfire',
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Fire)
+	});
+var _user$project$Knight_Guns$neutralizer = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$gun,
+	{
+		name: 'Neutralizer',
+		chargeTime: _user$project$Knight_Values$charge.quick,
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.neutralizer},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.driver},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$biohazard = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Guns$neutralizer,
+	{
+		name: 'Biohazard',
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Poison),
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.magnusCharge},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.driver},
+				_1: {ctor: '[]'}
+			}
+		},
+		inflictions: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Types$Fair, _2: _user$project$Knight_Types$Moderate},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Guns$tortofists = function () {
+	var copy = function (_p11) {
+		var _p12 = _p11;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$gun,
+			{
+				name: _p12._0,
+				damageType: _p12._1,
+				attacks: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Basic, _1: _user$project$Knight_Values$attacks.tortofist},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.blaster},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.pepperCharge},
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'Gorgofist', _1: _user$project$Knight_UV$Shadow},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'Grand Tortofist', _1: _user$project$Knight_UV$Normal},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'Savage Tortofist', _1: _user$project$Knight_UV$Piercing},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'Omega Tortofist', _1: _user$project$Knight_UV$Elemental},
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$mixmasters = function () {
+	var copy = function (_p13) {
+		var _p14 = _p13;
+		return _elm_lang$core$Native_Utils.update(
+			_user$project$Knight_Guns$gun,
+			{
+				name: _p14._0,
+				damageType: _user$project$Knight_UV$Elemental,
+				status: _elm_lang$core$Maybe$Just(_p14._1),
+				attacks: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.driverCharge},
+						_1: {ctor: '[]'}
+					}
+				},
+				inflictions: {
+					ctor: '::',
+					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	};
+	var variants = {
+		ctor: '::',
+		_0: {ctor: '_Tuple2', _0: 'Overcharged Mixmaster', _1: _user$project$Knight_UV$Shock},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'Celestial Orbitgun', _1: _user$project$Knight_UV$Fire},
+			_1: {ctor: '[]'}
+		}
+	};
+	return A2(_elm_lang$core$List$map, copy, variants);
+}();
+var _user$project$Knight_Guns$guns = A2(
+	_elm_lang$core$Basics_ops['++'],
+	{ctor: '[]'},
+	A2(
+		_elm_lang$core$Basics_ops['++'],
+		{ctor: '::', _0: _user$project$Knight_Guns$valiance, _1: _user$project$Knight_Guns$blasters},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: _user$project$Knight_Guns$nova,
+				_1: {ctor: '::', _0: _user$project$Knight_Guns$umbra, _1: _user$project$Knight_Guns$alchemers}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_user$project$Knight_Guns$autoguns,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _user$project$Knight_Guns$pepper,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Knight_Guns$plague,
+							_1: {ctor: '[]'}
+						}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_user$project$Knight_Guns$magnuses,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_user$project$Knight_Guns$antiguas,
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								{
+									ctor: '::',
+									_0: _user$project$Knight_Guns$obsidian,
+									_1: {ctor: '[]'}
+								},
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									{
+										ctor: '::',
+										_0: _user$project$Knight_Guns$supernova,
+										_1: {
+											ctor: '::',
+											_0: _user$project$Knight_Guns$polaris,
+											_1: {
+												ctor: '::',
+												_0: _user$project$Knight_Guns$wildfire,
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										{
+											ctor: '::',
+											_0: _user$project$Knight_Guns$neutralizer,
+											_1: {
+												ctor: '::',
+												_0: _user$project$Knight_Guns$biohazard,
+												_1: {ctor: '[]'}
+											}
+										},
+										A2(_elm_lang$core$Basics_ops['++'], _user$project$Knight_Guns$tortofists, _user$project$Knight_Guns$mixmasters)))))))))));
 var _user$project$Knight_Armour$base = {
 	hearts: 5,
 	name: 'Base Armour',
@@ -10020,104 +10563,108 @@ var _user$project$Knight_Armour$armours = A2(
 		_0: _user$project$Knight_Armour$cobalt,
 		_1: {
 			ctor: '::',
-			_0: _user$project$Knight_Armour$skolver,
+			_0: _user$project$Knight_Armour$crusader,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Knight_Armour$vog,
+				_0: _user$project$Knight_Armour$skolver,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Knight_Armour$snarby,
+					_0: _user$project$Knight_Armour$vog,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Knight_Armour$justifier,
+						_0: _user$project$Knight_Armour$snarby,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Knight_Armour$nameless,
+							_0: _user$project$Knight_Armour$justifier,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Knight_Armour$shadowsun,
+								_0: _user$project$Knight_Armour$nameless,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Knight_Armour$deadshot,
+									_0: _user$project$Knight_Armour$shadowsun,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Knight_Armour$volcDemo,
+										_0: _user$project$Knight_Armour$deadshot,
 										_1: {
 											ctor: '::',
-											_0: _user$project$Knight_Armour$bombastic,
+											_0: _user$project$Knight_Armour$volcDemo,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Knight_Armour$mad,
+												_0: _user$project$Knight_Armour$bombastic,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Knight_Armour$mercDemo,
+													_0: _user$project$Knight_Armour$mad,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Knight_Armour$jelly,
+														_0: _user$project$Knight_Armour$mercDemo,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Knight_Armour$queen,
+															_0: _user$project$Knight_Armour$jelly,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Knight_Armour$gray,
+																_0: _user$project$Knight_Armour$queen,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Knight_Armour$divine,
+																	_0: _user$project$Knight_Armour$gray,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Knight_Armour$chaos,
+																		_0: _user$project$Knight_Armour$divine,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Knight_Armour$skelly,
+																			_0: _user$project$Knight_Armour$chaos,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Knight_Armour$ironmight,
+																				_0: _user$project$Knight_Armour$skelly,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Knight_Armour$volcPlate,
+																					_0: _user$project$Knight_Armour$ironmight,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Knight_Armour$ancient,
+																						_0: _user$project$Knight_Armour$volcPlate,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Knight_Armour$virulisk,
+																							_0: _user$project$Knight_Armour$ancient,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Knight_Armour$salamander,
+																								_0: _user$project$Knight_Armour$virulisk,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Knight_Armour$arcane,
+																									_0: _user$project$Knight_Armour$salamander,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Knight_Armour$dragon,
+																										_0: _user$project$Knight_Armour$arcane,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Knight_Armour$silver,
+																											_0: _user$project$Knight_Armour$dragon,
 																											_1: {
 																												ctor: '::',
-																												_0: _user$project$Knight_Armour$valkyrie,
+																												_0: _user$project$Knight_Armour$silver,
 																												_1: {
 																													ctor: '::',
-																													_0: _user$project$Knight_Armour$fallen,
+																													_0: _user$project$Knight_Armour$valkyrie,
 																													_1: {
 																														ctor: '::',
-																														_0: _user$project$Knight_Armour$heavenly,
+																														_0: _user$project$Knight_Armour$fallen,
 																														_1: {
 																															ctor: '::',
-																															_0: _user$project$Knight_Armour$kat,
+																															_0: _user$project$Knight_Armour$heavenly,
 																															_1: {
 																																ctor: '::',
-																																_0: _user$project$Knight_Armour$claw,
+																																_0: _user$project$Knight_Armour$kat,
 																																_1: {
 																																	ctor: '::',
-																																	_0: _user$project$Knight_Armour$eye,
+																																	_0: _user$project$Knight_Armour$claw,
 																																	_1: {
 																																		ctor: '::',
-																																		_0: _user$project$Knight_Armour$hiss,
+																																		_0: _user$project$Knight_Armour$eye,
 																																		_1: {
 																																			ctor: '::',
-																																			_0: _user$project$Knight_Armour$seerus,
-																																			_1: {ctor: '[]'}
+																																			_0: _user$project$Knight_Armour$hiss,
+																																			_1: {
+																																				ctor: '::',
+																																				_0: _user$project$Knight_Armour$seerus,
+																																				_1: {ctor: '[]'}
+																																			}
 																																		}
 																																	}
 																																}
@@ -10582,20 +11129,20 @@ var _user$project$Knight_Trinket$hearts = function (trinkets) {
 	return _elm_lang$core$List$sum(
 		A2(_elm_lang$core$List$concatMap, toHearts, trinkets));
 };
-var _user$project$Knight$p2wSkolver = {
-	piece: _user$project$Knight_Armour$skolver,
+var _user$project$Knight$p2wKat = {
+	piece: _user$project$Knight_Armour$kat,
 	uvs: {
 		ctor: '::',
 		_0: _user$project$Knight_UV$DefenceUV(
 			{ctor: '_Tuple2', _0: _user$project$Knight_UV$Normal, _1: _user$project$Knight_UV$Maximum}),
 		_1: {
 			ctor: '::',
-			_0: _user$project$Knight_UV$DefenceUV(
-				{ctor: '_Tuple2', _0: _user$project$Knight_UV$Piercing, _1: _user$project$Knight_UV$Maximum}),
+			_0: _user$project$Knight_UV$StatusUV(
+				{ctor: '_Tuple2', _0: _user$project$Knight_UV$Shock, _1: _user$project$Knight_UV$Maximum}),
 			_1: {
 				ctor: '::',
 				_0: _user$project$Knight_UV$StatusUV(
-					{ctor: '_Tuple2', _0: _user$project$Knight_UV$Shock, _1: _user$project$Knight_UV$Maximum}),
+					{ctor: '_Tuple2', _0: _user$project$Knight_UV$Stun, _1: _user$project$Knight_UV$Maximum}),
 				_1: {ctor: '[]'}
 			}
 		}
@@ -10603,21 +11150,66 @@ var _user$project$Knight$p2wSkolver = {
 };
 var _user$project$Knight$opponent = {
 	name: 'The guy she tells you not to worry about',
-	weapon: {
-		piece: _user$project$Knight_Swords$acheron,
-		uvs: {
+	weapons: {
+		ctor: '::',
+		_0: {
+			piece: _user$project$Knight_Swords$acheron,
+			uvs: {
+				ctor: '::',
+				_0: _user$project$Knight_UV$WeaponUV(
+					{ctor: '_Tuple2', _0: _user$project$Knight_UV$ASI, _1: _user$project$Knight_UV$VeryHigh}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Knight_UV$WeaponUV(
+						{ctor: '_Tuple2', _0: _user$project$Knight_UV$CTR, _1: _user$project$Knight_UV$VeryHigh}),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		_1: {
 			ctor: '::',
-			_0: _user$project$Knight_UV$WeaponUV(
-				{ctor: '_Tuple2', _0: _user$project$Knight_UV$ASI, _1: _user$project$Knight_UV$VeryHigh}),
-			_1: {ctor: '[]'}
+			_0: {
+				piece: _user$project$Knight_Swords$flourish,
+				uvs: {
+					ctor: '::',
+					_0: _user$project$Knight_UV$WeaponUV(
+						{ctor: '_Tuple2', _0: _user$project$Knight_UV$ASI, _1: _user$project$Knight_UV$VeryHigh}),
+					_1: {ctor: '[]'}
+				}
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					piece: _user$project$Knight_Swords$faust,
+					uvs: {
+						ctor: '::',
+						_0: _user$project$Knight_UV$WeaponUV(
+							{ctor: '_Tuple2', _0: _user$project$Knight_UV$ASI, _1: _user$project$Knight_UV$VeryHigh}),
+						_1: {ctor: '[]'}
+					}
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						piece: _user$project$Knight_Guns$arcana,
+						uvs: {
+							ctor: '::',
+							_0: _user$project$Knight_UV$WeaponUV(
+								{ctor: '_Tuple2', _0: _user$project$Knight_UV$ASI, _1: _user$project$Knight_UV$VeryHigh}),
+							_1: {ctor: '[]'}
+						}
+					},
+					_1: {ctor: '[]'}
+				}
+			}
 		}
 	},
 	shield: {
 		piece: _user$project$Knight_Shield$striker,
 		uvs: {ctor: '[]'}
 	},
-	helmet: _user$project$Knight$p2wSkolver,
-	armour: _user$project$Knight$p2wSkolver,
+	helmet: _user$project$Knight$p2wKat,
+	armour: _user$project$Knight$p2wKat,
 	trinkets: A2(_elm_lang$core$List$repeat, 2, _user$project$Knight_Trinket$penta)
 };
 var _user$project$Knight$stockArmour = {
@@ -10626,9 +11218,20 @@ var _user$project$Knight$stockArmour = {
 };
 var _user$project$Knight$you = {
 	name: 'You',
-	weapon: {
-		piece: _user$project$Knight_Swords$leviathan,
-		uvs: {ctor: '[]'}
+	weapons: {
+		ctor: '::',
+		_0: {
+			piece: _user$project$Knight_Swords$leviathan,
+			uvs: {ctor: '[]'}
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				piece: _user$project$Knight_Guns$valiance,
+				uvs: {ctor: '[]'}
+			},
+			_1: {ctor: '[]'}
+		}
 	},
 	shield: {
 		piece: _user$project$Knight_Shield$striker,
@@ -11017,113 +11620,114 @@ var _user$project$Knight$resistances = function (knight) {
 				}
 			}));
 };
-var _user$project$Knight$attacks = function (knight) {
-	var toIntBoost = function (_p16) {
-		var _p17 = _p16;
-		return {
-			ctor: '_Tuple2',
-			_0: _p17._0,
-			_1: _user$project$Knight_UV$toDamageBonus(_p17._1)
+var _user$project$Knight$attacks = F2(
+	function (knight, weapon) {
+		var toIntBoost = function (_p16) {
+			var _p17 = _p16;
+			return {
+				ctor: '_Tuple2',
+				_0: _p17._0,
+				_1: _user$project$Knight_UV$toDamageBonus(_p17._1)
+			};
 		};
-	};
-	var bonuses = A2(
-		_elm_lang$core$List$map,
-		toIntBoost,
-		_elm_lang$core$List$concat(
-			{
-				ctor: '::',
-				_0: knight.helmet.piece.bonuses,
-				_1: {
+		var bonuses = A2(
+			_elm_lang$core$List$map,
+			toIntBoost,
+			_elm_lang$core$List$concat(
+				{
 					ctor: '::',
-					_0: knight.armour.piece.bonuses,
-					_1: {ctor: '[]'}
-				}
-			}));
-	var uvs = A2(
-		_elm_lang$core$List$map,
-		_user$project$Knight$toDamageBoost,
-		_elm_lang$core$List$concat(
-			{
-				ctor: '::',
-				_0: knight.shield.piece.effects,
-				_1: {
+					_0: knight.helmet.piece.bonuses,
+					_1: {
+						ctor: '::',
+						_0: knight.armour.piece.bonuses,
+						_1: {ctor: '[]'}
+					}
+				}));
+		var uvs = A2(
+			_elm_lang$core$List$map,
+			_user$project$Knight$toDamageBoost,
+			_elm_lang$core$List$concat(
+				{
 					ctor: '::',
-					_0: _user$project$Knight_Trinket$effects(knight.trinkets),
-					_1: {ctor: '[]'}
+					_0: knight.shield.piece.effects,
+					_1: {
+						ctor: '::',
+						_0: _user$project$Knight_Trinket$effects(knight.trinkets),
+						_1: {ctor: '[]'}
+					}
+				}));
+		var total = function (bonus) {
+			return A2(
+				_elm_lang$core$Basics$min,
+				24,
+				_user$project$Knight$sum(
+					A2(
+						_elm_lang$core$List$map,
+						_elm_lang$core$Tuple$second,
+						A2(
+							_elm_lang$core$List$filter,
+							function (_p18) {
+								var _p19 = _p18;
+								var _p20 = _p19._0;
+								return _elm_lang$core$Native_Utils.eq(_p20, bonus) || _elm_lang$core$Native_Utils.eq(_p20, _user$project$Knight_UV$Dmg);
+							},
+							A2(_elm_lang$core$Basics_ops['++'], uvs, bonuses)))));
+		};
+		var piece = weapon.piece;
+		var bonusType = function () {
+			var _p21 = piece.weaponType;
+			switch (_p21.ctor) {
+				case 'Sword':
+					return _user$project$Knight_UV$SwordDmg;
+				case 'Gun':
+					return _user$project$Knight_UV$GunDmg;
+				default:
+					return _user$project$Knight_UV$BombDmg;
+			}
+		}();
+		var boosted = function (damage) {
+			return (damage * _elm_lang$core$Basics$toFloat(
+				100 + total(bonusType))) / 100;
+		};
+		var boost = function (_p22) {
+			var _p23 = _p22;
+			var _p27 = _p23._0;
+			var toStatusValues = function (infliction) {
+				var _p24 = infliction;
+				if ((_p24.ctor === 'Just') && (_p24._0.ctor === '_Tuple3')) {
+					return _elm_lang$core$Maybe$Just(
+						{
+							ctor: '_Tuple2',
+							_0: _user$project$Knight_Types$statusChance(_p24._0._1),
+							_1: _user$project$Knight_Types$statusStrength(_p24._0._2)
+						});
+				} else {
+					return _elm_lang$core$Maybe$Nothing;
 				}
-			}));
-	var total = function (bonus) {
-		return A2(
-			_elm_lang$core$Basics$min,
-			24,
-			_user$project$Knight$sum(
-				A2(
-					_elm_lang$core$List$map,
-					_elm_lang$core$Tuple$second,
+			};
+			var isStage = F2(
+				function (stage, _p25) {
+					var _p26 = _p25;
+					return _elm_lang$core$Native_Utils.eq(stage, _p26._0);
+				});
+			var infliction = toStatusValues(
+				_elm_lang$core$List$head(
 					A2(
 						_elm_lang$core$List$filter,
-						function (_p18) {
-							var _p19 = _p18;
-							var _p20 = _p19._0;
-							return _elm_lang$core$Native_Utils.eq(_p20, bonus) || _elm_lang$core$Native_Utils.eq(_p20, _user$project$Knight_UV$Dmg);
-						},
-						A2(_elm_lang$core$Basics_ops['++'], uvs, bonuses)))));
-	};
-	var weapon = knight.weapon.piece;
-	var bonusType = function () {
-		var _p21 = weapon.weaponType;
-		switch (_p21.ctor) {
-			case 'Sword':
-				return _user$project$Knight_UV$SwordDmg;
-			case 'Gun':
-				return _user$project$Knight_UV$GunDmg;
-			default:
-				return _user$project$Knight_UV$BombDmg;
-		}
-	}();
-	var boosted = function (damage) {
-		return (damage * _elm_lang$core$Basics$toFloat(
-			100 + total(bonusType))) / 100;
-	};
-	var boost = function (_p22) {
-		var _p23 = _p22;
-		var _p27 = _p23._0;
-		var toStatusValues = function (infliction) {
-			var _p24 = infliction;
-			if ((_p24.ctor === 'Just') && (_p24._0.ctor === '_Tuple3')) {
-				return _elm_lang$core$Maybe$Just(
-					{
-						ctor: '_Tuple2',
-						_0: _user$project$Knight_Types$statusChance(_p24._0._1),
-						_1: _user$project$Knight_Types$statusStrength(_p24._0._2)
-					});
-			} else {
-				return _elm_lang$core$Maybe$Nothing;
-			}
-		};
-		var isStage = F2(
-			function (stage, _p25) {
-				var _p26 = _p25;
-				return _elm_lang$core$Native_Utils.eq(stage, _p26._0);
-			});
-		var infliction = toStatusValues(
-			_elm_lang$core$List$head(
-				A2(
-					_elm_lang$core$List$filter,
-					isStage(_p27),
-					weapon.inflictions)));
-		return {
-			ctor: '_Tuple2',
-			_0: {
+						isStage(_p27),
+						piece.inflictions)));
+			return {
 				ctor: '_Tuple2',
-				_0: _p27,
-				_1: boosted(_p23._1)
-			},
-			_1: infliction
+				_0: {
+					ctor: '_Tuple2',
+					_0: _p27,
+					_1: boosted(_p23._1)
+				},
+				_1: infliction
+			};
 		};
-	};
-	return A2(_elm_lang$core$List$map, boost, weapon.attacks);
-};
+		return A2(_elm_lang$core$List$map, boost, piece.attacks);
+	});
 var _user$project$Knight$hearts = function (knight) {
 	return (((5 + knight.helmet.piece.hearts) + knight.armour.piece.hearts) + _elm_lang$core$List$sum(
 		A2(_elm_lang$core$List$map, _user$project$Knight_UV$toHearts, knight.shield.piece.effects))) + _user$project$Knight_Trinket$hearts(knight.trinkets);
@@ -11133,7 +11737,7 @@ var _user$project$Knight$health = function (knight) {
 };
 var _user$project$Knight$Knight = F6(
 	function (a, b, c, d, e, f) {
-		return {name: a, weapon: b, helmet: c, armour: d, shield: e, trinkets: f};
+		return {name: a, weapons: b, helmet: c, armour: d, shield: e, trinkets: f};
 	});
 var _user$project$Knight$WeaponEquip = F2(
 	function (a, b) {
@@ -11475,537 +12079,6 @@ var _user$project$Knight_Bombs$bombs = A2(
 								_1: {ctor: '[]'}
 							}
 						}))))));
-var _user$project$Knight_Guns$gun = {
-	weaponType: _user$project$Knight_Types$Gun,
-	name: 'Stock Gun',
-	damageType: _user$project$Knight_UV$Normal,
-	split: _elm_lang$core$Maybe$Nothing,
-	status: _elm_lang$core$Maybe$Nothing,
-	chargeTime: _user$project$Knight_Values$charge.normal,
-	attacks: {ctor: '[]'},
-	inflictions: {ctor: '[]'},
-	bonuses: {ctor: '[]'}
-};
-var _user$project$Knight_Guns$valiance = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$gun,
-	{
-		name: 'Valiance',
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.blaster},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.blasterCharge},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$blasters = function () {
-	var copy = function (_p0) {
-		var _p1 = _p0;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$valiance,
-			{name: _p1._0, damageType: _p1._1});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Riftlocker', _1: _user$project$Knight_UV$Piercing},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Arcana', _1: _user$project$Knight_UV$Elemental},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'Phantomos', _1: _user$project$Knight_UV$Shadow},
-				_1: {ctor: '[]'}
-			}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$nova = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$gun,
-	{
-		name: 'Nova Driver',
-		damageType: _user$project$Knight_UV$Elemental,
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.nova},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.novaCharge},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$umbra = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$nova,
-	{name: 'Umbra Driver', damageType: _user$project$Knight_UV$Shadow});
-var _user$project$Knight_Guns$alchemers = function () {
-	var copy = function (_p2) {
-		var _p3 = _p2;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$nova,
-			{
-				name: _p3._0,
-				status: _elm_lang$core$Maybe$Just(_p3._1),
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.driverCharge},
-						_1: {ctor: '[]'}
-					}
-				},
-				inflictions: {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Magma Driver', _1: _user$project$Knight_UV$Fire},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Hail Driver', _1: _user$project$Knight_UV$Freeze},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'Storm Driver', _1: _user$project$Knight_UV$Shock},
-				_1: {ctor: '[]'}
-			}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$pepper = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$gun,
-	{
-		name: 'Volcanic Pepperbox',
-		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Fire),
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.pepper},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.pepperCharge},
-				_1: {ctor: '[]'}
-			}
-		},
-		inflictions: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Moderate},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Moderate},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$plague = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$pepper,
-	{
-		name: 'Plague Needle',
-		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Poison),
-		inflictions: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Strong},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Strong},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$autoguns = function () {
-	var copy = function (_p4) {
-		var _p5 = _p4;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$gun,
-			{
-				name: _p5._0,
-				damageType: _p5._1,
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Blitz Needle', _1: _user$project$Knight_UV$Piercing},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Grim Repeater', _1: _user$project$Knight_UV$Shadow},
-			_1: {ctor: '[]'}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$antiguas = function () {
-	var copy = function (_p6) {
-		var _p7 = _p6;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$gun,
-			{
-				name: _p7._0,
-				damageType: _p7._1,
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
-						_1: {ctor: '[]'}
-					}
-				},
-				bonuses: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _p7._2, _1: _user$project$Knight_UV$High},
-					_1: {ctor: '[]'}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple3', _0: 'Gilded Griffin', _1: _user$project$Knight_UV$Piercing, _2: _user$project$Knight_UV$Beast},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: 'Argent Peacemaker', _1: _user$project$Knight_UV$Elemental, _2: _user$project$Knight_UV$Undead},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: 'Sentenza', _1: _user$project$Knight_UV$Shadow, _2: _user$project$Knight_UV$Gremlin},
-				_1: {ctor: '[]'}
-			}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$obsidian = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$gun,
-	{
-		name: 'Obsidian Carbine',
-		damageType: _user$project$Knight_UV$Shadow,
-		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Poison),
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
-				_1: {ctor: '[]'}
-			}
-		},
-		inflictions: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Slight, _2: _user$project$Knight_Types$Moderate},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Fair, _2: _user$project$Knight_Types$Moderate},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$magnuses = function () {
-	var copy = function (_p8) {
-		var _p9 = _p8;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$gun,
-			{
-				name: _p9._0,
-				damageType: _p9._1,
-				status: _elm_lang$core$Maybe$Just(_p9._2),
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.magnus},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.magnusCharge},
-						_1: {ctor: '[]'}
-					}
-				},
-				inflictions: {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Fair, _2: _user$project$Knight_Types$Moderate},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple3', _0: 'Callahan', _1: _user$project$Knight_UV$Piercing, _2: _user$project$Knight_UV$Stun},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: 'Iron Slug', _1: _user$project$Knight_UV$Normal, _2: _user$project$Knight_UV$Stun},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: 'Winter Grave', _1: _user$project$Knight_UV$Shadow, _2: _user$project$Knight_UV$Freeze},
-				_1: {ctor: '[]'}
-			}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$supernova = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$gun,
-	{
-		name: 'Supernova',
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Values$attacks.magnus},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.novaCharge},
-					_1: {ctor: '[]'}
-				}
-			}
-		}
-	});
-var _user$project$Knight_Guns$pulsars = function () {
-	var copy = function (_p10) {
-		var _p11 = _p10;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$gun,
-			{
-				name: _p11._0,
-				damageType: _user$project$Knight_UV$Elemental,
-				status: _elm_lang$core$Maybe$Just(_p11._1),
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Values$attacks.nova},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.blasterCharge},
-							_1: {ctor: '[]'}
-						}
-					}
-				},
-				inflictions: {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Polaris', _1: _user$project$Knight_UV$Shock},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Wildfire', _1: _user$project$Knight_UV$Fire},
-			_1: {ctor: '[]'}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$neutralizer = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$gun,
-	{
-		name: 'Neutralizer',
-		chargeTime: _user$project$Knight_Values$charge.quick,
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.neutralizer},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.driver},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$biohazard = _elm_lang$core$Native_Utils.update(
-	_user$project$Knight_Guns$neutralizer,
-	{
-		name: 'Biohazard',
-		status: _elm_lang$core$Maybe$Just(_user$project$Knight_UV$Poison),
-		attacks: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.magnusCharge},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.driver},
-				_1: {ctor: '[]'}
-			}
-		},
-		inflictions: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Types$Fair, _2: _user$project$Knight_Types$Moderate},
-				_1: {ctor: '[]'}
-			}
-		}
-	});
-var _user$project$Knight_Guns$tortofists = function () {
-	var copy = function (_p12) {
-		var _p13 = _p12;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$gun,
-			{
-				name: _p13._0,
-				damageType: _p13._1,
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Basic, _1: _user$project$Knight_Values$attacks.tortofist},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.blaster},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.antiguaCharge},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.pepperCharge},
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Gorgofist', _1: _user$project$Knight_UV$Shadow},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Grand Tortofist', _1: _user$project$Knight_UV$Normal},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'Savage Tortofist', _1: _user$project$Knight_UV$Piercing},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'Omega Tortofist', _1: _user$project$Knight_UV$Elemental},
-					_1: {ctor: '[]'}
-				}
-			}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$mixmasters = function () {
-	var copy = function (_p14) {
-		var _p15 = _p14;
-		return _elm_lang$core$Native_Utils.update(
-			_user$project$Knight_Guns$gun,
-			{
-				name: _p15._0,
-				damageType: _user$project$Knight_UV$Elemental,
-				status: _elm_lang$core$Maybe$Just(_p15._1),
-				attacks: {
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.driver},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.driverCharge},
-						_1: {ctor: '[]'}
-					}
-				},
-				inflictions: {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple3', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Types$Good, _2: _user$project$Knight_Types$Moderate},
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	};
-	var variants = {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'Overcharged Mixmaster', _1: _user$project$Knight_UV$Shock},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple2', _0: 'Celestial Orbitgun', _1: _user$project$Knight_UV$Fire},
-			_1: {ctor: '[]'}
-		}
-	};
-	return A2(_elm_lang$core$List$map, copy, variants);
-}();
-var _user$project$Knight_Guns$guns = A2(
-	_elm_lang$core$Basics_ops['++'],
-	{ctor: '[]'},
-	A2(
-		_elm_lang$core$Basics_ops['++'],
-		{ctor: '::', _0: _user$project$Knight_Guns$valiance, _1: _user$project$Knight_Guns$blasters},
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			{
-				ctor: '::',
-				_0: _user$project$Knight_Guns$nova,
-				_1: {ctor: '::', _0: _user$project$Knight_Guns$umbra, _1: _user$project$Knight_Guns$alchemers}
-			},
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_user$project$Knight_Guns$autoguns,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					{
-						ctor: '::',
-						_0: _user$project$Knight_Guns$pepper,
-						_1: {
-							ctor: '::',
-							_0: _user$project$Knight_Guns$plague,
-							_1: {ctor: '[]'}
-						}
-					},
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						_user$project$Knight_Guns$magnuses,
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_user$project$Knight_Guns$antiguas,
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								{
-									ctor: '::',
-									_0: _user$project$Knight_Guns$obsidian,
-									_1: {ctor: '[]'}
-								},
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									{ctor: '::', _0: _user$project$Knight_Guns$supernova, _1: _user$project$Knight_Guns$pulsars},
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										{
-											ctor: '::',
-											_0: _user$project$Knight_Guns$neutralizer,
-											_1: {
-												ctor: '::',
-												_0: _user$project$Knight_Guns$biohazard,
-												_1: {ctor: '[]'}
-											}
-										},
-										A2(_elm_lang$core$Basics_ops['++'], _user$project$Knight_Guns$tortofists, _user$project$Knight_Guns$mixmasters)))))))))));
 var _user$project$View_Shortcuts$spacer = A2(
 	_elm_lang$html$Html$div,
 	{
@@ -13044,93 +13117,76 @@ var _user$project$Knight_View$attackSpeed = F2(
 				}
 			});
 	});
-var _user$project$Knight_View$attacks = function (knight) {
-	var value = function (label) {
-		return A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('value'),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text(label),
-				_1: {ctor: '[]'}
-			});
-	};
-	var maxDamage = 715;
-	var bar = function (dType) {
-		return A2(
-			_user$project$View_Shortcuts$bar,
-			maxDamage,
-			_elm_lang$core$Basics$toString(dType));
-	};
-	var piece = knight.weapon.piece;
-	var actualStatus = function () {
-		var _p3 = piece.status;
-		if (_p3.ctor === 'Just') {
-			return _p3._0;
-		} else {
-			return _user$project$Knight_UV$Fire;
-		}
-	}();
-	var status = function (infliction) {
-		var _p4 = infliction;
-		if (_p4.ctor === 'Just') {
-			return {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('status-blurb'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$span,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('chance'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(_p4._0._0),
-										'%')),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
+var _user$project$Knight_View$attacks = F2(
+	function (knight, weapon) {
+		var value = function (label) {
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('value'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(label),
+					_1: {ctor: '[]'}
+				});
+		};
+		var maxDamage = 715;
+		var bar = function (dType) {
+			return A2(
+				_user$project$View_Shortcuts$bar,
+				maxDamage,
+				_elm_lang$core$Basics$toString(dType));
+		};
+		var piece = weapon.piece;
+		var actualStatus = function () {
+			var _p3 = piece.status;
+			if (_p3.ctor === 'Just') {
+				return _p3._0;
+			} else {
+				return _user$project$Knight_UV$Fire;
+			}
+		}();
+		var status = function (infliction) {
+			var _p4 = infliction;
+			if (_p4.ctor === 'Just') {
+				return {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('status-blurb'),
+							_1: {ctor: '[]'}
+						},
+						{
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$span,
-								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('chance of'),
+									_0: _elm_lang$html$Html_Attributes$class('chance'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Basics$toString(_p4._0._0),
+											'%')),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
 								ctor: '::',
 								_0: A2(
 									_elm_lang$html$Html$span,
+									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('strength'),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												'+',
-												_elm_lang$core$Basics$toString(_p4._0._1))),
+										_0: _elm_lang$html$Html$text('chance of'),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -13139,160 +13195,182 @@ var _user$project$Knight_View$attacks = function (knight) {
 										_elm_lang$html$Html$span,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class(
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													'status ',
-													_elm_lang$core$Basics$toString(actualStatus))),
+											_0: _elm_lang$html$Html_Attributes$class('strength'),
 											_1: {ctor: '[]'}
 										},
 										{
 											ctor: '::',
 											_0: _elm_lang$html$Html$text(
-												_elm_lang$core$Basics$toString(actualStatus)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'+',
+													_elm_lang$core$Basics$toString(_p4._0._1))),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$span,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class(
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														'status ',
+														_elm_lang$core$Basics$toString(actualStatus))),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													_elm_lang$core$Basics$toString(actualStatus)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
-						}
-					}),
-				_1: {ctor: '[]'}
-			};
-		} else {
-			return {ctor: '[]'};
-		}
-	};
-	var singlebar = F2(
-		function (damage, infliction) {
-			return A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('splitbar'),
+						}),
 					_1: {ctor: '[]'}
-				},
-				A2(
-					_elm_lang$core$Basics_ops['++'],
+				};
+			} else {
+				return {ctor: '[]'};
+			}
+		};
+		var singlebar = F2(
+			function (damage, infliction) {
+				return A2(
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: A2(bar, piece.damageType, damage),
+						_0: _elm_lang$html$Html_Attributes$class('splitbar'),
 						_1: {ctor: '[]'}
 					},
-					status(infliction)));
-		});
-	var splitbar = F2(
-		function (damage, infliction) {
-			return A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('splitbar'),
-					_1: {ctor: '[]'}
-				},
-				A2(
-					_elm_lang$core$Basics_ops['++'],
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
+							ctor: '::',
+							_0: A2(bar, piece.damageType, damage),
+							_1: {ctor: '[]'}
+						},
+						status(infliction)));
+			});
+		var splitbar = F2(
+			function (damage, infliction) {
+				return A2(
+					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: A2(bar, piece.damageType, damage / 2),
+						_0: _elm_lang$html$Html_Attributes$class('splitbar'),
+						_1: {ctor: '[]'}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
+							ctor: '::',
+							_0: A2(bar, piece.damageType, damage / 2),
+							_1: {
+								ctor: '::',
+								_0: A2(bar, piece.split, damage / 2),
+								_1: {ctor: '[]'}
+							}
+						},
+						status(infliction)));
+			});
+		var split = !_elm_lang$core$Native_Utils.eq(piece.split, _elm_lang$core$Maybe$Nothing);
+		var attack = function (_p5) {
+			var _p6 = _p5;
+			var _p8 = _p6._1;
+			var _p7 = _p6._0._1;
+			return A2(
+				_user$project$Knight_View$item,
+				_elm_lang$core$Basics$toString(_p6._0._0),
+				A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('graphic'),
+						_1: {ctor: '[]'}
+					},
+					split ? {
+						ctor: '::',
+						_0: A2(splitbar, _p7, _p8),
 						_1: {
 							ctor: '::',
-							_0: A2(bar, piece.split, damage / 2),
-							_1: {ctor: '[]'}
-						}
-					},
-					status(infliction)));
-		});
-	var split = !_elm_lang$core$Native_Utils.eq(piece.split, _elm_lang$core$Maybe$Nothing);
-	var attack = function (_p5) {
-		var _p6 = _p5;
-		var _p8 = _p6._1;
-		var _p7 = _p6._0._1;
-		return A2(
-			_user$project$Knight_View$item,
-			_elm_lang$core$Basics$toString(_p6._0._0),
-			A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('graphic'),
-					_1: {ctor: '[]'}
-				},
-				split ? {
-					ctor: '::',
-					_0: A2(splitbar, _p7, _p8),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$div,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('value'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: value(
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(
-											_elm_lang$core$Basics$round(_p7 / 2)),
-										' +')),
-								_1: {
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('value'),
+									_1: {ctor: '[]'}
+								},
+								{
 									ctor: '::',
 									_0: value(
-										_elm_lang$core$Basics$toString(
-											_elm_lang$core$Basics$round(_p7 / 2))),
-									_1: {ctor: '[]'}
-								}
-							}),
-						_1: {ctor: '[]'}
-					}
-				} : {
-					ctor: '::',
-					_0: A2(singlebar, _p7, _p8),
-					_1: {
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Basics$toString(
+												_elm_lang$core$Basics$round(_p7 / 2)),
+											' +')),
+									_1: {
+										ctor: '::',
+										_0: value(
+											_elm_lang$core$Basics$toString(
+												_elm_lang$core$Basics$round(_p7 / 2))),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}
+					} : {
 						ctor: '::',
-						_0: value(
-							_elm_lang$core$Basics$toString(
-								_elm_lang$core$Basics$round(_p7))),
-						_1: {ctor: '[]'}
-					}
-				}));
-	};
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$h3,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(piece.name),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
+						_0: A2(singlebar, _p7, _p8),
+						_1: {
+							ctor: '::',
+							_0: value(
+								_elm_lang$core$Basics$toString(
+									_elm_lang$core$Basics$round(_p7))),
+							_1: {ctor: '[]'}
+						}
+					}));
+		};
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
 				ctor: '::',
-				_0: A2(
-					_user$project$Knight_View$item,
-					'Speed',
-					A2(_user$project$Knight_View$attackSpeed, knight, knight.weapon)),
+				_0: _user$project$Knight_View$divisor,
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_user$project$Knight_View$item,
-						'CT',
-						A2(_user$project$Knight_View$chargeSpeed, knight, knight.weapon)),
-					_1: {ctor: '[]'}
+						_elm_lang$html$Html$h3,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(piece.name),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_user$project$Knight_View$item,
+							'Speed',
+							A2(_user$project$Knight_View$attackSpeed, knight, weapon)),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Knight_View$item,
+								'CT',
+								A2(_user$project$Knight_View$chargeSpeed, knight, weapon)),
+							_1: {ctor: '[]'}
+						}
+					}
 				}
-			}
-		},
-		A2(
-			_elm_lang$core$List$map,
-			attack,
-			_user$project$Knight$attacks(knight)));
-};
+			},
+			A2(
+				_elm_lang$core$List$map,
+				attack,
+				A2(_user$project$Knight$attacks, knight, weapon)));
+	});
 var _user$project$Knight_View$resistances = function (knight) {
 	var immunities = function (status) {
 		return {
@@ -13465,16 +13543,12 @@ var _user$project$Knight_View$stats = function (knight) {
 								_0: _user$project$Knight_View$resistances(knight),
 								_1: {
 									ctor: '::',
-									_0: {
-										ctor: '::',
-										_0: _user$project$Knight_View$divisor,
-										_1: {ctor: '[]'}
-									},
-									_1: {
-										ctor: '::',
-										_0: _user$project$Knight_View$attacks(knight),
-										_1: {ctor: '[]'}
-									}
+									_0: _elm_lang$core$List$concat(
+										A2(
+											_elm_lang$core$List$map,
+											_user$project$Knight_View$attacks(knight),
+											knight.weapons)),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
@@ -13522,6 +13596,95 @@ var _user$project$Knight_View$slot = F5(
 				},
 				A2(uvForm, equipUv, equipment)));
 	});
+var _user$project$Knight_View$weaponSlots = F2(
+	function (message, knight) {
+		var removeWeapon = function (index) {
+			return message(
+				A2(_user$project$Util$remove, index, knight.weapons));
+		};
+		var addWeapon = message(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				knight.weapons,
+				{
+					ctor: '::',
+					_0: {
+						piece: _user$project$Knight_Bombs$nitro,
+						uvs: {ctor: '[]'}
+					},
+					_1: {ctor: '[]'}
+				}));
+		var equipWeapon = F2(
+			function (index, weapon) {
+				return message(
+					A3(_user$project$Util$replace, knight.weapons, index, weapon));
+			});
+		var weapons = A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Knight_Swords$swords,
+			A2(_elm_lang$core$Basics_ops['++'], _user$project$Knight_Guns$guns, _user$project$Knight_Bombs$bombs));
+		var weaponSlot = F2(
+			function (index, weapon) {
+				return A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('weapon slot'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A5(
+							_user$project$Knight_View$slot,
+							equipWeapon(index),
+							weapon,
+							weapons,
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'Weapon ',
+								_elm_lang$core$Basics$toString(index + 1)),
+							_user$project$Knight_UV_View$weaponForm),
+						_1: (_elm_lang$core$Native_Utils.cmp(index, 1) > 0) ? {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(
+										removeWeapon(index)),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('-'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						} : {ctor: '[]'}
+					});
+			});
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(_elm_lang$core$List$indexedMap, weaponSlot, knight.weapons),
+			(_elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$List$length(knight.weapons),
+				4) < 0) ? {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(addWeapon),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('+ Weapon'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			} : {ctor: '[]'});
+	});
 var _user$project$Knight_View$form = F2(
 	function (message, knight) {
 		var equipTrinkets = function (equip) {
@@ -13530,11 +13693,11 @@ var _user$project$Knight_View$form = F2(
 					knight,
 					{trinkets: equip}));
 		};
-		var equipWeapon = function (equip) {
+		var equipWeapons = function (equip) {
 			return message(
 				_elm_lang$core$Native_Utils.update(
 					knight,
-					{weapon: equip}));
+					{weapons: equip}));
 		};
 		var equipArmour = function (equip) {
 			return message(
@@ -13554,10 +13717,6 @@ var _user$project$Knight_View$form = F2(
 					knight,
 					{shield: equip}));
 		};
-		var weapons = A2(
-			_elm_lang$core$Basics_ops['++'],
-			_user$project$Knight_Swords$swords,
-			A2(_elm_lang$core$Basics_ops['++'], _user$project$Knight_Guns$guns, _user$project$Knight_Bombs$bombs));
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -13592,22 +13751,21 @@ var _user$project$Knight_View$form = F2(
 									_1: {
 										ctor: '::',
 										_0: _user$project$Knight_View$divisor,
-										_1: {
-											ctor: '::',
-											_0: A5(_user$project$Knight_View$slot, equipWeapon, knight.weapon, weapons, 'Weapon', _user$project$Knight_UV_View$weaponForm),
-											_1: {
-												ctor: '::',
-												_0: _user$project$Knight_View$divisor,
-												_1: {ctor: '[]'}
-											}
-										}
+										_1: {ctor: '[]'}
 									}
 								}
 							}
 						}
 					}
 				},
-				A2(_user$project$Knight_UV_View$trinketForms, equipTrinkets, knight.trinkets)));
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(_user$project$Knight_View$weaponSlots, equipWeapons, knight),
+					{
+						ctor: '::',
+						_0: _user$project$Knight_View$divisor,
+						_1: A2(_user$project$Knight_UV_View$trinketForms, equipTrinkets, knight.trinkets)
+					})));
 	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
