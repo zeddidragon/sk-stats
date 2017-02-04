@@ -3,8 +3,6 @@ import Util exposing (lIndex)
 
 type DamageType = Normal | Piercing | Elemental | Shadow
 
-type Stage = Basic | Heavy | Charge | Special
-
 type Status = Fire | Freeze | Shock | Poison | Stun | Curse | Sleep | Random
 
 type Bonus

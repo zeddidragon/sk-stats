@@ -22,7 +22,7 @@ valiance =
   { gun
   | name = "Valiance"
   , attacks =
-    [ (Basic, attacks.blaster)
+    [ (Shot, attacks.blaster)
     , (Charge, attacks.blasterCharge)
     ]
   }
@@ -49,7 +49,7 @@ nova =
   | name = "Nova Driver"
   , damageType = Elemental
   , attacks =
-    [ (Basic, attacks.nova)
+    [ (Shot, attacks.nova)
     , (Charge, attacks.novaCharge)
     ]
   }
@@ -74,11 +74,11 @@ alchemers =
       | name = name
       , status = Just status
       , attacks =
-        [ (Basic, attacks.driver)
+        [ (Shot, attacks.driver)
         , (Charge, attacks.driverCharge)
         ]
       , inflictions =
-        [ (Basic, Good, Moderate)
+        [ (Shot, Good, Moderate)
         , (Charge, Good, Moderate)
         ]
       }
@@ -91,11 +91,11 @@ pepper =
   | name = "Volcanic Pepperbox"
   , status = Just Fire
   , attacks =
-    [ (Basic, attacks.pepper)
+    [ (Shot, attacks.pepper)
     , (Charge, attacks.pepperCharge)
     ]
   , inflictions =
-    [ (Basic, Slight, Moderate)
+    [ (Shot, Slight, Moderate)
     , (Charge, Slight, Moderate)
     ]
   }
@@ -106,7 +106,7 @@ plague =
   | name = "Plague Needle"
   , status = Just Poison
   , inflictions =
-    [ (Basic, Slight, Strong)
+    [ (Shot, Slight, Strong)
     , (Charge, Slight, Strong)
     ]
   }
@@ -123,7 +123,7 @@ autoguns =
       | name = name
       , damageType = dType
       , attacks =
-        [ (Basic, attacks.antigua)
+        [ (Shot, attacks.antigua)
         , (Charge, attacks.antiguaCharge)
         ]
       }
@@ -143,7 +143,7 @@ antiguas =
       | name = name
       , damageType = dType
       , attacks =
-        [ (Basic, attacks.antigua)
+        [ (Shot, attacks.antigua)
         , (Charge, attacks.antiguaCharge)
         ]
       , bonuses = [ (bonus, High) ]
@@ -156,12 +156,13 @@ obsidian =
   { gun
   | name = "Obsidian Carbine"
   , damageType = Shadow
+  , status = Just Poison
   , attacks =
-    [ (Basic, attacks.antigua)
+    [ (Shot, attacks.antigua)
     , (Charge, attacks.antiguaCharge)
     ]
   , inflictions =
-    [ (Basic, Slight, Moderate)
+    [ (Shot, Slight, Moderate)
     , (Charge, Fair, Moderate)
     ]
   }
@@ -180,11 +181,11 @@ magnuses =
       , damageType = dType
       , status = Just status
       , attacks =
-        [ (Basic, attacks.magnus)
+        [ (Shot, attacks.magnus)
         , (Charge, attacks.magnusCharge)
         ]
       , inflictions =
-        [ (Basic, Fair, Moderate)
+        [ (Shot, Fair, Moderate)
         , (Charge, Good, Moderate)
         ]
       }
@@ -196,7 +197,7 @@ supernova =
   { gun
   | name = "Supernova"
   , attacks =
-    [ (Basic, attacks.driver)
+    [ (Shot, attacks.driver)
     , (Heavy, attacks.magnus)
     , (Charge, attacks.novaCharge)
     ]
@@ -215,9 +216,14 @@ pulsars =
       , damageType = Elemental
       , status = Just status
       , attacks =
-        [ (Basic, attacks.driver)
+        [ (Shot, attacks.driver)
         , (Heavy, attacks.nova)
         , (Charge, attacks.blasterCharge)
+        ]
+      , inflictions =
+        [ (Shot, Good, Moderate)
+        , (Heavy, Good, Moderate)
+        , (Charge, Good, Moderate)
         ]
       }
   in
@@ -249,6 +255,53 @@ biohazard =
     ]
   }
 
+tortofists : List Weapon
+tortofists =
+  let
+    variants =
+      [ ("Gorgofist", Shadow)
+      , ("Grand Tortofist", Normal)
+      , ("Savage Tortofist", Piercing)
+      , ("Omega Tortofist", Elemental)
+      ]
+    copy (name, dType) =
+      { gun
+      | name = name
+      , damageType = dType
+      , attacks =
+        [ (Basic, attacks.tortofist)
+        , (Shot, attacks.blaster)
+        , (Charge, attacks.antiguaCharge)
+        , (Special, attacks.pepperCharge)
+        ]
+      }
+  in
+    List.map copy variants
+
+mixmasters : List Weapon
+mixmasters =
+  let
+    variants =
+      [ ("Overcharged Mixmaster", Shock)
+      , ("Celestial Orbitgun", Fire)
+      ]
+    copy (name, status) =
+      { gun
+      | name = name
+      , damageType = Elemental
+      , status = Just status
+      , attacks =
+        [ (Shot, attacks.driver)
+        , (Charge, attacks.driverCharge)
+        ]
+      , inflictions =
+        [ (Shot, Good, Moderate)
+        , (Charge, Good, Moderate)
+        ]
+      }
+  in
+    List.map copy variants
+
 guns : List Weapon
 guns =
   []
@@ -259,4 +312,6 @@ guns =
   ++ antiguas ++ [obsidian]
   ++ (supernova :: pulsars)
   ++ [neutralizer, biohazard]
+  ++ tortofists
+  ++ mixmasters
 

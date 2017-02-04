@@ -5,6 +5,7 @@ import Knight.UV exposing (..)
 type WeaponType = Sword | Gun | Bomb
 type StatusChance = Slight | Fair | Good
 type StatusStrength = Minor | Moderate | Strong
+type Stage = Basic | Heavy | Shot | Charge | Special
 
 type alias Weapon =
   { name: String
