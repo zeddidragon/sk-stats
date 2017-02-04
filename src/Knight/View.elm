@@ -7,6 +7,7 @@ import Knight.UV exposing (..)
 import Knight
 import Knight.Swords exposing (swords)
 import Knight.Guns exposing (guns)
+import Knight.Bombs exposing (bombs)
 import Knight.Armour exposing (armours)
 import Knight.Shield exposing (shields)
 import View.Shortcuts exposing (selectList, bar, toText)
@@ -14,7 +15,7 @@ import Knight.UV.View as UvForm
 
 form message knight =
   let
-    weapons = swords ++ guns
+    weapons = swords ++ guns ++ bombs
     equipShield equip = message {knight | shield = equip}
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}

@@ -5,6 +5,7 @@ charge =
   , normal = 2
   , long = 3
   , painful = 6
+  , irontech = 2.5
   }
 
 attacks =
@@ -63,4 +64,21 @@ attacks =
   , neutralizer = 652 / 1.24
   
   , tortofist = 252 / 1.24
+
+-- Bombs --
+  , nitro = 443 / 1.24
+  , irontech = 476 / 1.24
+  , bab = 509 / 1.24
+
+  , haze = 389 / 1.24
+  , graviton = 24 / 1.24
+  , gravitonCollapse = 423 / 1.24
+
+  , dr = 182 / 1.24 
+
+  , shardCore = 246 / 1.24
+  , shardPure = 296 / 1.24
+  , shardStatus = 271 / 1.24
+
+  , shardOld = 593 / 1.24
   }
