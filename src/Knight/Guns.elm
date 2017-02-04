@@ -43,6 +43,11 @@ blasters =
   in
     List.map copy variants
 
+arcana =
+  case List.head <| List.drop 1 blasters of
+    Just gun -> gun
+    Nothing -> valiance
+
 nova : Weapon
 nova =
   { gun
@@ -203,31 +208,30 @@ supernova =
     ]
   }
 
-pulsars : List Weapon
-pulsars =
-  let
-    variants =
-      [ ("Polaris", Shock)
-      , ("Wildfire", Fire)
-      ]
-    copy (name, status) =
-      { gun
-      | name = name
-      , damageType = Elemental
-      , status = Just status
-      , attacks =
-        [ (Shot, attacks.driver)
-        , (Heavy, attacks.nova)
-        , (Charge, attacks.blasterCharge)
-        ]
-      , inflictions =
-        [ (Shot, Good, Moderate)
-        , (Heavy, Good, Moderate)
-        , (Charge, Good, Moderate)
-        ]
-      }
-  in
-    List.map copy variants
+polaris : Weapon
+polaris =
+  { gun
+  | name = "Polaris"
+  , damageType = Elemental
+  , status = Just Shock
+  , attacks =
+    [ (Shot, attacks.driver)
+    , (Heavy, attacks.nova)
+    , (Charge, attacks.blasterCharge)
+    ]
+  , inflictions =
+    [ (Shot, Good, Moderate)
+    , (Heavy, Good, Moderate)
+    , (Charge, Good, Moderate)
+    ]
+  }
+
+wildfire : Weapon
+wildfire =
+  { polaris
+  | name = "Wildfire"
+  , status = Just Fire
+  }
 
 neutralizer : Weapon
 neutralizer =
@@ -310,7 +314,7 @@ guns =
   ++ autoguns ++ [pepper, plague]
   ++ magnuses
   ++ antiguas ++ [obsidian]
-  ++ (supernova :: pulsars)
+  ++ [supernova, polaris, wildfire]
   ++ [neutralizer, biohazard]
   ++ tortofists
   ++ mixmasters

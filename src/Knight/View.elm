@@ -2,6 +2,7 @@ module Knight.View exposing (form, stats)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Util exposing (replace)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight
@@ -15,11 +16,10 @@ import Knight.UV.View as UvForm
 
 form message knight =
   let
-    weapons = swords ++ guns ++ bombs
     equipShield equip = message {knight | shield = equip}
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}
-    equipWeapon equip = message {knight | weapon = equip}
+    equipWeapons equip = message {knight | weapons = equip}
     equipTrinkets equip = message {knight | trinkets = equip}
   in
     div [ class "knight-form" ]
@@ -29,9 +29,25 @@ form message knight =
       , slot equipHelmet knight.helmet armours "Helmet" UvForm.armourForm
       , slot equipArmour knight.armour armours "Armour" UvForm.armourForm
       , divisor
-      , slot equipWeapon knight.weapon weapons  "Weapon" UvForm.weaponForm
-      , divisor
-      ] ++ UvForm.trinketForms equipTrinkets knight.trinkets)
+      ]
+      ++ weaponSlots equipWeapons knight
+      ++ (divisor :: UvForm.trinketForms equipTrinkets knight.trinkets)
+      )
+
+weaponSlots message knight =
+  let
+    weapons = swords ++ guns ++ bombs
+    equipWeapon index weapon =
+      message <| replace knight.weapons index weapon
+    weaponSlot index weapon =
+      slot
+        (equipWeapon index)
+        weapon
+        weapons
+        ("Weapon " ++ toString (index + 1))
+        UvForm.weaponForm
+  in
+    List.indexedMap weaponSlot knight.weapons
 
 slot message equipment items title uvForm =
   let
@@ -53,7 +69,7 @@ stats knight =
     , [ divisor ]
     , resistances knight
     , [ divisor ]
-    , attacks knight
+    , List.concat <| List.map (attacks knight) knight.weapons
     ]
   |> div [ class "knight-stats" ]
 
@@ -119,9 +135,9 @@ resistances knight =
   in
     Knight.resistances knight |> List.map resistance
  
-attacks knight =
+attacks knight weapon =
   let
-    piece = knight.weapon.piece
+    piece = weapon.piece
     maxDamage = 715
     bar dType = View.Shortcuts.bar maxDamage (toString dType)
     singlebar damage infliction =
@@ -170,9 +186,9 @@ attacks knight =
       )
   in
     [ h3 [] [ text piece.name ]
-    , attackSpeed knight knight.weapon |> item "Speed"
-    , chargeSpeed knight knight.weapon |> item "CT"
-    ] ++ (Knight.attacks knight |> List.map attack)
+    , attackSpeed knight weapon |> item "Speed"
+    , chargeSpeed knight weapon |> item "CT"
+    ] ++ (Knight.attacks knight weapon |> List.map attack)
 
 health knight =
   let

@@ -6,13 +6,14 @@ import Tuple exposing (first, second)
 import Knight.Types exposing (..)
 import Knight.UV as UV exposing (..)
 import Knight.Swords as Swords
+import Knight.Guns as Guns
 import Knight.Armour as Armour
 import Knight.Shield as Shield
 import Knight.Trinket as Trinket
 
 type alias Knight =
   { name: String
-  , weapon: WeaponEquip
+  , weapons: List WeaponEquip
   , helmet: ArmourEquip
   , armour: ArmourEquip
   , shield: ShieldEquip
@@ -209,10 +210,10 @@ toDamageBoost uv =
     WeaponUV (bonus, strength) -> (bonus, UV.toDamageBonus strength)
     _ -> (Dmg, 0)
 
-attacks : Knight -> List ((Stage, Float), Maybe (Int, Int))
-attacks knight =
+attacks : Knight -> WeaponEquip -> List ((Stage, Float), Maybe (Int, Int))
+attacks knight weapon =
   let
-    weapon = knight.weapon.piece
+    piece = weapon.piece
     uvs =
       List.map toDamageBoost <| List.concat
         [ knight.shield.piece.effects
@@ -231,7 +232,7 @@ attacks knight =
       |> sum
       |> Basics.min 24
     bonusType =
-      case weapon.weaponType of
+      case piece.weaponType of
         Sword -> SwordDmg
         Gun -> GunDmg
         Bomb -> BombDmg
@@ -245,14 +246,14 @@ attacks knight =
             Just (stage, chance, strength) ->
               Just (statusChance chance, statusStrength strength)
             _ -> Nothing
-        infliction = weapon.inflictions
+        infliction = piece.inflictions
           |> List.filter (isStage attack)
           |> List.head
           |> toStatusValues
       in
         ((attack, boosted damage), infliction)
   in
-    List.map boost weapon.attacks
+    List.map boost piece.attacks
 
 stockArmour : ArmourEquip
 stockArmour =
@@ -260,23 +261,27 @@ stockArmour =
   , uvs = []
   }
 
-p2wSkolver : ArmourEquip
-p2wSkolver =
-  { piece = Armour.skolver
+p2wKat : ArmourEquip
+p2wKat =
+  { piece = Armour.kat
   , uvs =
     [ DefenceUV (Normal, Maximum)
-    , DefenceUV (Piercing, Maximum)
     , StatusUV (Shock, Maximum)
+    , StatusUV (Stun, Maximum)
     ]
   }
 
 you : Knight
 you =
   { name = "You"
-  , weapon =
-    { piece = Swords.leviathan
-    , uvs = []
-    }
+  , weapons =
+    [ { piece = Swords.leviathan
+      , uvs = []
+      }
+    , { piece = Guns.valiance
+      , uvs = []
+      }
+    ]
   , shield =
     { piece = Shield.striker
     , uvs = []
@@ -289,15 +294,28 @@ you =
 opponent : Knight
 opponent =
   { name = "The guy she tells you not to worry about"
-  , weapon =
-    { piece = Swords.acheron
-    , uvs = [WeaponUV (ASI, VeryHigh)]
-    }
+  , weapons =
+    [ { piece = Swords.acheron
+      , uvs =
+        [ WeaponUV (ASI, VeryHigh)
+        , WeaponUV (CTR, VeryHigh)
+        ]
+      }
+    , { piece = Swords.flourish
+      , uvs = [ WeaponUV (ASI, VeryHigh) ]
+      }
+    , { piece = Swords.faust
+      , uvs = [ WeaponUV (ASI, VeryHigh) ]
+      }
+    , { piece = Guns.arcana
+      , uvs = [ WeaponUV (ASI, VeryHigh) ]
+      }
+    ]
   , shield =
     { piece = Shield.striker
     , uvs = []
     }
-  , helmet = p2wSkolver
-  , armour = p2wSkolver
+  , helmet = p2wKat
+  , armour = p2wKat
   , trinkets = List.repeat 2 Trinket.penta
   }
