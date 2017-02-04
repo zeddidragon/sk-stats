@@ -22,7 +22,23 @@ plate =
 cobalt =
   { base
   | name = "Cobalt"
-  , defences = [ (Piercing, defences.base), (Normal, defences.special) ]
+  , defences =
+    [ (Piercing, defences.base)
+    , (Normal, defences.special)
+    ]
+  }
+
+crusader =
+  { base
+  | name = "Almirian Crusader"
+  , defences =
+    [ (Piercing, defences.base)
+    , (Normal, defences.special)
+    ]
+  , resistances =
+    [ (Fire, -2)
+    , (Curse, 2)
+    ]
   }
 
 skolver =
@@ -132,6 +148,15 @@ jelly =
     ]
   }
 
+queen =
+  { jelly
+  | name = "Ice Queen"
+  , resistances =
+    [ (Stun, 2)
+    , (Freeze, 2)
+    ]
+  }
+
 gray =
   { base
   | name = "Gray Feather"
@@ -155,6 +180,16 @@ divine =
     , (Curse, 2)
     ]
   , bonuses = [ (Fiend, Medium) ]
+  }
+
+skelly =
+  { base
+  | name = "Dread Skelly"
+  , defences = (Shadow, defences.special) :: base.defences
+  , resistances =
+    [ (Freeze, 2)
+    , (Poison, 2)
+    ]
   }
 
 chaos =
@@ -242,6 +277,118 @@ ancient =
   , bonuses = ironmight.bonuses ++ [ (MSI, NegLow) ]
   }
 
+seerus =
+  { base
+  | name = "Perfect Mask of Seerus"
+  , defences = (Elemental, defences.class) :: class.defences
+  , resistances =
+    [ (Fire, 2)
+    , (Freeze, -2)
+    , (Shock, 2)
+    , (Poison, -2)
+    ]
+  , bonuses =
+    [ (GunCTR, Medium)
+    , (GunASI, Low)
+    ]
+  }
+
+valkyrie =
+  { base
+  | name = "Valkyrie"
+  , defences =
+    [ (Shadow, defences.base)
+    , (Normal, defences.base)
+    ]
+  , resistances =
+    [ (Fire, -4)
+    , (Poison, 4)
+    , (Curse, 4)
+    ]
+  , bonuses = [ (Fiend, Low) ]
+  }
+
+fallen =
+  { valkyrie
+  | name = "Fallen"
+  , resistances =
+    [ (Fire, 4)
+    , (Poison, 4)
+    , (Curse, -4)
+    ]
+  , bonuses =
+    [ (Fiend, NegLow)
+    , (ASI, Low)
+    ]
+  }
+
+heavenly =
+  { base
+  | name = "Heavenly Iron"
+  , defences = (Shadow, defences.base) :: class.defences
+  , resistances =
+    [ (Shock, -4)
+    , (Curse, 4)
+    ]
+  , bonuses =
+    [ (Fiend, Low)
+    , (SwordDmg, Low)
+    ]
+  }
+
+virulisk =
+  { base
+  | name = "Deadly Virulisk"
+  , defences = (Piercing, defences.base) :: class.defences
+  , resistances = [ (Poison, 4) ]
+  , bonuses = [ (Slime, Medium) ]
+  }
+
+salamander =
+  { virulisk
+  | name = "Volcanic Salamander"
+  , defences = (Elemental, defences.base) :: class.defences
+  , resistances = [ (Fire, 4) ]
+  }
+
+arcane =
+  { salamander
+  | name = "Arcane Salamander"
+  , defences = (Elemental, defences.class) :: class.defences
+  , bonuses =
+    [ (Slime, Low)
+    , (Beast, Low)
+    ]
+  }
+
+dragon =
+  { base
+  | name = "Dragon Scale"
+  , defences =
+    [ (Piercing, defences.class)
+    , (Elemental, defences.class)
+    ]
+  , resistances =
+    [ (Fire, 4)
+    , (Poison, 4)
+    ]
+  , bonuses = [ (Beast, Medium) ]
+  }
+
+silver =
+  { base
+  | name = "Radiant Silvermail"
+  , defences =
+    [ (Piercing, defences.class)
+    , (Shadow, defences.class)
+    ]
+  , resistances =
+    [ (Curse, 4)
+    , (Poison, 4)
+    ]
+  , bonuses = [ (Undead, Medium) ]
+  }
+
 armours =
   [ cobalt
 
@@ -260,18 +407,34 @@ armours =
   , mercDemo
 
   , jelly
+  , queen
 
   , gray
   , divine
   , chaos
+  
+  , skelly
 
   , ironmight
   , volcPlate
   , ancient
+
+  , virulisk
+  , salamander
+  , arcane
+
+  , dragon
+  , silver
+
+  , valkyrie
+  , fallen
+  , heavenly
 
   , kat
 
   , claw
   , eye
   , hiss
+  
+  , seerus
   ]
