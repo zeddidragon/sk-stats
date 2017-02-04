@@ -437,4 +437,73 @@ armours =
   , hiss
   
   , seerus
-  ]
+  ] ++ gunnerSets
+
+gunnerSets =
+  let
+    statusName status =
+      case status of
+        Fire -> "Firefly"
+        Shock -> "Falcon"
+        Freeze -> "Grizzly"
+        Poison -> "Snakebite"
+        _ -> toString status
+    counter status =
+      case status of
+        Fire -> Shock
+        Shock -> Freeze
+        Freeze -> Poison
+        Poison -> Fire
+        _ -> status
+    toBonus family = (family, Medium)
+    families dType =
+      case dType of
+        Piercing -> [Slime, Beast]
+        Elemental -> [Construct, Gremlin]
+        Shadow -> [Undead, Fiend]
+        _ -> [BombDmg, BombCTR]
+    defenceName dType =
+      case dType of
+        Piercing -> "Pathfinder"
+        Elemental -> "Sentinel"
+        Shadow -> "Shade"
+        _ -> "WAT?"
+    familyName bonus defence =
+      case Tuple.first bonus of
+        Beast -> "Guerilla"
+        Slime -> "Hazard"
+        Undead -> "Ghost"
+        Fiend -> "Hex"
+        Gremlin -> "Wraith"
+        Construct -> "Keeper"
+        _ -> defenceName defence
+    statuses = [ Fire, Shock, Freeze, Poison ]
+    damageTypes = [ Piercing, Elemental, Shadow ]
+    familyPaths defence =
+      let
+        bonuses = (GunDmg, Low) :: List.map toBonus (families defence)
+      in
+        List.concatMap (statusPaths defence) bonuses
+    statusPaths defence bonus =
+      List.map (compose defence bonus) statuses
+    compose defence bonus status =
+      { base
+      | name =
+        String.join " "
+          [ "Sacred"
+          , statusName status
+          , familyName bonus defence
+          ]
+      , defences = (defence, defences.base) :: base.defences
+      , resistances =
+        [ (status, 4)
+        , (counter status, -4)
+        ]
+      , bonuses =
+        [ (GunCTR, Low)
+        , (GunASI, Low)
+        , bonus
+        ]
+      }
+  in
+    List.concatMap familyPaths damageTypes
