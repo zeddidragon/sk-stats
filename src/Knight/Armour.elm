@@ -122,6 +122,41 @@ mad =
     ]
   }
 
+jelly =
+  { base
+  | name = "Royal Jelly"
+  , defences = (Piercing, defences.special) :: base.defences
+  , resistances =
+    [ (Stun, 2)
+    , (Sleep, 2)
+    ]
+  }
+
+gray =
+  { base
+  | name = "Gray Feather"
+  , defences = (Elemental, defences.special) :: base.defences
+  , resistances =
+    [ (Fire, 2)
+    , (Shock, 2)
+    ]
+  }
+
+divine =
+  { base
+  | name = "Divine"
+  , defences = 
+    [ (Elemental, defences.class)
+    , (Shadow, defences.class)
+    ]
+  , resistances =
+    [ (Fire, 2)
+    , (Shock, 2)
+    , (Curse, 2)
+    ]
+  , bonuses = [ (Fiend, Medium) ]
+  }
+
 chaos =
   { mad
   | name = "Chaos"
@@ -224,11 +259,16 @@ armours =
   , mad
   , mercDemo
 
+  , jelly
+
+  , gray
+  , divine
+  , chaos
+
   , ironmight
   , volcPlate
   , ancient
 
-  , chaos
   , kat
 
   , claw

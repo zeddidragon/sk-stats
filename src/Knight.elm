@@ -191,7 +191,7 @@ resistances knight =
       |> sum
       |> secondTo status
   in
-    [Fire, Freeze, Shock, Poison, Stun, Curse]
+    [Fire, Freeze, Shock, Poison, Stun, Curse, Sleep]
       |> map total
       |> filter nonZero
 

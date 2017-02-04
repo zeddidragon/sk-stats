@@ -5,7 +5,7 @@ type DamageType = Normal | Piercing | Elemental | Shadow
 
 type Stage = Basic | Heavy | Charge | Special
 
-type Status = Fire | Freeze | Shock | Poison | Stun | Curse | Random
+type Status = Fire | Freeze | Shock | Poison | Stun | Curse | Sleep | Random
 
 type Bonus
   = MSI

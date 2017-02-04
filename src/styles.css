@@ -151,6 +151,11 @@ label {
 .Poison .pip { background-color: #218221; }
 .Stun .pip { background-color: #fafa82; }
 .Curse .pip { background-color: #822182; }
+.Sleep .pip { background-color: #82fafa; }
+.pip.immune {
+  transform: scale(1.2);
+  filter: brightness(150%);
+}
 
 .status-blurb .status {
   font-weight: bold;
