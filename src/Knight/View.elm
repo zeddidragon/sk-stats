@@ -6,6 +6,7 @@ import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight
 import Knight.Swords exposing (swords)
+import Knight.Guns exposing (guns)
 import Knight.Armour exposing (armours)
 import Knight.Shield exposing (shields)
 import View.Shortcuts exposing (selectList, bar, toText)
@@ -13,6 +14,7 @@ import Knight.UV.View as UvForm
 
 form message knight =
   let
+    weapons = swords ++ guns
     equipShield equip = message {knight | shield = equip}
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}
@@ -26,7 +28,7 @@ form message knight =
       , slot equipHelmet knight.helmet armours "Helmet" UvForm.armourForm
       , slot equipArmour knight.armour armours "Armour" UvForm.armourForm
       , divisor
-      , slot equipWeapon knight.weapon swords  "Weapon" UvForm.weaponForm
+      , slot equipWeapon knight.weapon weapons  "Weapon" UvForm.weaponForm
       , divisor
       ] ++ UvForm.trinketForms equipTrinkets knight.trinkets)
 
@@ -213,7 +215,7 @@ attackSpeed knight weapon =
 
 chargeSpeed knight weapon =
   let
-    minTime = 1.2
+    minTime = 0.55
     maxTime = 8
     speed = Knight.chargeSpeed knight weapon
     pretty num =

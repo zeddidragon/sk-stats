@@ -46,9 +46,19 @@ attacks =
   , blaster = 314 / 1.24
   , blasterCharge = 532 / 1.24
 
+  , nova = 336 / 1.24
+  , novaCharge = 572 / 1.24
+
+  , driver = 295 / 1.24
+  , driverCharge = 501 / 1.24
+
   , antigua = 231 / 1.24
   , antiguaCharge = 392 / 1.24
 
+  , pepper = (231 / 1.24) * 0.88
+  , pepperCharge = (391 / 1.24) * 0.88
+
   , magnus = 360 / 1.24
   , magnusCharge = 611 / 1.24
+  , neutralizer = 652 / 1.24
   }

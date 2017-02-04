@@ -11,7 +11,7 @@ sword =
   , damageType = Normal
   , split = False
   , status = Nothing
-  , chargeTime = 2.2
+  , chargeTime = charge.normal
   , attacks = []
   , inflictions = []
   , bonuses = []
@@ -206,6 +206,14 @@ voltedge =
   , status = Just Shock
   }
 
+obsidian : Weapon
+obsidian =
+  { combuster
+  | name = "Obsidian Edge"
+  , damageType = Shadow
+  , status = Just Poison
+  }
+
 acheron : Weapon
 acheron =
   { sword
@@ -290,6 +298,7 @@ swords =
   , glacius
   , voltedge
   , acheron
+  , obsidian
   , avenger
   , faust
   , fang
