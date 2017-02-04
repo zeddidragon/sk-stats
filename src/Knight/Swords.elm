@@ -309,6 +309,19 @@ fang =
     ]
   }
 
+faust4star : Weapon
+faust4star =
+  { faust
+  | name = "Faust (4*)"
+  , chargeTime = charge.long
+  , attacks =
+    [ (Basic, 502)
+    , (Heavy, 591)
+    , (Charge, 790)
+    , (Special, 338)
+    ]
+  }
+
 swords : List Weapon
 swords =
   [ leviathan
@@ -329,5 +342,6 @@ swords =
   , avenger
   , faust
   , fang
+  , faust4star
   ]
 
