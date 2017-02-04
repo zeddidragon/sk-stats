@@ -176,3 +176,9 @@ label {
 .status.Stun { color: #fafa82; }
 .status.Curse { color: #822182; }
 
+.weapon.slot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+

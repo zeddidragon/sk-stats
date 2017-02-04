@@ -391,6 +391,7 @@ silver =
 
 armours =
   [ cobalt
+  , crusader
 
   , skolver
   , vog

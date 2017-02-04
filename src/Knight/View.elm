@@ -2,7 +2,8 @@ module Knight.View exposing (form, stats)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Util exposing (replace)
+import Html.Events exposing (onClick)
+import Util exposing (remove, replace)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight
@@ -39,15 +40,37 @@ weaponSlots message knight =
     weapons = swords ++ guns ++ bombs
     equipWeapon index weapon =
       message <| replace knight.weapons index weapon
+    addWeapon =
+      message <| knight.weapons ++
+        [ { piece = Knight.Bombs.nitro
+          , uvs = []
+          }
+        ]
+    removeWeapon index =
+      message <| remove index knight.weapons
     weaponSlot index weapon =
-      slot
-        (equipWeapon index)
-        weapon
-        weapons
-        ("Weapon " ++ toString (index + 1))
-        UvForm.weaponForm
+      div [class "weapon slot"] (
+        slot
+          (equipWeapon index)
+          weapon
+          weapons
+          ("Weapon " ++ toString (index + 1))
+          UvForm.weaponForm
+        :: (
+          if index > 1 then
+            [ button [ onClick <| removeWeapon index ] [ text "-" ] ]
+          else
+            []
+        )
+      )
   in
     List.indexedMap weaponSlot knight.weapons
+    ++ (
+      if List.length knight.weapons < 4 then
+        [ button [ onClick addWeapon ] [ text "+ Weapon" ] ]
+      else
+        []
+    )
 
 slot message equipment items title uvForm =
   let
@@ -68,7 +91,6 @@ stats knight =
     , defences knight
     , [ divisor ]
     , resistances knight
-    , [ divisor ]
     , List.concat <| List.map (attacks knight) knight.weapons
     ]
   |> div [ class "knight-stats" ]
@@ -185,7 +207,8 @@ attacks knight weapon =
         )
       )
   in
-    [ h3 [] [ text piece.name ]
+    [ divisor
+    , h3 [] [ text piece.name ]
     , attackSpeed knight weapon |> item "Speed"
     , chargeSpeed knight weapon |> item "CT"
     ] ++ (Knight.attacks knight weapon |> List.map attack)
