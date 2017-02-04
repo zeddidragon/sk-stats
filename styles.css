@@ -29,6 +29,13 @@ h3 {
   opacity: 0.7;
 }
 
+.hdivisor {
+  border-left: thin solid white;
+  opacity: 0.7;
+  margin-left: 1px;
+  margin-right: 2px;
+}
+
 body {
   color: white;
   background-color: black;
@@ -76,7 +83,7 @@ label {
   font-weight: bold;
   font-size: 0.8em;
   padding: 0 1em;
-  width: 4em;
+  width: 5em;
 }
 
 .bar-container {
@@ -144,6 +151,11 @@ label {
 .Poison .pip { background-color: #218221; }
 .Stun .pip { background-color: #fafa82; }
 .Curse .pip { background-color: #822182; }
+.Sleep .pip { background-color: #82fafa; }
+.pip.highlight {
+  transform: scale(1.2);
+  filter: brightness(150%);
+}
 
 .status-blurb .status {
   font-weight: bold;
