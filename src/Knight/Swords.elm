@@ -9,7 +9,7 @@ sword =
   { weaponType = Sword
   , name = "Stock Sword" 
   , damageType = Normal
-  , split = False
+  , split = Nothing
   , status = Nothing
   , chargeTime = charge.normal
   , attacks = []
@@ -178,7 +178,7 @@ combuster =
   { sword
   | name = "Combuster"
   , damageType = Elemental
-  , split = True
+  , split = Just Normal
   , status = Just Fire
   , attacks =
     [ (Basic, attacks.brandish)
@@ -219,7 +219,7 @@ acheron =
   { sword
   | name = "Acheron"
   , damageType = Shadow
-  , split = True
+  , split = Just Normal
   , attacks =
     [ (Basic, attacks.brandishHeavy)
     , (Heavy, attacks.brandishHeavyFinish)
@@ -254,7 +254,7 @@ fang =
   { sword
   | name = "Fang of Vog"
   , damageType = Elemental
-  , split = True
+  , split = Just Normal
   , status = Just Fire
   , attacks =
     [ (Basic, attacks.fang)

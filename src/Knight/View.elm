@@ -130,7 +130,7 @@ attacks knight =
     splitbar damage infliction =
       div [ class "splitbar" ] (
         [ bar piece.damageType <| damage / 2
-        , bar Normal <| damage / 2
+        , bar piece.split <| damage / 2
         ] ++ status infliction
       )
     actualStatus =
@@ -152,9 +152,10 @@ attacks knight =
               ]
           ]
         Nothing -> []
+    split = piece.split /= Nothing
     attack ((stage, damage), infliction) =
       item (toString stage) (div [ class "graphic" ]
-        ( if piece.split then
+        ( if split then
             [ splitbar damage infliction
             , div [class "value"]
               [ value <| (toString (round (damage / 2))) ++ " +"

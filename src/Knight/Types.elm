@@ -12,7 +12,7 @@ type alias Weapon =
   , weaponType: WeaponType
   , damageType: DamageType
   , chargeTime: Float
-  , split: Bool
+  , split: Maybe DamageType
   , status: Maybe Status
   , attacks: List (Stage, Float)
   , inflictions: List (Stage, StatusChance, StatusStrength)

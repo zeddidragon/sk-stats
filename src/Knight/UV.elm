@@ -1,9 +1,21 @@
 module Knight.UV exposing (..)
 import Util exposing (lIndex)
 
-type DamageType = Normal | Piercing | Elemental | Shadow
+type DamageType
+  = Normal
+  | Piercing
+  | Elemental
+  | Shadow
 
-type Status = Fire | Freeze | Shock | Poison | Stun | Curse | Sleep | Random
+type Status
+  = Fire
+  | Freeze
+  | Shock
+  | Poison
+  | Stun
+  | Curse
+  | Sleep
+  | Random
 
 type Bonus
   = MSI

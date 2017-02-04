@@ -81,4 +81,5 @@ attacks =
   , shardStatus = 271 / 1.24
 
   , shardOld = 593 / 1.24
+  , saltOld = 304
   }

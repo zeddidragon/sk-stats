@@ -9,7 +9,7 @@ bomb =
   { weaponType = Bomb
   , name = "Stock Bomb"
   , damageType = Normal
-  , split = False
+  , split = Nothing
   , status = Nothing
   , chargeTime = charge.normal
   , attacks = []
@@ -167,12 +167,22 @@ rss =
   { bomb
   | name = "Radiant Sun Shards (Old)"
   , damageType = Piercing
-  , split = True
+  , split = Just Elemental
   , attacks = [ (Charge, attacks.shardOld) ]
   , bonuses = [ (Fiend, High) ]
   }
 
-
+salt : Weapon
+salt =
+  { bomb
+  | name = "Ionized Salt Bomb (Old)"
+  , damageType = Piercing
+  , status = Just Shock
+  , chargeTime = charge.painful
+  , attacks = [ (Charge, attacks.saltOld) ]
+  , inflictions = [ (Charge, Good, Moderate) ]
+  , bonuses = [ (Slime, High) ]
+  }
  
 bombs : List Weapon
 bombs =
@@ -182,3 +192,4 @@ bombs =
   ++ (graviton :: vortexes)
   ++ [dr]
   ++ (sss :: ssb :: shards)
+  ++ [rss, salt]

@@ -84,12 +84,16 @@ attackSpeed knight weapon =
         Sword -> SwordASI
         Gun -> GunASI
         Bomb -> ASI
+    uvs =
+      []
+      ++ knight.shield.piece.effects
+      ++ weapon.uvs
+      ++ Trinket.effects knight.trinkets
     bonuses =
       List.concat
         [ knight.helmet.piece.bonuses
         , knight.armour.piece.bonuses
-        , List.map toBonus knight.shield.piece.effects
-        , List.map toBonus weapon.uvs
+        , List.map toBonus uvs
         ]
     boost =
       bonuses
@@ -113,12 +117,16 @@ chargeSpeed knight weapon =
         Sword -> SwordCTR
         Gun -> GunCTR
         Bomb -> BombCTR
+    uvs =
+      []
+      ++ knight.shield.piece.effects
+      ++ weapon.uvs
+      ++ Trinket.effects knight.trinkets
     bonuses =
       (CTR, Medium) :: List.concat
         [ knight.helmet.piece.bonuses
         , knight.armour.piece.bonuses
-        , List.map toBonus knight.shield.piece.effects
-        , List.map toBonus weapon.uvs
+        , List.map toBonus uvs
         ]
     boost =
       bonuses
