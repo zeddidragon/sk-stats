@@ -1,12 +1,12 @@
 module Knight.View exposing (form, stats)
 
-import Html exposing (div, select, text, h3, span)
+import Html exposing (div, select, text, h3, span, Html)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Util exposing (remove, replace)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
-import Knight
+import Knight exposing (Knight)
 import Knight.Swords exposing (swords)
 import Knight.Guns exposing (guns)
 import Knight.Bombs exposing (bombs)
@@ -95,29 +95,31 @@ shield knight =
           []
       ) )
 
-stats lockdown knight =
+stats : Maybe (a -> b) -> Knight -> Html b
+stats message knight =
   List.concat
     [ [ health knight |> item "Health"
       , mobility knight |> item "Mobility"
       ]
     , [ divisor ]
-    , defences lockdown knight
+    , defences message knight
     , [ divisor ]
     , resistances knight
     , (
-      if lockdown then
-      [ divisor
-      , shield knight
-      ]
-      else
+      if message == Nothing then
         []
+      else
+        [ divisor
+        , shield knight
+        ]
     )
     , List.concat <| List.map (attacks knight) knight.weapons
     ]
   |> div [ class "knight-stats" ]
 
-defences lockdown knight =
+defences message knight =
   let
+    lockdown = message /= Nothing
     maxDefence = 350
     defence (dtype, amount) =
       item (toString dtype) (div [ class "graphic" ]

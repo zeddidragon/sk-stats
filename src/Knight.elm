@@ -201,6 +201,8 @@ resistances knight =
       |> filter (isType status)
       |> map second
       |> sum
+      |> Basics.min 10
+      |> Basics.max -8
       |> secondTo status
   in
     [Fire, Freeze, Shock, Poison, Stun, Curse, Sleep]

@@ -2,6 +2,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Knight exposing (..)
 import Knight.View
+import Events exposing (..)
+import Events.View
 import View.Shortcuts exposing (tabs)
 
 main =
@@ -10,7 +12,8 @@ main =
 model =
   { you = Knight.you
   , opponent = Knight.opponent
-  , state = You
+  , state = Vs
+  , events = []
   }
 
 view model =
@@ -20,6 +23,7 @@ view model =
         You -> model.you.name
         Vs -> "vs"
         Opponent -> model.opponent.name
+    addEvent event = SetEvents (event :: model.events)
   in
     div [class "body"]
       [ node "link"
@@ -38,14 +42,15 @@ view model =
         ( case model.state of
           You -> 
             [ Knight.View.form EquipYou model.you
-            , Knight.View.stats False model.you
+            , Knight.View.stats Nothing model.you
             ]
           Vs ->
-            [ Knight.View.stats True model.you
-            , Knight.View.stats True model.opponent
+            [ Knight.View.stats (Just addEvent) model.you
+            , Events.View.log SetEvents model.events [model.you, model.opponent]
+            , Knight.View.stats (Just addEvent) model.opponent
             ]
           Opponent ->
-            [ Knight.View.stats False model.opponent
+            [ Knight.View.stats Nothing model.opponent
             , Knight.View.form EquipOpponent model.opponent
             ]
         )
@@ -55,12 +60,14 @@ update msg model =
   case msg of
     EquipYou new -> {model | you = new}
     EquipOpponent new -> {model | opponent = new}
+    SetEvents new -> {model | events = new}
     SetState new -> {model | state = new}
 
 type Msg
   = EquipYou Knight
   | EquipOpponent Knight
   | SetState State
+  | SetEvents (List Event)
 
 type State
   = You
