@@ -1,7 +1,7 @@
 module View.Shortcuts exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (on, targetValue)
+import Html.Events exposing (on, targetValue, onClick)
 import Json.Decode
 
 signal message label things current selected =
@@ -47,3 +47,16 @@ bar max color value =
 toText arg = arg |> toString |> text
 
 spacer = div [ class "spacer" ] []
+
+tabs : (a -> String) -> (a -> String) -> (a -> b) -> List a -> a -> Html b
+tabs toLabel toClass message items selected =
+  let
+    isSelected item = if selected == item then " selected" else ""
+    tab item =
+      div
+        [ class <| "tab " ++ toClass item ++ isSelected item
+        , onClick <| message item
+        ] [ text <| toLabel item]
+  in
+    div [ class "tabs" ] <| List.map tab items
+

@@ -132,7 +132,7 @@ uvForms availableUvs uvStrengths message equipment =
     removeUv index =
       message <| remove index uvs
     uvForm index equip =
-      div [ class "item sub" ]
+      [ div [ class "item sub" ]
         [ Html.label [] [ "UV" ++ (index + 1 |> toString) |> text ]
         , selectListExclude
           (uvs |> List.map uvName)
@@ -141,7 +141,12 @@ uvForms availableUvs uvStrengths message equipment =
           uvNames
           (equip |> uvName)
         , spacer
-        , Html.label [] [ equip |> uvStrength |> toString |> text ]
+        , button
+          [ onClick <| removeUv index ]
+          [ text "-" ]
+        ]
+      , div [ class "item sub"]
+        [ Html.label [] [ equip |> uvStrength |> toString |> text ]
         , input
           [ type_ "range"
           , Html.Attributes.min "0"
@@ -154,13 +159,10 @@ uvForms availableUvs uvStrengths message equipment =
             |> toString
             |> value
           ] []
-        , spacer
-        , button
-          [ onClick <| removeUv index ]
-          [ text "-" ]
         ]
+      ]
   in
-    List.indexedMap uvForm uvs ++ (
+    (List.concat <| List.indexedMap uvForm uvs) ++ (
       if List.length uvs < 3 then
         [ button [ onClick addUv ] [ text "+ UV" ] ]
       else

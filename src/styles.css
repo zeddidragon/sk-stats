@@ -222,3 +222,34 @@ label {
   justify-content: space-between;
 }
 
+.tabs {
+  display: flex;
+  width: 100%;
+  font-weight: bold;
+}
+
+.tab {
+  text-align: center;
+  padding: 1em;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.tab.You {
+  flex: 1;
+  transform-origin: right;
+}
+
+.tab.Opponent {
+  flex: 1;
+  transform-origin: left;
+}
+
+.tab:hover {
+  transform: scale(1.12);
+  border-bottom: medium solid rgba(255, 255, 255, 0.7);
+}
+
+.tab.selected {
+  border-bottom: medium solid white;
+}
