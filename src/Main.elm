@@ -9,6 +9,7 @@ main =
 model =
   { you = Knight.you
   , opponent = Knight.opponent
+  , state = You
   }
 
 view model =
@@ -25,13 +26,23 @@ view model =
       ]
     []
     , div [class "main"]
-      [ Knight.View.form EquipYou model.you
-      , Knight.View.stats model.you
-      {-
-      , Knight.View.stats model.opponent
-      , Knight.View.form EquipOpponent model.opponent
-      -}
-      ]
+      ( (
+        if model.state == You then
+          [ Knight.View.form EquipYou model.you ]
+        else
+          []
+        ) 
+      ++
+        [ Knight.View.stats model.you
+        , Knight.View.stats model.opponent
+        ]
+      ++ (
+        if model.state == Opponent then
+          [ Knight.View.form EquipOpponent model.opponent ]
+        else
+          []
+        )
+      )
     ]
 
 update msg model =
@@ -43,3 +54,7 @@ type Msg
   = EquipYou Knight
   | EquipOpponent Knight
 
+type State
+  = You
+  | Opponent
+  | Vs

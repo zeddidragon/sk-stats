@@ -32,7 +32,7 @@ crusader =
   { base
   | name = "Almirian Crusader"
   , defences =
-    [ (Piercing, defences.base)
+    [ (Shadow, defences.base)
     , (Normal, defences.special)
     ]
   , resistances =

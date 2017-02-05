@@ -229,11 +229,16 @@ health knight =
       else hearts
     heart color = span [class <| "heart " ++ color] [ text "♥" ]
   in
-    div [ class "row hearts" ] ([]
-      ++ List.repeat golds (heart "gold")
-      ++ List.repeat silvers (heart "silver")
-      ++ List.repeat reds (heart "red")
-      ++ [div [ class "value" ] [ Knight.health knight |> toText ]]
+    div [ class "row" ] (
+      [
+        div [ class "hearts"] (
+          []
+          ++ List.repeat golds (heart "gold")
+          ++ List.repeat silvers (heart "silver")
+          ++ List.repeat reds (heart "red")
+        )
+      , div [ class "value" ] [ Knight.health knight |> toText ]
+      ]
     )
 
 mobility knight =
