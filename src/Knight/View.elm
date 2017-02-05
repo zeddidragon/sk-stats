@@ -3,10 +3,11 @@ module Knight.View exposing (form, stats)
 import Html exposing (div, select, text, h3, span, Html)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
+import Events exposing (..)
 import Util exposing (remove, replace)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
-import Knight exposing (Knight)
+import Knight exposing (Knight, WeaponEquip)
 import Knight.Swords exposing (swords)
 import Knight.Guns exposing (guns)
 import Knight.Bombs exposing (bombs)
@@ -95,7 +96,6 @@ shield knight =
           []
       ) )
 
-stats : Maybe (a -> b) -> Knight -> Html b
 stats message knight =
   List.concat
     [ [ health knight |> item "Health"
@@ -113,7 +113,7 @@ stats message knight =
         , shield knight
         ]
     )
-    , List.concat <| List.map (attacks knight) knight.weapons
+    , List.concat <| List.map (attacks message knight) knight.weapons
     ]
   |> div [ class "knight-stats" ]
 
@@ -180,7 +180,7 @@ resistances knight =
   in
     Knight.resistances knight |> List.map resistance
  
-attacks knight weapon =
+attacks message knight weapon =
   let
     piece = weapon.piece
     maxDamage = 715
@@ -213,31 +213,43 @@ attacks knight weapon =
           ]
         Nothing -> []
     split = piece.split /= Nothing
-    attack ((stage, damage), infliction) =
-      [ item (toString stage) (
-        div [ class "graphic" ]
-          ( if split then
-              [ splitbar damage
-              , div [class "split-value"]
-                [ value <| (toString (round (damage / 2))) ++ " +"
-                , value <| toString <| round (damage / 2)
-                ]
-              , div [ class "combined-value"]
-                [ value <| toString <| round damage ]
+    attack index ((stage, damage), infliction) =
+      [ div [ class "item " ] (
+        (
+        case message of
+          Just (msg, side) ->
+            Html.label 
+              [ onClick <| msg (Attack (side, piece.name, stage))
+              , class "button"
               ]
-            else
-              [ singlebar damage
-              , value <| toString <| round damage
-              ]
-          )
+              [ text <| toString stage ]
+          Nothing -> Html.label [] [ text <| toString stage ]
+        ) :: (
+        if split then
+          [ splitbar damage
+          , div [class "split-value"]
+            [ value <| (toString (round (damage / 2))) ++ " +"
+            , value <| toString <| round (damage / 2)
+            ]
+          , div [ class "combined-value"]
+            [ value <| toString <| round damage ]
+          ]
+        else
+          [ singlebar damage
+          , value <| toString <| round damage
+          ]
         )
-      ] ++ status infliction
+      ) ] ++ status infliction
   in
     [ divisor
     , h3 [] [ text piece.name ]
     , attackSpeed knight weapon |> item "Speed"
     , chargeSpeed knight weapon |> item "CT"
-    ] ++ (Knight.attacks knight weapon |> List.concatMap attack)
+    ] ++ (
+      Knight.attacks knight weapon
+        |> List.indexedMap attack
+        |> List.concat
+    )
 
 health knight =
   let

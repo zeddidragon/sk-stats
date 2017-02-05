@@ -9,6 +9,6 @@ type Side
   | Right
 
 type Event
-  = Attack (Side, DamageType, Float)
+  = Attack (Side, String, Stage)
   | Infliction (Side, Status, Int)
   | Recovery (Side, Status)
