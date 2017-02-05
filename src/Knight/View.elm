@@ -233,9 +233,9 @@ health knight =
       [
         div [ class "hearts"] (
           []
-          ++ List.repeat golds (heart "gold")
-          ++ List.repeat silvers (heart "silver")
           ++ List.repeat reds (heart "red")
+          ++ List.repeat silvers (heart "silver")
+          ++ List.repeat golds (heart "gold")
         )
       , div [ class "value" ] [ Knight.health knight |> toText ]
       ]
