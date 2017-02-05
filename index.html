@@ -12093,6 +12093,8 @@ var _user$project$View_Shortcuts$toText = function (arg) {
 };
 var _user$project$View_Shortcuts$bar = F3(
 	function (max, color, value) {
+		var shift = ((100 * value) / max) - 100;
+		var scale = value / max;
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -12125,11 +12127,14 @@ var _user$project$View_Shortcuts$bar = F3(
 										ctor: '::',
 										_0: {
 											ctor: '_Tuple2',
-											_0: 'width',
+											_0: 'transform',
 											_1: A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString((100 * value) / max),
-												'%')
+												'scaleX(',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(scale),
+													')'))
 										},
 										_1: {ctor: '[]'}
 									}),
@@ -12868,6 +12873,21 @@ var _user$project$Knight_View$chargeSpeed = F2(
 			});
 	});
 var _user$project$Knight_View$health = function (knight) {
+	var heart = function (color) {
+		return A2(
+			_elm_lang$html$Html$span,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
+					A2(_elm_lang$core$Basics_ops['++'], 'heart ', color)),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('♥'),
+				_1: {ctor: '[]'}
+			});
+	};
 	var hearts = _user$project$Knight$hearts(knight);
 	var golds = (_elm_lang$core$Native_Utils.cmp(hearts, 60) > 0) ? (hearts - 60) : 0;
 	var silvers = (_elm_lang$core$Native_Utils.cmp(golds, 0) > 0) ? (30 - golds) : ((_elm_lang$core$Native_Utils.cmp(hearts, 30) > 0) ? (hearts - 30) : 0);
@@ -12876,74 +12896,47 @@ var _user$project$Knight_View$health = function (knight) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('row'),
+			_0: _elm_lang$html$Html_Attributes$class('row hearts'),
 			_1: {ctor: '[]'}
 		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('hearts gold'),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(
-						A2(_elm_lang$core$String$repeat, golds, '♥')),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('hearts silver'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							A2(_elm_lang$core$String$repeat, silvers, '♥')),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(
+					_elm_lang$core$List$repeat,
+					golds,
+					heart('gold')),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(
+						_elm_lang$core$List$repeat,
+						silvers,
+						heart('silver')),
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(
+							_elm_lang$core$List$repeat,
+							reds,
+							heart('red')),
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('hearts'),
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('value'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _user$project$View_Shortcuts$toText(
+										_user$project$Knight$health(knight)),
+									_1: {ctor: '[]'}
+								}),
 							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(
-								A2(_elm_lang$core$String$repeat, reds, '♥')),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$div,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('value'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _user$project$View_Shortcuts$toText(
-									_user$project$Knight$health(knight)),
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		});
+						})))));
 };
 var _user$project$Knight_View$highlightPips = F3(
 	function (highlights, klass, amount) {
@@ -13728,31 +13721,20 @@ var _user$project$Knight_View$form = F2(
 				_elm_lang$core$Basics_ops['++'],
 				{
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$h1,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(knight.name),
-							_1: {ctor: '[]'}
-						}),
+					_0: A5(_user$project$Knight_View$slot, equipShield, knight.shield, _user$project$Knight_Shield$shields, 'Shield', _user$project$Knight_UV_View$armourForm),
 					_1: {
 						ctor: '::',
-						_0: A5(_user$project$Knight_View$slot, equipShield, knight.shield, _user$project$Knight_Shield$shields, 'Shield', _user$project$Knight_UV_View$armourForm),
+						_0: _user$project$Knight_View$divisor,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Knight_View$divisor,
+							_0: A5(_user$project$Knight_View$slot, equipHelmet, knight.helmet, _user$project$Knight_Armour$armours, 'Helmet', _user$project$Knight_UV_View$armourForm),
 							_1: {
 								ctor: '::',
-								_0: A5(_user$project$Knight_View$slot, equipHelmet, knight.helmet, _user$project$Knight_Armour$armours, 'Helmet', _user$project$Knight_UV_View$armourForm),
+								_0: A5(_user$project$Knight_View$slot, equipArmour, knight.armour, _user$project$Knight_Armour$armours, 'Armour', _user$project$Knight_UV_View$armourForm),
 								_1: {
 									ctor: '::',
-									_0: A5(_user$project$Knight_View$slot, equipArmour, knight.armour, _user$project$Knight_Armour$armours, 'Armour', _user$project$Knight_UV_View$armourForm),
-									_1: {
-										ctor: '::',
-										_0: _user$project$Knight_View$divisor,
-										_1: {ctor: '[]'}
-									}
+									_0: _user$project$Knight_View$divisor,
+									_1: {ctor: '[]'}
 								}
 							}
 						}
@@ -13840,23 +13822,12 @@ var _user$project$Main$view = function (model) {
 						},
 						{
 							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$div,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('knight'),
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: A2(_user$project$Knight_View$form, _user$project$Main$EquipYou, model.you),
-									_1: {
-										ctor: '::',
-										_0: _user$project$Knight_View$stats(model.you),
-										_1: {ctor: '[]'}
-									}
-								}),
-							_1: {ctor: '[]'}
+							_0: A2(_user$project$Knight_View$form, _user$project$Main$EquipYou, model.you),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Knight_View$stats(model.you),
+								_1: {ctor: '[]'}
+							}
 						}),
 					_1: {ctor: '[]'}
 				}
