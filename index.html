@@ -11210,7 +11210,8 @@ var _user$project$Knight$opponent = {
 	},
 	helmet: _user$project$Knight$p2wKat,
 	armour: _user$project$Knight$p2wKat,
-	trinkets: A2(_elm_lang$core$List$repeat, 2, _user$project$Knight_Trinket$penta)
+	trinkets: A2(_elm_lang$core$List$repeat, 2, _user$project$Knight_Trinket$penta),
+	lockdown: true
 };
 var _user$project$Knight$stockArmour = {
 	piece: _user$project$Knight_Armour$cobalt,
@@ -11239,7 +11240,8 @@ var _user$project$Knight$you = {
 	},
 	helmet: _user$project$Knight$stockArmour,
 	armour: _user$project$Knight$stockArmour,
-	trinkets: {ctor: '[]'}
+	trinkets: {ctor: '[]'},
+	lockdown: true
 };
 var _user$project$Knight$toDamageBoost = function (uv) {
 	var _p0 = uv;
@@ -11473,6 +11475,17 @@ var _user$project$Knight$chargeSpeed = F2(
 		return weapon.piece.chargeTime * (1 - (_elm_lang$core$Basics$toFloat(boost) * 7.5e-2));
 	});
 var _user$project$Knight$defences = function (knight) {
+	var applyLockdown = function (_p16) {
+		var _p17 = _p16;
+		return {
+			ctor: '_Tuple2',
+			_0: _p17._0,
+			_1: A2(
+				_elm_lang$core$Basics$max,
+				knight.lockdown ? 100 : 0,
+				_p17._1)
+		};
+	};
 	var uvs = _elm_lang$core$List$concat(
 		{
 			ctor: '::',
@@ -11519,24 +11532,27 @@ var _user$project$Knight$defences = function (knight) {
 		_user$project$Knight$nonZero,
 		A2(
 			_elm_lang$core$List$map,
-			total,
-			{
-				ctor: '::',
-				_0: _user$project$Knight_UV$Normal,
-				_1: {
+			applyLockdown,
+			A2(
+				_elm_lang$core$List$map,
+				total,
+				{
 					ctor: '::',
-					_0: _user$project$Knight_UV$Piercing,
+					_0: _user$project$Knight_UV$Normal,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Knight_UV$Elemental,
+						_0: _user$project$Knight_UV$Piercing,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Knight_UV$Shadow,
-							_1: {ctor: '[]'}
+							_0: _user$project$Knight_UV$Elemental,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Knight_UV$Shadow,
+								_1: {ctor: '[]'}
+							}
 						}
 					}
-				}
-			}));
+				})));
 };
 var _user$project$Knight$resistances = function (knight) {
 	var uvs = _elm_lang$core$List$concat(
@@ -11622,12 +11638,12 @@ var _user$project$Knight$resistances = function (knight) {
 };
 var _user$project$Knight$attacks = F2(
 	function (knight, weapon) {
-		var toIntBoost = function (_p16) {
-			var _p17 = _p16;
+		var toIntBoost = function (_p18) {
+			var _p19 = _p18;
 			return {
 				ctor: '_Tuple2',
-				_0: _p17._0,
-				_1: _user$project$Knight_UV$toDamageBonus(_p17._1)
+				_0: _p19._0,
+				_1: _user$project$Knight_UV$toDamageBonus(_p19._1)
 			};
 		};
 		var bonuses = A2(
@@ -11666,17 +11682,17 @@ var _user$project$Knight$attacks = F2(
 						_elm_lang$core$Tuple$second,
 						A2(
 							_elm_lang$core$List$filter,
-							function (_p18) {
-								var _p19 = _p18;
-								var _p20 = _p19._0;
-								return _elm_lang$core$Native_Utils.eq(_p20, bonus) || _elm_lang$core$Native_Utils.eq(_p20, _user$project$Knight_UV$Dmg);
+							function (_p20) {
+								var _p21 = _p20;
+								var _p22 = _p21._0;
+								return _elm_lang$core$Native_Utils.eq(_p22, bonus) || _elm_lang$core$Native_Utils.eq(_p22, _user$project$Knight_UV$Dmg);
 							},
 							A2(_elm_lang$core$Basics_ops['++'], uvs, bonuses)))));
 		};
 		var piece = weapon.piece;
 		var bonusType = function () {
-			var _p21 = piece.weaponType;
-			switch (_p21.ctor) {
+			var _p23 = piece.weaponType;
+			switch (_p23.ctor) {
 				case 'Sword':
 					return _user$project$Knight_UV$SwordDmg;
 				case 'Gun':
@@ -11689,39 +11705,39 @@ var _user$project$Knight$attacks = F2(
 			return (damage * _elm_lang$core$Basics$toFloat(
 				100 + total(bonusType))) / 100;
 		};
-		var boost = function (_p22) {
-			var _p23 = _p22;
-			var _p27 = _p23._0;
+		var boost = function (_p24) {
+			var _p25 = _p24;
+			var _p29 = _p25._0;
 			var toStatusValues = function (infliction) {
-				var _p24 = infliction;
-				if ((_p24.ctor === 'Just') && (_p24._0.ctor === '_Tuple3')) {
+				var _p26 = infliction;
+				if ((_p26.ctor === 'Just') && (_p26._0.ctor === '_Tuple3')) {
 					return _elm_lang$core$Maybe$Just(
 						{
 							ctor: '_Tuple2',
-							_0: _user$project$Knight_Types$statusChance(_p24._0._1),
-							_1: _user$project$Knight_Types$statusStrength(_p24._0._2)
+							_0: _user$project$Knight_Types$statusChance(_p26._0._1),
+							_1: _user$project$Knight_Types$statusStrength(_p26._0._2)
 						});
 				} else {
 					return _elm_lang$core$Maybe$Nothing;
 				}
 			};
 			var isStage = F2(
-				function (stage, _p25) {
-					var _p26 = _p25;
-					return _elm_lang$core$Native_Utils.eq(stage, _p26._0);
+				function (stage, _p27) {
+					var _p28 = _p27;
+					return _elm_lang$core$Native_Utils.eq(stage, _p28._0);
 				});
 			var infliction = toStatusValues(
 				_elm_lang$core$List$head(
 					A2(
 						_elm_lang$core$List$filter,
-						isStage(_p27),
+						isStage(_p29),
 						piece.inflictions)));
 			return {
 				ctor: '_Tuple2',
 				_0: {
 					ctor: '_Tuple2',
-					_0: _p27,
-					_1: boosted(_p23._1)
+					_0: _p29,
+					_1: boosted(_p25._1)
 				},
 				_1: infliction
 			};
@@ -11735,9 +11751,9 @@ var _user$project$Knight$hearts = function (knight) {
 var _user$project$Knight$health = function (knight) {
 	return 40 * _user$project$Knight$hearts(knight);
 };
-var _user$project$Knight$Knight = F6(
-	function (a, b, c, d, e, f) {
-		return {name: a, weapons: b, helmet: c, armour: d, shield: e, trinkets: f};
+var _user$project$Knight$Knight = F7(
+	function (a, b, c, d, e, f, g) {
+		return {name: a, weapons: b, helmet: c, armour: d, shield: e, trinkets: f, lockdown: g};
 	});
 var _user$project$Knight$WeaponEquip = F2(
 	function (a, b) {
