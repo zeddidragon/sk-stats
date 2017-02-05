@@ -10,7 +10,7 @@ main =
 model =
   { you = Knight.you
   , opponent = Knight.opponent
-  , state = Vs
+  , state = You
   }
 
 view model =
@@ -31,10 +31,10 @@ view model =
         [ name "viewport"
         , content "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         ] []
-      , div [ class "tabs" ]
+      , div [ class "state-tabs" ]
         [ tabs stateToLabel toString SetState [You, Vs, Opponent] model.state
         ]
-      , div [ class "main" ]
+      , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
             [ Knight.View.form EquipYou model.you

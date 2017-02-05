@@ -60,3 +60,4 @@ tabs toLabel toClass message items selected =
   in
     div [ class "tabs" ] <| List.map tab items
 
+button attributes = div <| [ class "button" ] ++ attributes

@@ -1,13 +1,13 @@
 module Knight.UV.View exposing (weaponForm, armourForm, trinketForms)
 
-import Html exposing (..)
+import Html exposing (div, select, text, h3, span, input)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Trinket as Trinket
 import Util exposing (lIndex, atIndex, replace, remove)
-import View.Shortcuts exposing (selectList, selectListExclude, spacer)
+import View.Shortcuts exposing (selectList, selectListExclude, spacer, button)
 
 strengths = [Low, Medium, High, VeryHigh, Ultra, Maximum]
 

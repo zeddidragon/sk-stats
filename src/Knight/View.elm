@@ -1,6 +1,6 @@
 module Knight.View exposing (form, stats)
 
-import Html exposing (..)
+import Html exposing (div, select, text, h3, span)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Util exposing (remove, replace)
@@ -12,7 +12,7 @@ import Knight.Guns exposing (guns)
 import Knight.Bombs exposing (bombs)
 import Knight.Armour exposing (armours)
 import Knight.Shield exposing (shields)
-import View.Shortcuts exposing (selectList, bar, toText)
+import View.Shortcuts exposing (selectList, bar, toText, button)
 import Knight.UV.View as UvForm
 
 form message knight =
@@ -82,6 +82,19 @@ slot message equipment items title uvForm =
         ++ uvForm equipUv equipment
       )
 
+shield knight =
+  let
+    piece = knight.shield.piece
+  in
+    div []
+      ( [ h3 [] [ text piece.name ] ]
+      ++ (
+        if piece == Knight.Shield.recon then
+          [ button [] [ text "Apply Deathmark" ] ]
+        else
+          []
+      ) )
+
 stats lockdown knight =
   List.concat
     [ [ health knight |> item "Health"
@@ -91,6 +104,14 @@ stats lockdown knight =
     , defences lockdown knight
     , [ divisor ]
     , resistances knight
+    , (
+      if lockdown then
+      [ divisor
+      , shield knight
+      ]
+      else
+        []
+    )
     , List.concat <| List.map (attacks knight) knight.weapons
     ]
   |> div [ class "knight-stats" ]
@@ -130,7 +151,7 @@ highlightPips highlights klass amount =
         ] ++ (if isHighlight then [ title highlight ] else [])
         ) []
   in
-    div [ class ("graphic " ++ klass) ]
+    div [ class ("graphic pips " ++ klass) ]
       [ div [ class "graphic negative" ]
         ( List.range n -1 |> List.map pip )
       , div [ class "hdivisor"] []
@@ -162,15 +183,14 @@ attacks knight weapon =
     piece = weapon.piece
     maxDamage = 715
     bar dType = View.Shortcuts.bar maxDamage (toString dType)
-    singlebar damage infliction =
+    singlebar damage =
       div [ class "splitbar"]
-        ([ bar piece.damageType damage ] ++ status infliction)
-    splitbar damage infliction =
-      div [ class "splitbar" ] (
+        [ bar piece.damageType damage ]
+    splitbar damage =
+      div [ class "splitbar" ]
         [ bar piece.damageType <| damage / 2
         , bar piece.split <| damage / 2
-        ] ++ status infliction
-      )
+        ]
     actualStatus =
       case piece.status of
         Just status -> status
@@ -192,26 +212,30 @@ attacks knight weapon =
         Nothing -> []
     split = piece.split /= Nothing
     attack ((stage, damage), infliction) =
-      item (toString stage) (div [ class "graphic" ]
-        ( if split then
-            [ splitbar damage infliction
-            , div [class "value"]
-              [ value <| (toString (round (damage / 2))) ++ " +"
-              , value <| toString <| round (damage / 2)
+      [ item (toString stage) (
+        div [ class "graphic" ]
+          ( if split then
+              [ splitbar damage
+              , div [class "split-value"]
+                [ value <| (toString (round (damage / 2))) ++ " +"
+                , value <| toString <| round (damage / 2)
+                ]
+              , div [ class "combined-value"]
+                [ value <| toString <| round damage ]
               ]
-            ]
-          else
-            [ singlebar damage infliction
-            , value <| toString <| round damage
-            ]
+            else
+              [ singlebar damage
+              , value <| toString <| round damage
+              ]
+          )
         )
-      )
+      ] ++ status infliction
   in
     [ divisor
     , h3 [] [ text piece.name ]
     , attackSpeed knight weapon |> item "Speed"
     , chargeSpeed knight weapon |> item "CT"
-    ] ++ (Knight.attacks knight weapon |> List.map attack)
+    ] ++ (Knight.attacks knight weapon |> List.concatMap attack)
 
 health knight =
   let
