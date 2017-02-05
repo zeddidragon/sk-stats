@@ -33,19 +33,22 @@ h3 {
   flex: 1;
 }
 
-@media (max-width: 800px) {
-  .knight {
-    flex-direction: column;
-  }
-}
 .knight-form {
   flex: 1;
-  margin: 1em;
+  min-width: 340px;
 }
 
 .knight-stats {
-  flex: 1;
+  flex: 2;
+}
+
+.knight-form, .knight-stats {
+  overflow-x: hidden;
+  overflow-y: scroll;
   margin: 1em;
+  color: #5999A6;
+  background-color: #1E272E;
+  padding: 1em;
 }
 
 .divisor {
@@ -62,27 +65,40 @@ h3 {
 
 body {
   color: white;
-  background-color: black;
+  background-color: #09121E;
   height: 100%;
+}
+
+.body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
   display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
 .row {
   display: flex;
+  flex: 1;
 }
 
 .hearts {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  flex: 1;
 }
 
 .heart {
   color: red;
   animation: popin 0.3s;
   transition: color 0.3s;
+  max-width: calc(100% / 30);
 }
 
 .heart.silver {
@@ -95,8 +111,9 @@ body {
 }
 
 .value {
-  padding-left: 1em;
+  color: white;
   min-width: 4em;
+  text-align: right;
 }
 
 .item {
@@ -120,6 +137,35 @@ label {
   flex: 1;
   height: 1em;
 }
+
+.combined-value {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .bar-container,
+  .hearts,
+  .graphic.pips {
+    display: none;
+  }
+  .value {
+    min-width: 0;
+  }
+  .row,
+  .graphic {
+    justify-content: flex-end;
+  }
+  .split-value {
+    display: none;
+  }
+  .combined-value {
+    display: initial;
+  }
+  .knight-form, .knight-stats {
+    margin: 0;
+  }
+}
+
 
 .bar-bg {
   position: absolute;
@@ -173,6 +219,7 @@ label {
   flex: 1;
   max-width: 0.5em;
   animation: popin 0.3s;
+  transition: filter 0.3s;
 }
 
 .negative {
@@ -192,15 +239,21 @@ label {
   filter: brightness(150%);
 }
 
+.status-blurb {
+  text-align: center;
+}
+
 .status-blurb .status {
   font-weight: bold;
 }
 
 .status-blurb .chance {
+  color: white;
   padding: 0.5em;
 }
 
 .status-blurb .strength {
+  color: white;
   padding: 0.5em;
 }
 
@@ -215,5 +268,67 @@ label {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+}
+
+.tabs {
+  display: flex;
+  font-weight: bold;
+}
+
+.state-tabs {
+  width: 100%;
+  border-bottom: thin solid rgba(255, 255, 255, 0.7);
+}
+
+.tab {
+  text-align: center;
+  padding: 1em;
+  cursor: pointer;
+  transition: transform 0.5s;
+  color: white;
+  background-color: #1C252B;
+}
+
+.tab.You {
+  flex: 1;
+  transform-origin: right;
+}
+
+.tab.Opponent {
+  flex: 1;
+  transform-origin: left;
+}
+
+.tab:hover {
+  transform: scale(1.12);
+  border-bottom: medium solid rgba(255, 255, 255, 0.7);
+}
+
+.tab.selected {
+  border-bottom: medium solid white;
+}
+
+h1, h2, h3 {
+  color: #FFC134;
+}
+
+select {
+  color: white;
+  background-color: #1C252B;
+}
+
+.button {
+  color: #A4F7ED;
+  background-color: #00547E;
+  display: inline-block;
+  padding: 0 0.5em;
+  border-radius: 0.5em;
+  border: thin solid #3B68A7;
+  cursor: pointer;
+}
+
+.button:hover {
+  filter: brightness(150%);
+  transition: filter 0.3s;
 }
 
