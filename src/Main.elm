@@ -10,7 +10,7 @@ main =
 model =
   { you = Knight.you
   , opponent = Knight.opponent
-  , state = You
+  , state = Vs
   }
 
 view model =
@@ -35,22 +35,19 @@ view model =
         [ tabs stateToLabel toString SetState [You, Vs, Opponent] model.state
         ]
       , div [ class "main" ]
-        ( (
-          if model.state == You then
-            [ Knight.View.form EquipYou model.you ]
-          else
-            []
-          ) 
-        ++
-          [ Knight.View.stats model.you
-          , Knight.View.stats model.opponent
-          ]
-        ++ (
-          if model.state == Opponent then
-            [ Knight.View.form EquipOpponent model.opponent ]
-          else
-            []
-          )
+        ( case model.state of
+          You -> 
+            [ Knight.View.form EquipYou model.you
+            , Knight.View.stats False model.you
+            ]
+          Vs ->
+            [ Knight.View.stats True model.you
+            , Knight.View.stats True model.opponent
+            ]
+          Opponent ->
+            [ Knight.View.stats False model.opponent
+            , Knight.View.form EquipOpponent model.opponent
+            ]
         )
       ]
 

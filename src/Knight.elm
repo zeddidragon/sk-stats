@@ -18,7 +18,6 @@ type alias Knight =
   , armour: ArmourEquip
   , shield: ShieldEquip
   , trinkets: List Trinket
-  , lockdown : Bool
   }
 
 type alias WeaponEquip =
@@ -146,8 +145,8 @@ toDefence uv =
     DefenceUV (dType, strength) -> (dType, UV.toDefence strength)
     _ -> (Normal, 0)
 
-defences : Knight -> List (DamageType, Float)
-defences knight =
+defences : Bool -> Knight -> List (DamageType, Float)
+defences lockdown knight =
   let
     uvs =
       List.concat
@@ -168,7 +167,7 @@ defences knight =
       |> sum
       |> secondTo dtype
     applyLockdown (dType, num) =
-      (dType, Basics.max (if knight.lockdown then 100 else 0) num)
+      (dType, Basics.max (if lockdown then 100 else 0) num)
   in
     [Normal, Piercing, Elemental, Shadow]
       |> map total
@@ -293,7 +292,6 @@ you =
   , helmet = stockArmour
   , armour = stockArmour
   , trinkets = []
-  , lockdown = True
   }
 
 opponent : Knight
@@ -323,5 +321,4 @@ opponent =
   , helmet = p2wKat
   , armour = p2wKat
   , trinkets = List.repeat 2 Trinket.penta
-  , lockdown = True
   }

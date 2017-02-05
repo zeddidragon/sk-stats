@@ -82,20 +82,20 @@ slot message equipment items title uvForm =
         ++ uvForm equipUv equipment
       )
 
-stats knight =
+stats lockdown knight =
   List.concat
     [ [ health knight |> item "Health"
       , mobility knight |> item "Mobility"
       ]
     , [ divisor ]
-    , defences knight
+    , defences lockdown knight
     , [ divisor ]
     , resistances knight
     , List.concat <| List.map (attacks knight) knight.weapons
     ]
   |> div [ class "knight-stats" ]
 
-defences knight =
+defences lockdown knight =
   let
     maxDefence = 350
     defence (dtype, amount) =
@@ -104,7 +104,7 @@ defences knight =
         , div [ class "value" ] [ toText <| round amount ]
         ])
   in
-    Knight.defences knight |> List.map defence
+    Knight.defences lockdown knight |> List.map defence
 
 highlightPips highlights klass amount =
   let
