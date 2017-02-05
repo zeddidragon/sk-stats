@@ -24,8 +24,8 @@ form message knight =
     equipTrinkets equip = message {knight | trinkets = equip}
   in
     div [ class "knight-form" ]
-      ([ h1 [] [ text knight.name ]
-      , slot equipShield knight.shield shields "Shield" UvForm.armourForm
+      (
+      [ slot equipShield knight.shield shields "Shield" UvForm.armourForm
       , divisor
       , slot equipHelmet knight.helmet armours "Helmet" UvForm.armourForm
       , slot equipArmour knight.armour armours "Armour" UvForm.armourForm
@@ -227,13 +227,14 @@ health knight =
       if golds > 0 then 0
       else if silvers > 0 then 30 - silvers
       else hearts
+    heart color = span [class <| "heart " ++ color] [ text "♥" ]
   in
-    div [ class "row" ]
-      [ div [ class "hearts gold" ] [ String.repeat golds "♥" |> text ]
-      , div [ class "hearts silver" ] [ String.repeat silvers "♥" |> text ]
-      , div [ class "hearts" ] [ String.repeat reds "♥" |> text ]
-      , div [ class "value" ] [ Knight.health knight |> toText ]
-      ]
+    div [ class "row hearts" ] ([]
+      ++ List.repeat golds (heart "gold")
+      ++ List.repeat silvers (heart "silver")
+      ++ List.repeat reds (heart "red")
+      ++ [div [ class "value" ] [ Knight.health knight |> toText ]]
+    )
 
 mobility knight =
   let

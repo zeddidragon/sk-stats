@@ -31,14 +31,18 @@ selectOption excluded label current thing =
 selectList = selectListExclude []
 
 bar max color value =
-  div [ class ("bar-container " ++ color) ]
-    [ div [ class "bar-bg" ] []
-    , div
-        [ class "bar-fill"
-        , style [ ("width", (toString (100 * value / max)) ++ "%") ]
-        ]
-        []
-    ]
+  let
+    scale = value / max
+    shift = (100 * value / max) - 100
+  in
+    div [ class ("bar-container " ++ color) ]
+      [ div [ class "bar-bg" ] []
+      , div
+          [ class "bar-fill"
+          , style [ ("transform" , "scaleX(" ++ (toString scale) ++ ")") ]
+          ]
+          []
+      ]
 
 toText arg = arg |> toString |> text
 

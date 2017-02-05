@@ -25,10 +25,12 @@ view model =
       ]
     []
     , div [class "main"]
-      [ div [class "knight"]
-        [ Knight.View.form EquipYou model.you
-        , Knight.View.stats model.you
-        ]
+      [ Knight.View.form EquipYou model.you
+      , Knight.View.stats model.you
+      {-
+      , Knight.View.stats model.opponent
+      , Knight.View.form EquipOpponent model.opponent
+      -}
       ]
     ]
 
@@ -40,3 +42,4 @@ update msg model =
 type Msg
   = EquipYou Knight
   | EquipOpponent Knight
+
