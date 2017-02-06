@@ -44,7 +44,7 @@ h3 {
 
 .knight-form, .knight-stats, .events {
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 1em;
   color: #5999A6;
   background-color: #1E272E;
@@ -87,6 +87,8 @@ body {
 }
 
 .body {
+  position: fixed;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
