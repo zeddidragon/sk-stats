@@ -46,7 +46,7 @@ view model =
             ]
           Vs ->
             [ Knight.View.stats (Just (addEvent, Left)) model.you
-            , Events.View.log SetEvents model.events [model.you, model.opponent]
+            , Events.View.log SetEvents model.events model.you model.opponent
             , Knight.View.stats (Just (addEvent, Right)) model.opponent
             ]
           Opponent ->

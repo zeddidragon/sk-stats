@@ -8,9 +8,7 @@ import Util exposing (remove, replace)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight exposing (Knight, WeaponEquip)
-import Knight.Swords exposing (swords)
-import Knight.Guns exposing (guns)
-import Knight.Bombs exposing (bombs)
+import Knight.Bombs
 import Knight.Armour exposing (armours)
 import Knight.Shield exposing (shields)
 import View.Shortcuts exposing (selectList, bar, toText, button)
@@ -38,7 +36,6 @@ form message knight =
 
 weaponSlots message knight =
   let
-    weapons = swords ++ guns ++ bombs
     equipWeapon index weapon =
       message <| replace knight.weapons index weapon
     addWeapon =
@@ -54,7 +51,7 @@ weaponSlots message knight =
         slot
           (equipWeapon index)
           weapon
-          weapons
+          Knight.weapons
           ("Weapon " ++ toString (index + 1))
           UvForm.weaponForm
         :: (

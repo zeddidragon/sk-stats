@@ -7,9 +7,12 @@ import Knight.Types exposing (..)
 import Knight.UV as UV exposing (..)
 import Knight.Swords as Swords
 import Knight.Guns as Guns
+import Knight.Bombs as Bombs
 import Knight.Armour as Armour
 import Knight.Shield as Shield
 import Knight.Trinket as Trinket
+
+weapons = Swords.swords ++ Guns.guns ++ Bombs.bombs
 
 type alias Knight =
   { name: String
@@ -298,7 +301,7 @@ you =
 
 opponent : Knight
 opponent =
-  { name = "The guy she tells you not to worry about"
+  { name = "Challenger"
   , weapons =
     [ { piece = Swords.acheron
       , uvs =
