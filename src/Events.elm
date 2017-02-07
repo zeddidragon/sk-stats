@@ -15,8 +15,10 @@ type Event
 
 defend : Float -> Float -> Float
 defend defence damage =
-  if defence * 2 < damage then
-    damage - defence
-  else
-    damage * (1 - (0.5 + 0.19 + logBase 10 ((2 * defence - damage) / 15 + 1) ))
-
+  let
+    log10 = logBase 10
+  in
+    if defence * 2 < damage then
+      damage - defence
+    else
+      damage * (1 - (0.5 + 0.19 * log10((2 * defence - damage)/15 + 1)))

@@ -23,7 +23,7 @@ rIndex item list =
     |> List.reverse
     |> List.head
 
-find : (a -> Boolean) -> List a -> Maybe a
+find : (a -> Bool) -> List a -> Maybe a
 find search list =
   list
     |> List.filter search

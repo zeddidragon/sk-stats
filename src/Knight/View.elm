@@ -225,15 +225,15 @@ attacks message knight weapon =
         if split then
           [ splitbar damage
           , div [class "split-value"]
-            [ value <| (toString (round (damage / 2))) ++ " +"
-            , value <| toString <| round (damage / 2)
+            [ value <| (toString (ceiling (damage / 2))) ++ " +"
+            , value <| toString <| ceiling (damage / 2)
             ]
           , div [ class "combined-value"]
-            [ value <| toString <| round damage ]
+            [ value <| toString <| ceiling damage ]
           ]
         else
           [ singlebar damage
-          , value <| toString <| round damage
+          , value <| toString <| ceiling damage
           ]
         )
       ) ] ++ status infliction
