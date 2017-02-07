@@ -23,6 +23,12 @@ rIndex item list =
     |> List.reverse
     |> List.head
 
+find : (a -> Boolean) -> List a -> Maybe a
+find search list =
+  list
+    |> List.filter search
+    |> List.head
+
 replace : List a -> Int -> a -> List a
 replace list index new =
   List.indexedMap (\i old -> if i == index then new else old) list
