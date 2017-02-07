@@ -33,6 +33,25 @@ h3 {
   flex: 1;
 }
 
+.attack-flow.header {
+  background-color: #273845
+}
+
+.attack-damage {
+  color: white;
+}
+
+.attack-flow .weapon,
+.attack-flow .knight-name,
+.attack-stage,
+.attack-damage {
+  padding: 1em;
+}
+
+.attack-flow .knight-name {
+  color: #FFC134;
+}
+
 .knight-form {
   flex: 1;
   min-width: 340px;
@@ -48,8 +67,11 @@ h3 {
   margin: 1em;
   color: #5999A6;
   background-color: #1E272E;
-  padding: 1em;
   box-sizing: border-box;
+}
+
+.knight-formm, .knight-stats {
+  padding: 1em;
 }
 
 .You .knight-form {
@@ -281,7 +303,7 @@ label {
   cursor: pointer;
   transition: transform 0.5s;
   color: white;
-  background-color: #1C252B;
+  background-color: #273945;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -306,7 +328,9 @@ label {
   border-bottom: medium solid white;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #FFC134;
 }
 
@@ -365,6 +389,23 @@ label.button {
   .events {
     flex: 2;
   }
+}
+
+.event {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.attack-flow {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.Right .attack-flow {
+  flex-direction: row-reverse;
 }
 
 @media (max-width: 639px) {

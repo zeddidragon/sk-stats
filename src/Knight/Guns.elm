@@ -203,7 +203,7 @@ supernova =
   | name = "Supernova"
   , attacks =
     [ (Shot, attacks.driver)
-    , (Heavy, attacks.magnus)
+    , (Heavy, attacks.nova)
     , (Charge, attacks.novaCharge)
     ]
   }
@@ -216,7 +216,7 @@ polaris =
   , status = Just Shock
   , attacks =
     [ (Shot, attacks.driver)
-    , (Heavy, attacks.nova)
+    , (Heavy, attacks.blaster)
     , (Charge, attacks.blasterCharge)
     ]
   , inflictions =
@@ -231,6 +231,13 @@ wildfire =
   { polaris
   | name = "Wildfire"
   , status = Just Fire
+  }
+
+permafroster : Weapon
+permafroster =
+  { polaris
+  | name = "Permafroster"
+  , status = Just Freeze
   }
 
 neutralizer : Weapon
@@ -314,7 +321,7 @@ guns =
   ++ autoguns ++ [pepper, plague]
   ++ magnuses
   ++ antiguas ++ [obsidian]
-  ++ [supernova, polaris, wildfire]
+  ++ [supernova, polaris, wildfire, permafroster]
   ++ [neutralizer, biohazard]
   ++ tortofists
   ++ mixmasters

@@ -16,24 +16,19 @@ log message events left right =
         |> List.filter (\w -> w.name == name)
         |> List.head
         |> Maybe.withDefault leviathan
-    knightName knight =
-      span [ class "knight-name" ] [ text knight.name ]
-    attack stage weapon =
-      [ span [ class "attack-stage" ] [ toText stage ]
-      , text " attack from "
-      , span [ class "attack-weapon" ] [ text weapon ]
-      ]
     eventLog event =
       case event of
         Attack (side, weaponName, stage)->
-          [ div [ class "event" ] (
-            [ knightName <| knight side
-            , text " hit "
-            , knightName <| opponent side
-            , text " with a "
+          [ div [ class <| "event " ++ (toString side) ]
+            [ div [ class "attack-flow header" ]
+              [ div [ class "knight-name" ] [ text <| .name <| knight side ]
+              , div [ class "weapon" ] [ text weaponName ]
+              ]
+            , div [ class "attack-flow" ]
+              [ div [ class "attack-stage" ] [ toText stage ]
+              , div [ class "attack-damage" ] [ text "100" ]
+              ]
             ]
-            ++ attack stage weaponName
-            )
           ]
         _ -> []
   in

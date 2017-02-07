@@ -44,7 +44,7 @@ attacks =
   , fangCharge = 897 / 1.24
 
 -- Guns --
-  , blaster = 314 / 1.24
+  , blaster = 314 / 1.25
   , blasterCharge = 532 / 1.24
 
   , nova = 336 / 1.24
@@ -61,6 +61,7 @@ attacks =
 
   , magnus = 360 / 1.24
   , magnusCharge = 611 / 1.24
+
   , neutralizer = 652 / 1.24
   
   , tortofist = 252 / 1.24

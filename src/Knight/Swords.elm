@@ -268,6 +268,19 @@ fang =
     ]
   }
 
+winmillion : Weapon
+winmillion =
+  { sword
+  | name = "Winmillion"
+  , attacks =
+    [ (Basic, 300 / 1.24)
+    , (Shot, 220 / 1.24)
+    , (Heavy, 345 / 1.24)
+    , (Charge, 563 / 1.24)
+    , (Special, 322 / 1.24)
+    ]
+  }
+
 faust4star : Weapon
 faust4star =
   { faust
@@ -302,6 +315,7 @@ swords =
   , avenger
   , faust
   , fang
+  , winmillion
   , faust4star
   ]
 
