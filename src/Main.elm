@@ -23,7 +23,7 @@ view model =
         You -> model.you.name
         Vs -> "vs"
         Opponent -> model.opponent.name
-    addEvent event = SetEvents (event :: model.events)
+    addEvent event = SetEvents (model.events ++ [ event ])
   in
     div [class "body"]
       [ node "link"
@@ -42,15 +42,15 @@ view model =
         ( case model.state of
           You -> 
             [ Knight.View.form EquipYou model.you
-            , Knight.View.stats Nothing model.you
+            , Knight.View.stats Nothing [] model.you
             ]
           Vs ->
-            [ Knight.View.stats (Just (addEvent, Left)) model.you
+            [ Knight.View.stats (Just (addEvent, Left)) model.events model.you
             , Events.View.log SetEvents model.events model.you model.opponent
-            , Knight.View.stats (Just (addEvent, Right)) model.opponent
+            , Knight.View.stats (Just (addEvent, Right)) model.events model.opponent
             ]
           Opponent ->
-            [ Knight.View.stats Nothing model.opponent
+            [ Knight.View.stats Nothing [] model.opponent
             , Knight.View.form EquipOpponent model.opponent
             ]
         )

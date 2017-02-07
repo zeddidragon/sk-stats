@@ -63,7 +63,11 @@ log message events left right =
             defend (defence weapon.damageType) (damage / 2)
             + defend (defence splitType) (damage / 2)
           Nothing -> defend (defence weapon.damageType) damage
-    eventLog event =
+    eventLog events output =
+      case events of
+        [] -> output
+        e :: es -> eventLog es output ++ eventEntry es e
+    eventEntry history event =
       case event of
         Attack (side, weaponName, stage)->
           let
@@ -86,4 +90,4 @@ log message events left right =
             ]
         _ -> []
   in
-    div [ class "events" ] <| List.concatMap eventLog events
+    div [ class "events" ] <| eventLog events []

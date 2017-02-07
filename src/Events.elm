@@ -2,7 +2,6 @@ module Events exposing (..)
 
 import Knight.UV exposing (..)
 import Knight.Types exposing (..)
-import Knight exposing (Knight)
 
 type Side
   = Left

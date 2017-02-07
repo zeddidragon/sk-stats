@@ -93,9 +93,9 @@ shield knight =
           []
       ) )
 
-stats message knight =
+stats message events knight =
   List.concat
-    [ [ health knight |> item "Health"
+    [ [ health events knight |> item "Health"
       , mobility knight |> item "Mobility"
       ]
     , [ divisor ]
@@ -248,7 +248,7 @@ attacks message knight weapon =
         |> List.concat
     )
 
-health knight =
+health events knight =
   let
     hearts = Knight.hearts knight
     golds =
