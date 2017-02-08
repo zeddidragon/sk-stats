@@ -10,8 +10,8 @@ main =
   Html.beginnerProgram {model = model, view = view, update = update}
 
 model =
-  { you = Knight.you
-  , opponent = Knight.opponent
+  { left = Knight.you
+  , right = Knight.opponent
   , state = Vs
   , events = []
   }
@@ -20,9 +20,9 @@ view model =
   let
     stateToLabel state =
       case state of
-        You -> model.you.name
+        You -> model.left.name
         Vs -> "vs"
-        Opponent -> model.opponent.name
+        Opponent -> model.right.name
     addEvent side event = SetEvents (model.events ++ [ (side, event) ])
     leftEvents = model.events
     rightEvents = model.events
@@ -43,31 +43,31 @@ view model =
       , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
-            [ Knight.View.form EquipYou model.you
-            , Knight.View.stats Nothing [] model.you
+            [ Knight.View.form EquipLeft model.left
+            , Knight.View.stats Nothing Left model.left model.right []
             ]
           Vs ->
-            [ Knight.View.stats (Just (addEvent Left)) rightEvents model.you
-            , Events.View.log SetEvents model.events model.you model.opponent
-            , Knight.View.stats (Just (addEvent Right)) leftEvents model.opponent
+            [ Knight.View.stats (Just (addEvent Left)) Left model.left model.right model.events
+            , Events.View.log SetEvents model.events model.left model.right
+            , Knight.View.stats (Just (addEvent Right)) Right model.left model.right model.events
             ]
           Opponent ->
-            [ Knight.View.stats Nothing [] model.opponent
-            , Knight.View.form EquipOpponent model.opponent
+            [ Knight.View.stats Nothing Right model.left model.right []
+            , Knight.View.form EquipRight model.right
             ]
         )
       ]
 
 update msg model =
   case msg of
-    EquipYou new -> {model | you = new}
-    EquipOpponent new -> {model | opponent = new}
+    EquipLeft new -> {model | left = new}
+    EquipRight new -> {model | right = new}
     SetEvents new -> {model | events = new}
     SetState new -> {model | state = new}
 
 type Msg
-  = EquipYou Knight
-  | EquipOpponent Knight
+  = EquipLeft Knight
+  | EquipRight Knight
   | SetState State
   | SetEvents (List (Side, Event))
 

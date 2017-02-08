@@ -24,8 +24,8 @@ defend defence damage =
     else
       damage * (1 - (0.5 + 0.19 * log10((2 * defence - damage)/15 + 1)))
 
-damage : Bool -> Side -> List (Side, Event) -> Knight -> Knight -> (Side, Event) -> Float
-damage lockdown offenderSide history left right (side, event) =
+damage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> (Side, Event) -> Float
+damage lockdown offenderSide left right history (side, event) =
   let
     offender = if offenderSide == Left then left else right
     defender = if offenderSide == Left then right else left
@@ -58,4 +58,14 @@ damage lockdown offenderSide history left right (side, event) =
           Nothing ->
             defend (defence wpn.piece.damageType) damage
       _ -> 0
+
+totalDamage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> Float
+totalDamage lockdown offenderSide left right history =
+  let
+    dmg = damage lockdown offenderSide left right
+    recurse = totalDamage lockdown offenderSide left right
+  in
+    case history of
+      [] -> 0
+      x::xs -> dmg xs x + recurse xs
 

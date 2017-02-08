@@ -42,13 +42,13 @@ log message events left right =
     eventLog events output =
       case events of
         [] -> output
-        e :: es -> eventLog es output ++ eventEntry es e
+        x::xs -> eventLog xs output ++ eventEntry xs x
     eventEntry history (side, event) =
       case event of
         Attack (weaponName, stage)->
           let
             knight = getKnight side
-            damage = Events.damage True side history left right (side, event)
+            damage = Events.damage True side left right history (side, event)
           in
             [ div [ class <| "event " ++ (toString side) ]
               [ div [ class "attack-flow header" ]

@@ -93,26 +93,64 @@ shield knight =
           []
       ) )
 
-stats message events knight =
-  List.concat
-    [ [ health events knight |> item "Health"
-      , mobility knight |> item "Mobility"
-      ]
-    , [ divisor ]
-    , defences message knight
-    , [ divisor ]
-    , resistances knight
-    , (
-      if message == Nothing then
-        []
-      else
-        [ divisor
-        , shield knight
+stats message side left right events =
+  let
+    knight = if side == Left then left else right
+    opposing = if side == Left then Right else Left
+    opponent = if side ==  Left then right else left
+    lockdown = message /= Nothing
+    health =
+      let
+        hearts = Knight.hearts knight
+        golds =
+          if hearts > 60 then hearts - 60
+          else 0
+        silvers =
+          if golds > 0 then 30 - golds
+          else if hearts > 30 then hearts - 30
+          else 0
+        reds =
+          if golds > 0 then 0
+          else if silvers > 0 then 30 - silvers
+          else hearts
+        heart color = span [class <| "heart " ++ color] [ text "♥" ]
+        damage = Events.totalDamage lockdown opposing left right events
+      in
+        div [ class "row" ] (
+          [
+            div [ class "hearts"] (
+              []
+              ++ List.repeat reds (heart "red")
+              ++ List.repeat silvers (heart "silver")
+              ++ List.repeat golds (heart "gold")
+            )
+          , div [ class "value" ]
+            [ Knight.health knight - ceiling damage
+              |> Basics.max 0
+              |> toText
+            ]
+          ]
+        )
+  in
+    List.concat
+      [ [ health |> item "Health"
+        , mobility knight |> item "Mobility"
         ]
-    )
-    , List.concat <| List.map (attacks message knight) knight.weapons
-    ]
-  |> div [ class "knight-stats" ]
+      , [ divisor ]
+      , defences message knight
+      , [ divisor ]
+      , resistances knight
+      , (
+        if message == Nothing then
+          []
+        else
+          [ divisor
+          , shield knight
+          ]
+      )
+      , List.concat <| List.map (attacks message knight) knight.weapons
+      ]
+    |> div [ class "knight-stats" ]
 
 defences message knight =
   let
@@ -248,38 +286,6 @@ attacks message knight weapon =
         |> List.concat
     )
 
-health events knight =
-  let
-    hearts = Knight.hearts knight
-    golds =
-      if hearts > 60 then hearts - 60
-      else 0
-    silvers =
-      if golds > 0 then 30 - golds
-      else if hearts > 30 then hearts - 30
-      else 0
-    reds =
-      if golds > 0 then 0
-      else if silvers > 0 then 30 - silvers
-      else hearts
-    heart color = span [class <| "heart " ++ color] [ text "♥" ]
-    damage = Events.damage True 
-  in
-    div [ class "row" ] (
-      [
-        div [ class "hearts"] (
-          []
-          ++ List.repeat reds (heart "red")
-          ++ List.repeat silvers (heart "silver")
-          ++ List.repeat golds (heart "gold")
-        )
-      , div [ class "value" ]
-        [ Knight.health knight - 0
-          |> Basics.max 0
-          |> toText
-        ]
-      ]
-    )
 
 mobility knight =
   let
