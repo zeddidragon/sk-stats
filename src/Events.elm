@@ -1,16 +1,18 @@
 module Events exposing (..)
 
+import Knight exposing (Knight)
 import Knight.UV exposing (..)
 import Knight.Types exposing (..)
+import Util exposing (find)
 
 type Side
   = Left
   | Right
 
 type Event
-  = Attack (Side, String, Stage)
-  | Infliction (Side, Status, Int)
-  | Recovery (Side, Status)
+  = Attack (String, Stage)
+  | Infliction (Status, Int)
+  | Recovery (Status)
 
 defend : Float -> Float -> Float
 defend defence damage =
@@ -21,3 +23,39 @@ defend defence damage =
       damage - defence
     else
       damage * (1 - (0.5 + 0.19 * log10((2 * defence - damage)/15 + 1)))
+
+damage : Bool -> Side -> List (Side, Event) -> Knight -> Knight -> (Side, Event) -> Float
+damage lockdown offenderSide history left right (side, event) =
+  let
+    offender = if offenderSide == Left then left else right
+    defender = if offenderSide == Left then right else left
+    weapon =
+      case event of
+        Attack (weaponName, stage)->
+          offender.weapons
+            |> find (\eq -> eq.piece.name == weaponName)
+        _ -> Nothing
+    attack =
+      case (event, weapon) of
+        (Attack (weaponName, stage), Just wpn) ->
+          wpn
+            |> Knight.attacks offender
+            |> List.map Tuple.first
+            |> find (\attack -> Tuple.first attack == stage)
+        _ -> Nothing
+    defence dType = defender
+      |> Knight.defences lockdown
+      |> find (\def -> Tuple.first def == dType)
+      |> Maybe.withDefault (dType, 0)
+      |> Tuple.second
+  in
+    case (attack, weapon) of
+      (Just (stage, damage), Just wpn)->
+        case wpn.piece.split of
+          Just splitType ->
+            defend (defence splitType) (damage / 2) +
+            defend (defence wpn.piece.damageType) (damage / 2)
+          Nothing ->
+            defend (defence wpn.piece.damageType) damage
+      _ -> 0
+

@@ -39,42 +39,16 @@ log message events left right =
       weapons
         |> find (\w -> w.name == name)
         |> Maybe.withDefault unknownWeapon
-    getDamage side weapon stage =
-      let
-        knight = getKnight side
-        opponent = getOpponent side
-        equip = knight.weapons
-          |> find (\eq -> eq.piece == weapon)
-          |> Maybe.withDefault unknownEquip
-        attack = equip
-          |> Knight.attacks knight
-          |> find (\(attack, infliction) -> (Tuple.first attack) == stage)
-          |> Maybe.withDefault (unknownAttack, Nothing)
-          |> Tuple.first
-        damage = Tuple.second attack
-        defence dType = opponent
-          |> Knight.defences True
-          |> find (\def -> Tuple.first def == dType)
-          |> Maybe.withDefault (dType, 0)
-          |> Tuple.second
-      in
-        case weapon.split of
-          Just splitType ->
-            defend (defence weapon.damageType) (damage / 2)
-            + defend (defence splitType) (damage / 2)
-          Nothing -> defend (defence weapon.damageType) damage
     eventLog events output =
       case events of
         [] -> output
         e :: es -> eventLog es output ++ eventEntry es e
-    eventEntry history event =
+    eventEntry history (side, event) =
       case event of
-        Attack (side, weaponName, stage)->
+        Attack (weaponName, stage)->
           let
             knight = getKnight side
-            opponent = getOpponent side
-            weapon = getWeapon weaponName
-            damage = getDamage side weapon stage
+            damage = Events.damage True side history left right (side, event)
           in
             [ div [ class <| "event " ++ (toString side) ]
               [ div [ class "attack-flow header" ]
@@ -83,8 +57,7 @@ log message events left right =
                 ]
               , div [ class "attack-flow" ]
                 [ div [ class "attack-stage" ] [ toText stage ]
-                , div [ class "attack-damage" ]
-                  [ toText <| ceiling <| damage ]
+                , div [ class "attack-damage" ] [ toText <| ceiling <| damage ]
                 ]
               ]
             ]

@@ -23,7 +23,9 @@ view model =
         You -> model.you.name
         Vs -> "vs"
         Opponent -> model.opponent.name
-    addEvent event = SetEvents (model.events ++ [ event ])
+    addEvent side event = SetEvents (model.events ++ [ (side, event) ])
+    leftEvents = model.events
+    rightEvents = model.events
   in
     div [class "body"]
       [ node "link"
@@ -45,9 +47,9 @@ view model =
             , Knight.View.stats Nothing [] model.you
             ]
           Vs ->
-            [ Knight.View.stats (Just (addEvent, Left)) model.events model.you
+            [ Knight.View.stats (Just (addEvent Left)) rightEvents model.you
             , Events.View.log SetEvents model.events model.you model.opponent
-            , Knight.View.stats (Just (addEvent, Right)) model.events model.opponent
+            , Knight.View.stats (Just (addEvent Right)) leftEvents model.opponent
             ]
           Opponent ->
             [ Knight.View.stats Nothing [] model.opponent
@@ -67,7 +69,7 @@ type Msg
   = EquipYou Knight
   | EquipOpponent Knight
   | SetState State
-  | SetEvents (List Event)
+  | SetEvents (List (Side, Event))
 
 type State
   = You

@@ -214,9 +214,9 @@ attacks message knight weapon =
       [ div [ class "item " ] (
         (
         case message of
-          Just (msg, side) ->
+          Just msg ->
             Html.label 
-              [ onClick <| msg (Attack (side, piece.name, stage))
+              [ onClick <| msg (Attack (piece.name, stage))
               , class "button"
               ]
               [ text <| toString stage ]
@@ -263,6 +263,7 @@ health events knight =
       else if silvers > 0 then 30 - silvers
       else hearts
     heart color = span [class <| "heart " ++ color] [ text "♥" ]
+    damage = Events.damage True 
   in
     div [ class "row" ] (
       [
@@ -272,7 +273,11 @@ health events knight =
           ++ List.repeat silvers (heart "silver")
           ++ List.repeat golds (heart "gold")
         )
-      , div [ class "value" ] [ Knight.health knight |> toText ]
+      , div [ class "value" ]
+        [ Knight.health knight - 0
+          |> Basics.max 0
+          |> toText
+        ]
       ]
     )
 
