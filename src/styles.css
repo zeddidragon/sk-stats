@@ -47,6 +47,10 @@ h3 {
   color: #FFC134;
 }
 
+.infliction-description {
+  padding: 0 1em;
+}
+
 .knight-form {
   flex: 1;
   min-width: 340px;
@@ -422,12 +426,13 @@ label.button {
   flex-direction: row-reverse;
 }
 
+.status-duration {
+  color: white;
+}
+
 @media (max-width: 639px) {
   .knight-form {
     min-width: 240px;
-  }
-  .item {
-    flex-direction: column;
   }
   .Vs.main {
     flex-direction: column;

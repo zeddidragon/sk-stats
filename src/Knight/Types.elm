@@ -4,7 +4,7 @@ import Knight.UV exposing (..)
 
 type WeaponType = Sword | Gun | Bomb
 type StatusChance = Slight | Fair | Good | Certain
-type StatusStrength = Minor | Moderate | Strong
+type StatusStrength = Minor | Moderate | Strong | Ultimate
 type Stage = Basic | Heavy | Shot | Charge | Special
 
 type alias Weapon =
@@ -49,4 +49,25 @@ statusStrength strength =
     Minor -> 0
     Moderate -> 2
     Strong -> 4
+    Ultimate -> 8
+
+reductionFactor : Float -> Float
+reductionFactor strength =
+  if strength > 3 then
+    (8 - strength) * 2
+  else
+    13 - strength
+
+duration status strength =
+  let
+    base =
+      case status of
+        Deathmark -> 5
+        Stun -> 5
+        Poison -> 15
+        Curse -> 60
+        _ -> 10
+    factor = reductionFactor strength
+  in
+    base * (1 - factor / 30)
 

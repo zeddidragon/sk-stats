@@ -219,7 +219,7 @@ stats message side left right events =
           ( [ h3 [] [ text piece.name ] ]
           ++ (
             if piece == Knight.Shield.recon then
-              statusDescriptor (Just Deathmark) <| Just (Certain, Minor)
+              statusDescriptor (Just Deathmark) <| Just (Certain, Ultimate)
             else
               []
           ) )

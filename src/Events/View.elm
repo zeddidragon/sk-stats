@@ -72,6 +72,15 @@ log message events left right =
         Infliction (status, strength)->
           let
             knight = getKnight side
+            duration = Knight.Types.duration status <| statusStrength strength
+            description =
+              case status of
+                Deathmark ->
+                  [ text "All defences nullified for "
+                  , span [ class "status-duration" ] [ toText duration ]
+                  , text " seconds."
+                  ]
+                _ -> []
           in
             [ div [ class <| "event " ++ (toString side) ]
               [ div [ class "infliction-flow header" ]
@@ -89,8 +98,7 @@ log message events left right =
                 , div [ class <| "infliction-status status " ++ toString status ]
                   [ toText status ]
                 ]
-              , div [ class "infliction-description" ]
-                [ text "100% chance of stealing of your girl" ]
+              , div [ class "infliction-description" ] description
               ]
             ]
         _ -> []
