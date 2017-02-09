@@ -34,6 +34,7 @@ unknownEquip =
 
 log message events left right =
   let
+    opposing side = if side == Left then Right else Left
     getKnight side = if side == Left then left else right
     getOpponent side = if side == Left then right else left
     getWeapon name =
@@ -44,6 +45,11 @@ log message events left right =
       case events of
         [] -> output
         x::xs -> eventLog (index + 1) output xs ++ eventEntry index xs x
+    button index =
+      div
+        [ class "button"
+        , onClick <| message <| remove index events
+        ] [ text "-" ]
     eventEntry index history (side, event) =
       case event of
         Attack (weaponName, stage)->
@@ -55,15 +61,36 @@ log message events left right =
               [ div [ class "attack-flow header" ]
                 [ div [ class "knight-name" ] [ text <| .name <| knight ]
                 , div [ class "weapon" ] [ text weaponName ]
-                , div
-                  [ class "button"
-                  , onClick <| message <| remove index events
-                  ] [ text "-" ]
+                , button index
                 ]
               , div [ class "attack-flow" ]
                 [ div [ class "attack-stage" ] [ toText stage ]
                 , div [ class "attack-damage" ] [ toText <| ceiling <| damage ]
                 ]
+              ]
+            ]
+        Infliction (status, strength)->
+          let
+            knight = getKnight side
+          in
+            [ div [ class <| "event " ++ (toString side) ]
+              [ div [ class "infliction-flow header" ]
+                [ div [ class "knight-name" ] [ text <| .name <| knight ]
+                , button index
+                ]
+              , div [ class "infliction-flow" ]
+                [ (
+                  if status == Deathmark then
+                    div [] []
+                  else
+                    div [ class "infliction-strength" ]
+                      [ toText <| statusStrength strength ]
+                  )
+                , div [ class <| "infliction-status status " ++ toString status ]
+                  [ toText status ]
+                ]
+              , div [ class "infliction-description" ]
+                [ text "100% chance of stealing of your girl" ]
               ]
             ]
         _ -> []
