@@ -6,8 +6,8 @@ atIndex index list =
     |> List.drop index
     |> List.head
 
-lIndex : a -> List a -> Maybe Int
-lIndex item list =
+index : a -> List a -> Maybe Int
+index item list =
   list
     |> List.indexedMap (\i a -> (i, a))
     |> List.filter (\(i, a) -> item == a)
@@ -28,6 +28,12 @@ find search list =
   list
     |> List.filter search
     |> List.head
+
+rFind : (a -> Bool) -> List a -> Maybe a
+rFind search list =
+  list
+    |> List.reverse
+    |> find search
 
 replace : List a -> Int -> a -> List a
 replace list index new =

@@ -3,7 +3,7 @@ module Events exposing (..)
 import Knight exposing (Knight)
 import Knight.UV exposing (..)
 import Knight.Types exposing (..)
-import Util exposing (find)
+import Util exposing (find, rFind)
 
 type Side
   = Left
@@ -11,7 +11,7 @@ type Side
 
 type Event
   = Attack (String, Stage)
-  | Infliction (Status, Int)
+  | Infliction (Status, StatusStrength)
   | Recovery (Status)
 
 defend : Float -> Float -> Float
@@ -68,4 +68,24 @@ totalDamage lockdown offenderSide left right history =
     case history of
       [] -> 0
       x::xs -> dmg xs x + recurse xs
+
+statuses : Side -> Knight -> Knight -> List (Side, Event) -> List (Status, Int)
+statuses offenderSide left right history =
+  let
+    sideHistory =
+      history
+        |> List.filter (\(side, event)-> side == offenderSide)
+        |> List.map Tuple.second
+    statuses = [Fire, Freeze, Poison, Shock, Stun, Curse, Deathmark]
+    isStatus status event =
+      case event of 
+        Infliction (s, strength) -> s == status
+        Recovery (s) -> s == status
+        _ -> False
+    toInfliction status =
+      case rFind (isStatus status) sideHistory of
+        Just (Infliction (s, strength)) -> Just (s, 0)
+        _ -> Nothing
+  in
+    List.filterMap toInfliction statuses
 

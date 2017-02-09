@@ -80,19 +80,6 @@ slot message equipment items title uvForm =
         ++ uvForm equipUv equipment
       )
 
-shield knight =
-  let
-    piece = knight.shield.piece
-  in
-    div []
-      ( [ h3 [] [ text piece.name ] ]
-      ++ (
-        if piece == Knight.Shield.recon then
-          [ button [] [ text "Apply Deathmark" ] ]
-        else
-          []
-      ) )
-
 stats message side left right events =
   let
     knight = if side == Left then left else right
@@ -138,24 +125,121 @@ stats message side left right events =
             ]
           ]
         )
+    attacks weapon =
+      let
+        piece = weapon.piece
+        maxDamage = 715
+        bar dType = View.Shortcuts.bar maxDamage (toString dType)
+        singlebar damage =
+          div [ class "splitbar"]
+            [ bar piece.damageType damage ]
+        splitbar damage =
+          div [ class "splitbar" ]
+            [ bar piece.damageType <| damage / 2
+            , bar piece.split <| damage / 2
+            ]
+        value label =
+          div [ class "value" ] [ text label ]
+        split = piece.split /= Nothing
+        attack index ((stage, damage), infliction) =
+          [ div [ class "item " ] (
+            (
+            case message of
+              Just msg ->
+                Html.label 
+                  [ onClick <| msg (Attack (piece.name, stage))
+                  , class "button"
+                  ]
+                  [ text <| toString stage ]
+              Nothing -> Html.label [] [ text <| toString stage ]
+            ) :: (
+            if split then
+              [ splitbar damage
+              , div [class "split-value"]
+                [ value <| (toString (ceiling (damage / 2))) ++ " +"
+                , value <| toString <| ceiling (damage / 2)
+                ]
+              , div [ class "combined-value"]
+                [ value <| toString <| ceiling damage ]
+              ]
+            else
+              [ singlebar damage
+              , value <| toString <| ceiling damage
+              ]
+            )
+          ) ] ++ statusDescriptor piece.status infliction
+      in
+        [ divisor
+        , h3 [] [ text piece.name ]
+        , attackSpeed knight weapon |> item "Speed"
+        , chargeSpeed knight weapon |> item "CT"
+        ] ++ (
+          Knight.attacks knight weapon
+            |> List.indexedMap attack
+            |> List.concat
+        )
+
+    statusDescriptor maybeStatus maybeInfliction =
+      case maybeStatus of
+        Just status ->
+          case maybeInfliction of
+            Just (chance, strength)->
+              [
+                div [ class "status-blurb" ]
+                  [ span [ class "chance" ]
+                    [ text <| (toString <| statusChance chance) ++ "%"]
+                  , span [] [ text "chance of" ]
+                  , (
+                    if status == Deathmark then
+                      span [] [ text " " ]
+                    else
+                      span [ class "strength" ]
+                      [ text <| "+" ++ (toString <| statusStrength strength) ]
+                  )
+                  , (
+                    case message of
+                      Just msg ->
+                        div
+                          [ class "button"
+                          , onClick <| msg <| Infliction (status, strength)
+                          ] [ toText status]
+                      Nothing ->
+                        span [ class ("status " ++ (toString status)) ]
+                          [ toString status |> text ]
+                    )
+                  ]
+              ]
+            Nothing -> []
+        Nothing -> []
+    shield =
+      let
+        piece = knight.shield.piece
+      in
+        div [ class "item" ]
+          ( [ h3 [] [ text piece.name ] ]
+          ++ (
+            if piece == Knight.Shield.recon then
+              statusDescriptor (Just Deathmark) <| Just (Certain, Minor)
+            else
+              []
+          ) )
+    statuses =
+      List.map toText <| Events.statuses opposing left right events
   in
     List.concat
-      [ [ health |> item "Health"
+      [ statuses
+      , [ divisor
+        , health |> item "Health"
         , mobility knight |> item "Mobility"
+        , divisor
         ]
-      , [ divisor ]
       , defences message knight
       , [ divisor ]
       , resistances knight
-      , (
-        if message == Nothing then
-          []
-        else
-          [ divisor
-          , shield knight
-          ]
-      )
-      , List.concat <| List.map (attacks message knight) knight.weapons
+      , [ divisor
+        , shield
+        ]
+      , List.concat <| List.map attacks knight.weapons
       ]
     |> div [ class "knight-stats" ]
 
@@ -222,77 +306,6 @@ resistances knight =
   in
     Knight.resistances knight |> List.map resistance
  
-attacks message knight weapon =
-  let
-    piece = weapon.piece
-    maxDamage = 715
-    bar dType = View.Shortcuts.bar maxDamage (toString dType)
-    singlebar damage =
-      div [ class "splitbar"]
-        [ bar piece.damageType damage ]
-    splitbar damage =
-      div [ class "splitbar" ]
-        [ bar piece.damageType <| damage / 2
-        , bar piece.split <| damage / 2
-        ]
-    actualStatus =
-      case piece.status of
-        Just status -> status
-        Nothing -> Fire
-    value label =
-      div [ class "value" ] [ text label ]
-    status infliction =
-      case infliction of
-        Just (chance, strength) ->
-          [
-            div [ class "status-blurb" ]
-              [ span [ class "chance" ] [ (toString chance) ++ "%" |> text]
-              , span [] [ text "chance of" ]
-              , span [ class "strength" ] [ "+" ++ (toString strength) |> text ]
-              , span [ class ("status " ++ (toString actualStatus)) ]
-                [ toString actualStatus |> text ]
-              ]
-          ]
-        Nothing -> []
-    split = piece.split /= Nothing
-    attack index ((stage, damage), infliction) =
-      [ div [ class "item " ] (
-        (
-        case message of
-          Just msg ->
-            Html.label 
-              [ onClick <| msg (Attack (piece.name, stage))
-              , class "button"
-              ]
-              [ text <| toString stage ]
-          Nothing -> Html.label [] [ text <| toString stage ]
-        ) :: (
-        if split then
-          [ splitbar damage
-          , div [class "split-value"]
-            [ value <| (toString (ceiling (damage / 2))) ++ " +"
-            , value <| toString <| ceiling (damage / 2)
-            ]
-          , div [ class "combined-value"]
-            [ value <| toString <| ceiling damage ]
-          ]
-        else
-          [ singlebar damage
-          , value <| toString <| ceiling damage
-          ]
-        )
-      ) ] ++ status infliction
-  in
-    [ divisor
-    , h3 [] [ text piece.name ]
-    , attackSpeed knight weapon |> item "Speed"
-    , chargeSpeed knight weapon |> item "CT"
-    ] ++ (
-      Knight.attacks knight weapon
-        |> List.indexedMap attack
-        |> List.concat
-    )
-
 
 mobility knight =
   let

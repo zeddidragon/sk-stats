@@ -218,7 +218,7 @@ toDamageBoost uv =
     WeaponUV (bonus, strength) -> (bonus, UV.toDamageBonus strength)
     _ -> (Dmg, 0)
 
-attacks : Knight -> WeaponEquip -> List ((Stage, Float), Maybe (Int, Int))
+attacks : Knight -> WeaponEquip -> List ((Stage, Float), Maybe (StatusChance, StatusStrength))
 attacks knight weapon =
   let
     piece = weapon.piece
@@ -252,7 +252,7 @@ attacks knight weapon =
         toStatusValues infliction =
           case infliction of
             Just (stage, chance, strength) ->
-              Just (statusChance chance, statusStrength strength)
+              Just (chance, strength)
             _ -> Nothing
         infliction = piece.inflictions
           |> List.filter (isStage attack)
@@ -291,7 +291,7 @@ you =
       }
     ]
   , shield =
-    { piece = Shield.striker
+    { piece = Shield.recon
     , uvs = []
     }
   , helmet = stockArmour

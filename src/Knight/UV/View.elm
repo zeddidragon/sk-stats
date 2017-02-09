@@ -6,7 +6,7 @@ import Html.Events exposing (onInput, onClick)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Trinket as Trinket
-import Util exposing (lIndex, atIndex, replace, remove)
+import Util exposing (index, atIndex, replace, remove)
 import View.Shortcuts exposing (selectList, selectListExclude, spacer, button)
 
 strengths = [Low, Medium, High, VeryHigh, Ultra, Maximum]
@@ -113,7 +113,7 @@ uvForms availableUvs uvStrengths message equipment =
             DefenceUV (bonus, str) -> DefenceUV (bonus, strength)
             StatusUV (bonus, str) -> StatusUV (bonus, strength)
             Hearts num ->
-              lIndex strength strengths
+              Util.index strength strengths
                 |> Maybe.withDefault 0
                 |> (+) 1
                 |> Hearts
@@ -154,7 +154,7 @@ uvForms availableUvs uvStrengths message equipment =
           , onInput <| swapStrength equip index
           , equip
             |> uvStrength
-            |> (flip lIndex) uvStrengths
+            |> (flip Util.index) uvStrengths
             |> Maybe.withDefault 0
             |> toString
             |> value

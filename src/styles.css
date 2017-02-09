@@ -166,6 +166,7 @@ body {
 .item {
   padding: 0.5em;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -286,6 +287,7 @@ label {
 .status.Poison { color: #218221; }
 .status.Stun { color: #fafa82; }
 .status.Curse { color: #822182; }
+.status.Deathmark { color: #828282; }
 
 .weapon.slot {
   display: flex;
@@ -363,7 +365,6 @@ select {
 
 label.button {
   margin-right: 1em;
-  box-sizing: border-box;
 }
 
 @media (max-width: 799px) {

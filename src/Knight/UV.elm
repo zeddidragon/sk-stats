@@ -1,5 +1,5 @@
 module Knight.UV exposing (..)
-import Util exposing (lIndex)
+import Util exposing (index)
 
 type DamageType
   = Normal
@@ -15,6 +15,7 @@ type Status
   | Stun
   | Curse
   | Sleep
+  | Deathmark
   | Random
 
 type Bonus
@@ -102,8 +103,8 @@ toHearts effect =
 
 toBonus strength =
   let
-    bonus = lIndex strength strengths |> Maybe.withDefault -1 |> (+) 1
-    penalty = lIndex strength penalties |> Maybe.withDefault -1 |> (+) 1
+    bonus = index strength strengths |> Maybe.withDefault -1 |> (+) 1
+    penalty = index strength penalties |> Maybe.withDefault -1 |> (+) 1
   in
     bonus - penalty
 

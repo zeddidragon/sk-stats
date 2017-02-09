@@ -3,7 +3,7 @@ module Knight.Types exposing (..)
 import Knight.UV exposing (..)
 
 type WeaponType = Sword | Gun | Bomb
-type StatusChance = Slight | Fair | Good
+type StatusChance = Slight | Fair | Good | Certain
 type StatusStrength = Minor | Moderate | Strong
 type Stage = Basic | Heavy | Shot | Charge | Special
 
@@ -42,6 +42,7 @@ statusChance chance =
     Slight -> 15
     Fair -> 30
     Good -> 45
+    Certain -> 100
 
 statusStrength strength =
   case strength of
