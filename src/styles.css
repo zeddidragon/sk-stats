@@ -41,13 +41,6 @@ h3 {
   color: white;
 }
 
-.attack-flow .weapon,
-.attack-flow .knight-name,
-.attack-stage,
-.attack-damage {
-  padding: 1em;
-}
-
 .attack-flow .knight-name {
   color: #FFC134;
 }
@@ -415,6 +408,9 @@ label.button {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  box-sizing: border-box;
 }
 
 .Right .attack-flow {

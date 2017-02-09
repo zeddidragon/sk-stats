@@ -3,11 +3,12 @@ module Events.View exposing (log)
 import Events exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Knight exposing (..)
 import Knight.UV exposing (..)
 import Knight.Types exposing (..)
-import View.Shortcuts exposing (toText)
-import Util exposing (find)
+import View.Shortcuts exposing (toText, button)
+import Util exposing (find, remove)
 
 unknownWeapon : Weapon
 unknownWeapon =
@@ -39,11 +40,11 @@ log message events left right =
       weapons
         |> find (\w -> w.name == name)
         |> Maybe.withDefault unknownWeapon
-    eventLog events output =
+    eventLog index output events =
       case events of
         [] -> output
-        x::xs -> eventLog xs output ++ eventEntry xs x
-    eventEntry history (side, event) =
+        x::xs -> eventLog (index + 1) output xs ++ eventEntry index xs x
+    eventEntry index history (side, event) =
       case event of
         Attack (weaponName, stage)->
           let
@@ -54,6 +55,10 @@ log message events left right =
               [ div [ class "attack-flow header" ]
                 [ div [ class "knight-name" ] [ text <| .name <| knight ]
                 , div [ class "weapon" ] [ text weaponName ]
+                , div
+                  [ class "button"
+                  , onClick <| message <| remove index events
+                  ] [ text "-" ]
                 ]
               , div [ class "attack-flow" ]
                 [ div [ class "attack-stage" ] [ toText stage ]
@@ -63,4 +68,4 @@ log message events left right =
             ]
         _ -> []
   in
-    div [ class "events" ] <| eventLog events []
+    div [ class "events" ] <| eventLog 0 [] events
