@@ -129,26 +129,39 @@ body {
 
 .hearts {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row-reverse;
   justify-content: flex-end;
   flex: 1;
 }
 
 .heart {
-  color: red;
+  box-sizing: border-box;
+  border: thin solid;
+  border-color: red;
   animation: popin 0.3s;
   transition: color 0.3s;
-  max-width: calc(100% / 30);
+  flex: 1;
+  margin-right: 2px;
+}
+
+.heart.silver-border {
+  border-color: silver;
+}
+
+.heart.gold-border {
+  border-color: gold;
+}
+
+.heart.red {
+  background-color: red;
 }
 
 .heart.silver {
-  color: silver;
+  background-color: silver;
   animation: spin 0.3s;
 }
 
 .heart.gold {
-  color: gold;
+  background-color: gold;
 }
 
 .value {

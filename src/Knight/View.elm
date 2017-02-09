@@ -106,26 +106,33 @@ stats message side left right events =
           if hearts > 60 then hearts - 60
           else 0
         silvers =
-          if golds > 0 then 30 - golds
+          if golds > 0 then 30
           else if hearts > 30 then hearts - 30
           else 0
         reds =
-          if golds > 0 then 0
-          else if silvers > 0 then 30 - silvers
+          if silvers > 0 then 30
           else hearts
-        heart color = span [class <| "heart " ++ color] [ text "♥" ]
+        heart n =
+          let
+            fill =
+              if remainingHearts < n then "empty"
+              else if remainingHearts < 30 + n then "red"
+              else if remainingHearts < 60 + n then "silver"
+              else "gold"
+            border =
+              if golds >= n then "gold-border"
+              else if silvers >= n then "silver-border"
+              else "red-border"
+          in
+            span [class <| fill ++ " heart " ++ border] []
         damage = Events.totalDamage lockdown opposing left right events
+        remaining = Knight.health knight - ceiling damage
+        remainingHearts = remaining // 40
       in
         div [ class "row" ] (
-          [
-            div [ class "hearts"] (
-              []
-              ++ List.repeat reds (heart "red")
-              ++ List.repeat silvers (heart "silver")
-              ++ List.repeat golds (heart "gold")
-            )
+          [ div [ class "hearts"] <| List.map heart <| List.range 1 reds
           , div [ class "value" ]
-            [ Knight.health knight - ceiling damage
+            [ remaining
               |> Basics.max 0
               |> toText
             ]
