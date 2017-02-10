@@ -82,8 +82,14 @@ statuses offenderSide left right history =
         _ -> False
     toInfliction status =
       case rFind (isStatus status) history of
-        Just (side, (Infliction (s, strength))) -> Just (s, 0)
+        Just (side, (Infliction (s, strength))) -> Just (s, statusStrength strength)
         _ -> Nothing
   in
     List.filterMap toInfliction statuses
 
+defenceModifier : Side -> Knight -> Knight -> List (Side, Event) -> Float
+defenceModifier offenderSide left right history =
+  let
+    inflictions = statuses offenderSide left right history
+  in
+    1
