@@ -44,63 +44,74 @@ log message events left right =
     eventLog index output events =
       case events of
         [] -> output
-        x::xs -> eventLog (index + 1) output xs ++ eventEntry index xs x
+        x::xs -> eventLog (index + 1) output xs ++ [ eventEntry index xs x ]
     button index =
       div
         [ class "button"
         , onClick <| message <| remove index events
         ] [ text "-" ]
     eventEntry index history (side, event) =
-      case event of
-        Attack (weaponName, stage)->
-          let
-            knight = getKnight side
-            damage = Events.damage True side left right history (side, event)
-          in
-            [ div [ class <| "event " ++ (toString side) ]
-              [ div [ class "attack-flow header" ]
-                [ div [ class "knight-name" ] [ text <| .name <| knight ]
-                , div [ class "weapon" ] [ text weaponName ]
-                , button index
-                ]
-              , div [ class "attack-flow" ]
-                [ div [ class "attack-stage" ] [ toText stage ]
-                , div [ class "attack-damage" ] [ toText <| ceiling <| damage ]
-                ]
-              ]
-            ]
-        Infliction (status, strength)->
-          let
-            knight = getKnight side
-            duration = Knight.Types.duration status <| statusStrength strength
-            description =
-              case status of
-                Deathmark ->
-                  [ text "All defences nullified for "
-                  , span [ class "status-duration" ] [ toText duration ]
-                  , text " seconds."
+      let
+        knight = getKnight side
+      in
+        case event of
+          Attack (weaponName, stage)->
+            let
+              knight = getKnight side
+              damage = Events.damage True side left right history (side, event)
+            in
+              div [ class <| "event " ++ (toString side) ]
+                [ div [ class "attack flow header" ]
+                  [ div [ class "knight-name" ] [ text <| .name <| knight ]
+                  , div [ class "weapon" ] [ text weaponName ]
+                  , button index
                   ]
-                _ -> []
-          in
-            [ div [ class <| "event " ++ (toString side) ]
-              [ div [ class "infliction-flow header" ]
+                , div [ class "attack flow" ]
+                  [ div [ class "attack-stage" ] [ toText stage ]
+                  , div [ class "attack-damage" ] [ toText <| ceiling <| damage ]
+                  ]
+                ]
+          Infliction (status, strength)->
+            let
+              duration = Knight.Types.duration status <| statusStrength strength
+              description =
+                case status of
+                  Deathmark ->
+                    [ text "All defences nullified for "
+                    , span [ class "status-duration" ] [ toText duration ]
+                    , text " seconds."
+                    ]
+                  _ -> []
+            in
+              div [ class <| "event " ++ (toString side) ]
+                [ div [ class "infliction flow header" ]
+                  [ div [ class "knight-name" ] [ text <| .name <| knight ]
+                  , button index
+                  ]
+                , div [ class "infliction flow" ]
+                  [ (
+                    if status == Deathmark then
+                      div [] []
+                    else
+                      div [ class "infliction-strength" ]
+                        [ toText <| statusStrength strength ]
+                    )
+                  , div [ class <| "infliction-status status " ++ toString status ]
+                    [ toText status ]
+                  ]
+                , div [ class "infliction-description" ] description
+                ]
+          Recovery status ->
+            div [ class <| "event " ++ (toString side) ]
+              [ div [ class "recovery flow header" ]
                 [ div [ class "knight-name" ] [ text <| .name <| knight ]
                 , button index
                 ]
-              , div [ class "infliction-flow" ]
-                [ (
-                  if status == Deathmark then
-                    div [] []
-                  else
-                    div [ class "infliction-strength" ]
-                      [ toText <| statusStrength strength ]
-                  )
-                , div [ class <| "infliction-status status " ++ toString status ]
+              , div [ class "recovery flow" ]
+                [ div [ class "recovery label" ] [ text "Recovery" ]
+                , div [ class <| "recovery-status status " ++ toString status ]
                   [ toText status ]
                 ]
-              , div [ class "infliction-description" ] description
               ]
-            ]
-        _ -> []
   in
     div [ class "events" ] <| eventLog 0 [] events

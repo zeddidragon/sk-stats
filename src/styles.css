@@ -33,8 +33,7 @@ h3 {
   flex: 1;
 }
 
-.attack-flow.header,
-.infliction-flow.header {
+.flow.header {
   background-color: #273845
 }
 
@@ -42,8 +41,7 @@ h3 {
   color: white;
 }
 
-.attack-flow .knight-name,
-.infliction-flow .knight-name {
+.flow .knight-name {
   color: #FFC134;
 }
 
@@ -411,8 +409,7 @@ label.button {
   align-items: center;
 }
 
-.attack-flow,
-.infliction-flow {
+.flow {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -421,8 +418,7 @@ label.button {
   box-sizing: border-box;
 }
 
-.Right .attack-flow,
-.Right .infliction-flow {
+.Right .flow {
   flex-direction: row-reverse;
 }
 

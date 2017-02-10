@@ -72,19 +72,17 @@ totalDamage lockdown offenderSide left right history =
 statuses : Side -> Knight -> Knight -> List (Side, Event) -> List (Status, Int)
 statuses offenderSide left right history =
   let
-    sideHistory =
-      history
-        |> List.filter (\(side, event)-> side == offenderSide)
-        |> List.map Tuple.second
     statuses = [Fire, Freeze, Poison, Shock, Stun, Curse, Deathmark]
-    isStatus status event =
+    isStatus status (side, event) =
       case event of 
-        Infliction (s, strength) -> s == status
-        Recovery (s) -> s == status
+        Infliction (s, strength) ->
+          side == offenderSide && s == status
+        Recovery (s) ->
+          side /= offenderSide && s == status
         _ -> False
     toInfliction status =
-      case rFind (isStatus status) sideHistory of
-        Just (Infliction (s, strength)) -> Just (s, 0)
+      case rFind (isStatus status) history of
+        Just (side, (Infliction (s, strength))) -> Just (s, 0)
         _ -> Nothing
   in
     List.filterMap toInfliction statuses

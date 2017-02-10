@@ -178,7 +178,6 @@ stats message side left right events =
             |> List.indexedMap attack
             |> List.concat
         )
-
     statusDescriptor maybeStatus maybeInfliction =
       case maybeStatus of
         Just status ->
@@ -223,11 +222,35 @@ stats message side left right events =
             else
               []
           ) )
-    statuses =
-      List.map toText <| Events.statuses opposing left right events
+    trigger label event =
+      case message of
+        Just msg ->
+          div
+            [ class "button"
+            , onClick <| msg <| event
+            ] [ text label ]
+        Nothing -> 
+          div [] []
+    inflictions =
+      let
+        inflictionDetail (status, strength) =
+          div [ class "item" ]
+            [ trigger "Cure" <| Recovery status
+            , div [ class <| "status " ++ (toString status) ]
+              [ toText status ]
+            , (
+              if status == Deathmark then
+                div [] []
+              else
+                div [ class "value"] [ toText strength ]
+              )
+            ]
+      in
+        Events.statuses opposing left right events
+          |> List.map inflictionDetail
   in
     List.concat
-      [ statuses
+      [ inflictions
       , [ divisor
         , health |> item "Health"
         , mobility knight |> item "Mobility"
