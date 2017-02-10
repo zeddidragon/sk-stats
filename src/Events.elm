@@ -24,6 +24,13 @@ defend defence damage =
     else
       damage * (1 - (0.5 + 0.19 * log10((2 * defence - damage)/15 + 1)))
 
+resist : Float -> Float -> Float
+resist resistance infliction =
+  if infliction > 3 then
+    clamp -6 8 (infliction - resistance)
+  else
+    min 8 (infliction - resistance)
+
 damage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> (Side, Event) -> Float
 damage lockdown offenderSide left right history (side, event) =
   let
@@ -69,7 +76,7 @@ totalDamage lockdown offenderSide left right history =
       [] -> 0
       x::xs -> dmg xs x + recurse xs
 
-statuses : Side -> Knight -> Knight -> List (Side, Event) -> List (Status, Int)
+statuses : Side -> Knight -> Knight -> List (Side, Event) -> List (Status, Float)
 statuses offenderSide left right history =
   let
     statuses = [Fire, Freeze, Poison, Shock, Stun, Curse, Deathmark]
@@ -80,9 +87,19 @@ statuses offenderSide left right history =
         Recovery (s) ->
           side /= offenderSide && s == status
         _ -> False
+    knight = if offenderSide == Left then right else left
     toInfliction status =
       case rFind (isStatus status) history of
-        Just (side, (Infliction (s, strength))) -> Just (s, statusStrength strength)
+        Just (side, (Infliction (s, strength))) ->
+          let
+            str = statusStrength strength
+            res = Knight.resistance knight status
+            value = resist res str
+          in
+            if value < -6 then
+              Nothing
+            else
+              Just (s, value)
         _ -> Nothing
   in
     List.filterMap toInfliction statuses

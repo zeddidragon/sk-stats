@@ -53,6 +53,7 @@ log message events left right =
     eventEntry index history (side, event) =
       let
         knight = getKnight side
+        opponenet = getOpponent side
       in
         case event of
           Attack (weaponName, stage)->
@@ -73,7 +74,9 @@ log message events left right =
                 ]
           Infliction (status, strength)->
             let
-              duration = Knight.Types.duration status <| statusStrength strength
+              resistance = Knight.resistance opponent status
+              severity = Events.resist resistance <| statusStrength strength
+              duration = Knight.Types.duration status severity
               description =
                 case status of
                   Deathmark ->
@@ -94,7 +97,7 @@ log message events left right =
                       div [] []
                     else
                       div [ class "infliction-strength" ]
-                        [ toText <| statusStrength strength ]
+                        [ toText <| severity ]
                     )
                   , div [ class <| "infliction-status status " ++ toString status ]
                     [ toText status ]

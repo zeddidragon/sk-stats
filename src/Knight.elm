@@ -2,6 +2,7 @@ module Knight exposing (..)
 
 import List exposing (filter, map, foldr)
 import Tuple exposing (first, second)
+import Util exposing (find)
 
 import Knight.Types exposing (..)
 import Knight.UV as UV exposing (..)
@@ -212,6 +213,14 @@ resistances knight =
       |> map total
       |> filter nonZero
 
+resistance : Knight -> Status -> Float
+resistance knight status =
+  knight
+    |> resistances
+    |> find (\(s, amount)-> s == status)
+    |> Maybe.withDefault (status, 0)
+    |> Tuple.second
+
 toDamageBoost : UV -> (Bonus, Int)
 toDamageBoost uv =
   case uv of
@@ -283,10 +292,10 @@ you : Knight
 you =
   { name = "You"
   , weapons =
-    [ { piece = Swords.leviathan
+    [ { piece = Swords.fang
       , uvs = []
       }
-    , { piece = Guns.valiance
+    , { piece = Guns.polaris
       , uvs = []
       }
     ]
