@@ -31,18 +31,22 @@ duration status severity =
   in
     base * (1 - (factor severity) / 30)
 
-fireDamage : Float -> Float
+fireDamage : Float -> Int
 fireDamage severity =
-  109 * (100 - (factor severity) * 3.2) / 100
+  ceiling <| 109 * (100 - (factor severity) * 3.2) / 100
 
 fireFrequency : Float
 fireFrequency = 2.5
 
 fireTicks : Float -> Int
 fireTicks severity =
-  ceiling <| 1 + (duration Fire severity - 1) / fireFrequency - 1
+  ceiling <| 1 + (duration Fire severity - 0.4) / fireFrequency
 
-poisonModifier : Float -> Float
+fireTotal : Float -> Int
+fireTotal severity =
+  fireDamage severity * fireTicks severity
+
+poisonFactor : Float -> Float
 poisonModifier severity =
   50 - 1.5 * factor severity
 
@@ -52,3 +56,18 @@ shockDamage = 78
 spasm : Float -> Float
 spasm severity =
   1.6 - 0.05 * factor severity
+
+curseDamage : Float -> Int
+curseDamage severity =
+  ceiling <| 310 * (100 - (factor severity) * 2.5) / 100
+
+curseSlots : Float -> Int
+curseSlots severity =
+  clamp 1 4 <| floor <| duration Curse severity / 13 - 0.5
+
+curseVials : Float -> Int
+curseVials severity =
+  min 4 <| ceiling <| (duration Curse severity + 1) / 10 - 2
+
+stunFactor : Float -> Float
+stunFactor severity = 1

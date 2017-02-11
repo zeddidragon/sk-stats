@@ -79,8 +79,8 @@ log message events left right =
               duration = Knight.Status.duration status severity
               fire = Knight.Status.fireDamage severity
               fireTicks = Knight.Status.fireTicks severity
-              totalFire = fire * (toFloat fireTicks)
-              poison = Knight.Status.poisonModifier severity
+              totalFire = Knight.Status.fireTotal severity
+              poison = Knight.Status.poisonFactor severity
               shockDefence =
                 ( opponent
                   |> Knight.defences True
@@ -88,8 +88,12 @@ log message events left right =
                   |> Maybe.withDefault (Elemental, 0)
                   |> Tuple.second
                 ) * defenceModifier side left right history
+              cursedVials = Knight.Status.curseVials severity
+              cursedWeapons = Knight.Status.curseSlots severity
+              curseDamage = Knight.Status.curseDamage severity
               spasmDamage = Knight.Status.shockDamage
               spasmDuration = Knight.Status.spasm severity
+              stun = Knight.Status.stunFactor severity
               description =
               (
                   div []
@@ -110,13 +114,13 @@ log message events left right =
                     , div []
                       [ text "Burn deals "
                       , span [ class "status-effect" ]
-                        [ toText <| ceiling fire ]
+                        [ toText <| fire ]
                       , text " damage"
                       ]
                     , div []
                       [ text "Total: "
                       , span [ class "status-effect" ]
-                        [ toText <| ceiling totalFire ]
+                        [ toText <| totalFire ]
                       ]
                     ]
                   Freeze ->
@@ -155,6 +159,23 @@ log message events left right =
                       , span [ class "status-effect" ]
                         [ toText <| ceiling <| defend shockDefence spasmDamage ]
                       , text " damage"
+                      ]
+                    ]
+                  Curse ->
+                    [ div []
+                      [ text "Curse "
+                      , span [ class "status-effect" ] [ toText cursedWeapons ]
+                      , text " random weapons"
+                      ]
+                    , div []
+                      [ text "Curse "
+                      , span [ class "status-effect" ] [ toText cursedVials ]
+                      , text " random vial slots"
+                      ]
+                    , div []
+                      [ text "Suffer "
+                      , span [ class "status-effect" ] [ toText curseDamage ]
+                      , text " damage if used"
                       ]
                     ]
                   Deathmark ->
