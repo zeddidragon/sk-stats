@@ -9,7 +9,7 @@ import Knight.UV exposing (..)
 import Knight.Types exposing (..)
 import Knight.Status exposing (..)
 import View.Shortcuts exposing (toText, button)
-import Util exposing (find, remove)
+import Util exposing (find, remove, pretty)
 
 unknownWeapon : Weapon
 unknownWeapon =
@@ -78,31 +78,65 @@ log message events left right =
               severity = Events.resist resistance <| statusStrength strength
               duration = Knight.Status.duration status severity
               poison = Knight.Status.poisonModifier severity
+              shockDefence =
+                ( opponent
+                  |> Knight.defences True
+                  |> find (\def -> Tuple.first def == Elemental)
+                  |> Maybe.withDefault (Elemental, 0)
+                  |> Tuple.second
+                ) * defenceModifier side left right history
+              spasmDamage = Knight.Status.shockDamage
+              spasmDuration = Knight.Status.spasm severity
               description =
               (
                   div []
                     [ text "Lasts for "
-                    , span [ class "status-duration" ] [ toText duration ]
+                    , span [ class "status-duration" ]
+                      [ text <| pretty duration ]
                     , text " seconds"
                     ]
                 ) ::
                 case status of
-                  Deathmark ->
-                    [ text "All defences nullified" ]
+                  Freeze ->
+                    [ div [] 
+                      [ text "Cannot "
+                      , span [ class "status-effect" ] [ text "move" ]
+                      ]
+                    ]
                   Poison ->
                     [ div []
                       [ text "Damage reduced "
                       , span [ class "status-effect" ]
-                        [ text <| (toString poison) ++ "%" ]
+                        [ text <| (pretty poison) ++ "%" ]
                       ]
                     , div []
                       [ text "Defence reduced "
                       , span [ class "status-effect" ]
-                        [ text <| (toString <| poison / 2) ++ "%" ]
+                        [ text <| (pretty <| poison / 2) ++ "%" ]
                       ]
-                    , div [ class "status-effect" ]
-                      [ text "Cannot heal" ]
+                    , div [] 
+                      [ text "Cannot "
+                      , span [ class "status-effect" ] [ text "heal" ]
+                      ]
                     ]
+                  Shock ->
+                    [ div []
+                      [ text "Random shock spasms" ]
+                    , div []
+                      [ text "Spasm last for "
+                      , span [ class "status-effect" ]
+                        [ text <| pretty spasmDuration ]
+                      , text " seconds"
+                      ]
+                    , div [] 
+                      [ text "Spams inflict  "
+                      , span [ class "status-effect" ]
+                        [ toText <| ceiling <| defend shockDefence spasmDamage ]
+                      , text " damage"
+                      ]
+                    ]
+                  Deathmark ->
+                    [ text "All defences nullified" ]
                   _ -> []
             in
               div [ class <| "event " ++ (toString side) ]

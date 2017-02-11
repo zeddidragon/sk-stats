@@ -42,3 +42,10 @@ replace list index new =
 remove : Int -> List a -> List a
 remove index list =
   (List.take index list) ++ (List.drop (index + 1) list)
+
+pretty : Float -> String
+pretty num =
+  let
+    full = num * 10 |> floor |> toString
+  in
+    String.dropRight 1 full ++ "." ++ String.right 1 full

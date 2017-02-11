@@ -4,7 +4,7 @@ import Html exposing (div, select, text, h3, span, Html)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Events exposing (..)
-import Util exposing (remove, replace)
+import Util exposing (remove, replace, pretty)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Status exposing (..)
@@ -359,11 +359,6 @@ chargeSpeed knight weapon =
     minTime = 0.55
     maxTime = 8
     speed = Knight.chargeSpeed knight weapon
-    pretty num =
-      let
-        full = num * 10 |> floor |> toString
-      in
-        String.dropRight 1 full ++ "." ++ String.right 1 full
   in
     div [ class "row graphic" ]
       [ bar (maxTime - minTime) "" (maxTime - speed)
