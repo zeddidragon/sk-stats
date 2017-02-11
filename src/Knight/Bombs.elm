@@ -50,27 +50,28 @@ bab =
   , attacks = [ (Charge, attacks.bab) ]
   }
 
-hazes : List Weapon
-hazes =
-  let
-    variants =
-      [ ("Ash of Agni", Fire)
-      , ("Shivermist Buster", Freeze)
-      , ("Venom Veiler", Poison)
-      , ("Voltaic Tempest", Shock)
-      , ("Stagger Storm", Stun)
-      ]
-    copy (name, status) =
-      { bomb
-      | name = name
-      , damageType = Elemental
-      , status = Just status
-      , chargeTime = charge.long
-      , attacks = [ (Charge, attacks.haze) ]
-      , inflictions = [ (Charge, Good, Minor) ]
-      }
-  in
-    List.map copy variants
+ash : Weapon
+ash =
+  { bomb
+  | name = "Ash of Agni"
+  , damageType = Elemental
+  , status = Just Fire
+  , chargeTime = charge.long
+  , attacks = [ (Charge, attacks.haze) ]
+  , inflictions = [ (Charge, Good, Minor) ]
+  }
+
+shiver : Weapon
+shiver = { ash | name = "Shivermist Buster" , status = Just Freeze }
+
+venom : Weapon
+venom = { ash | name = "Venom Veiler" , status = Just Poison }
+
+tempest : Weapon
+tempest = { ash | name = "Voltaic Tempest" , status = Just Shock }
+
+stagger : Weapon
+stagger = { ash | name = "Stagger Storm" , status = Just Stun }
 
 graviton : Weapon
 graviton =
@@ -188,7 +189,7 @@ salt =
 bombs : List Weapon
 bombs =
   [nitro, irontech, bab, dbb]
-  ++ hazes
+  ++ [ash, shiver, venom, tempest, stagger]
   ++ (graviton :: vortexes)
   ++ [dr]
   ++ (sss :: ssb :: shards)

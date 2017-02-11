@@ -46,7 +46,7 @@ h3 {
 }
 
 .infliction-description {
-  padding: 1em;
+  padding: 0.5em 1em;
   padding-top: 0;
 }
 
@@ -419,7 +419,7 @@ label.button {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
+  padding: 0.5em 1em;
   box-sizing: border-box;
 }
 

@@ -245,7 +245,7 @@ stats message side left right events =
               [ toText status ]
             , (
               if status == Deathmark then
-                div [] []
+                div [ class "value" ] []
               else
                 div [ class "value"] [ toText strength ]
               )

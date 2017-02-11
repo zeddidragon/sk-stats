@@ -31,11 +31,22 @@ duration status severity =
   in
     base * (1 - (factor severity) / 30)
 
+fireDamage : Float -> Float
+fireDamage severity =
+  109 * (100 - (factor severity) * 3.2) / 100
+
+fireFrequency : Float
+fireFrequency = 2.5
+
+fireTicks : Float -> Int
+fireTicks severity =
+  ceiling <| 1 + (duration Fire severity - 1) / fireFrequency - 1
+
 poisonModifier : Float -> Float
 poisonModifier severity =
   50 - 1.5 * factor severity
 
-shockDamage: Float
+shockDamage : Float
 shockDamage = 78
 
 spasm : Float -> Float

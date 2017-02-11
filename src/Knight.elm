@@ -313,13 +313,13 @@ opponent : Knight
 opponent =
   { name = "Challenger"
   , weapons =
-    [ { piece = Swords.acheron
+    [ { piece = Swords.combuster
       , uvs =
         [ WeaponUV (ASI, VeryHigh)
         , WeaponUV (CTR, VeryHigh)
         ]
       }
-    , { piece = Swords.flourish
+    , { piece = Bombs.ash
       , uvs = [ WeaponUV (ASI, VeryHigh) ]
       }
     , { piece = Swords.faust

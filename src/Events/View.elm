@@ -77,6 +77,9 @@ log message events left right =
               resistance = Knight.resistance opponent status
               severity = Events.resist resistance <| statusStrength strength
               duration = Knight.Status.duration status severity
+              fire = Knight.Status.fireDamage severity
+              fireTicks = Knight.Status.fireTicks severity
+              totalFire = fire * (toFloat fireTicks)
               poison = Knight.Status.poisonModifier severity
               shockDefence =
                 ( opponent
@@ -97,6 +100,25 @@ log message events left right =
                     ]
                 ) ::
                 case status of
+                  Fire ->
+                    [ div [] 
+                      [ text "Suffer burns "
+                      , span [ class "status-effect" ]
+                        [ toText fireTicks ]
+                      , text " times"
+                      ]
+                    , div []
+                      [ text "Burn deals "
+                      , span [ class "status-effect" ]
+                        [ toText <| ceiling fire ]
+                      , text " damage"
+                      ]
+                    , div []
+                      [ text "Total: "
+                      , span [ class "status-effect" ]
+                        [ toText <| ceiling totalFire ]
+                      ]
+                    ]
                   Freeze ->
                     [ div [] 
                       [ text "Cannot "
