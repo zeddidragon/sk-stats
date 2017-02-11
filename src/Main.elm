@@ -23,7 +23,7 @@ view model =
         You -> model.left.name
         Vs -> "vs"
         Opponent -> model.right.name
-    addEvent side event = SetEvents (model.events ++ [ (side, event) ])
+    addEvent side event = SetEvents ((side, event) :: model.events)
     leftEvents = model.events
     rightEvents = model.events
   in

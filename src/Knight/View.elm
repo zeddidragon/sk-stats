@@ -7,6 +7,7 @@ import Events exposing (..)
 import Util exposing (remove, replace)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 import Knight exposing (Knight, WeaponEquip)
 import Knight.Bombs
 import Knight.Armour exposing (armours)
@@ -142,32 +143,36 @@ stats message side left right events =
           div [ class "value" ] [ text label ]
         split = piece.split /= Nothing
         attack index ((stage, damage), infliction) =
-          [ div [ class "item " ] (
-            (
-            case message of
-              Just msg ->
-                Html.label 
-                  [ onClick <| msg (Attack (piece.name, stage))
-                  , class "button"
+          let
+            modifier = Events.attackModifier opposing left right events
+            dmg = damage * modifier
+          in
+            [ div [ class "item " ] (
+              (
+              case message of
+                Just msg ->
+                  Html.label 
+                    [ onClick <| msg (Attack (piece.name, stage))
+                    , class "button"
+                    ]
+                    [ text <| toString stage ]
+                Nothing -> Html.label [] [ text <| toString stage ]
+              ) :: (
+              if split then
+                [ splitbar dmg
+                , div [class "split-value"]
+                  [ value <| (toString (ceiling (dmg / 2))) ++ " +"
+                  , value <| toString <| ceiling (dmg / 2)
                   ]
-                  [ text <| toString stage ]
-              Nothing -> Html.label [] [ text <| toString stage ]
-            ) :: (
-            if split then
-              [ splitbar damage
-              , div [class "split-value"]
-                [ value <| (toString (ceiling (damage / 2))) ++ " +"
-                , value <| toString <| ceiling (damage / 2)
+                , div [ class "combined-value"]
+                  [ value <| toString <| ceiling dmg ]
                 ]
-              , div [ class "combined-value"]
-                [ value <| toString <| ceiling damage ]
-              ]
-            else
-              [ singlebar damage
-              , value <| toString <| ceiling damage
-              ]
-            )
-          ) ] ++ statusDescriptor piece.status infliction
+              else
+                [ singlebar dmg
+                , value <| toString <| ceiling dmg
+                ]
+              )
+            ) ] ++ statusDescriptor piece.status infliction
       in
         [ divisor
         , h3 [] [ text piece.name ]
@@ -235,7 +240,7 @@ stats message side left right events =
       let
         inflictionDetail (status, strength) =
           div [ class "item" ]
-            [ trigger "Cure" <| Recovery status
+            [ trigger "Recover" <| Recovery status
             , div [ class <| "status " ++ (toString status) ]
               [ toText status ]
             , (
@@ -248,6 +253,18 @@ stats message side left right events =
       in
         Events.statuses opposing left right events
           |> List.map inflictionDetail
+    defences =
+      let
+        maxDefence = 350
+        defence (dtype, amount) =
+          item (toString dtype) (div [ class "graphic" ]
+            [ bar maxDefence (toString dtype) (amount * modifier)
+            , div [ class "value" ] [ toText <| round <| amount * modifier ]
+            ])
+        modifier = Events.defenceModifier opposing left right events
+      in
+        Knight.defences lockdown knight |> List.map defence
+
   in
     List.concat
       [ inflictions
@@ -256,7 +273,7 @@ stats message side left right events =
         , mobility knight |> item "Mobility"
         , divisor
         ]
-      , defences message knight
+      , defences
       , [ divisor ]
       , resistances knight
       , [ divisor
@@ -265,18 +282,6 @@ stats message side left right events =
       , List.concat <| List.map attacks knight.weapons
       ]
     |> div [ class "knight-stats" ]
-
-defences message knight =
-  let
-    lockdown = message /= Nothing
-    maxDefence = 350
-    defence (dtype, amount) =
-      item (toString dtype) (div [ class "graphic" ]
-        [ bar maxDefence (toString dtype) amount
-        , div [ class "value" ] [ toText <| round amount ]
-        ])
-  in
-    Knight.defences lockdown knight |> List.map defence
 
 highlightPips highlights klass amount =
   let

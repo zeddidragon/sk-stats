@@ -6,6 +6,7 @@ import Util exposing (find)
 
 import Knight.Types exposing (..)
 import Knight.UV as UV exposing (..)
+import Knight.Status exposing (..)
 import Knight.Swords as Swords
 import Knight.Guns as Guns
 import Knight.Bombs as Bombs
@@ -292,10 +293,10 @@ you : Knight
 you =
   { name = "You"
   , weapons =
-    [ { piece = Swords.fang
+    [ { piece = Swords.obsidian
       , uvs = []
       }
-    , { piece = Guns.polaris
+    , { piece = Bombs.irontech
       , uvs = []
       }
     ]

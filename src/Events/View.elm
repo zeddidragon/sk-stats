@@ -7,6 +7,7 @@ import Html.Events exposing (onClick)
 import Knight exposing (..)
 import Knight.UV exposing (..)
 import Knight.Types exposing (..)
+import Knight.Status exposing (..)
 import View.Shortcuts exposing (toText, button)
 import Util exposing (find, remove)
 
@@ -44,7 +45,7 @@ log message events left right =
     eventLog index output events =
       case events of
         [] -> output
-        x::xs -> eventLog (index + 1) output xs ++ [ eventEntry index xs x ]
+        x::xs -> eventEntry index xs x :: eventLog (index + 1) output xs
     button index =
       div
         [ class "button"
@@ -53,12 +54,11 @@ log message events left right =
     eventEntry index history (side, event) =
       let
         knight = getKnight side
-        opponenet = getOpponent side
+        opponent = getOpponent side
       in
         case event of
           Attack (weaponName, stage)->
             let
-              knight = getKnight side
               damage = Events.damage True side left right history (side, event)
             in
               div [ class <| "event " ++ (toString side) ]
@@ -76,13 +76,32 @@ log message events left right =
             let
               resistance = Knight.resistance opponent status
               severity = Events.resist resistance <| statusStrength strength
-              duration = Knight.Types.duration status severity
+              duration = Knight.Status.duration status severity
+              poison = Knight.Status.poisonModifier severity
               description =
+              (
+                  div []
+                    [ text "Lasts for "
+                    , span [ class "status-duration" ] [ toText duration ]
+                    , text " seconds"
+                    ]
+                ) ::
                 case status of
                   Deathmark ->
-                    [ text "All defences nullified for "
-                    , span [ class "status-duration" ] [ toText duration ]
-                    , text " seconds."
+                    [ text "All defences nullified" ]
+                  Poison ->
+                    [ div []
+                      [ text "Damage reduced "
+                      , span [ class "status-effect" ]
+                        [ text <| (toString poison) ++ "%" ]
+                      ]
+                    , div []
+                      [ text "Defence reduced "
+                      , span [ class "status-effect" ]
+                        [ text <| (toString <| poison / 2) ++ "%" ]
+                      ]
+                    , div [ class "status-effect" ]
+                      [ text "Cannot heal" ]
                     ]
                   _ -> []
             in
@@ -95,6 +114,9 @@ log message events left right =
                   [ (
                     if status == Deathmark then
                       div [] []
+                    else if severity < -6 then
+                      div [ class "infliction-strength immune" ]
+                        [ text <| "Immune!" ]
                     else
                       div [ class "infliction-strength" ]
                         [ toText <| severity ]
@@ -102,7 +124,12 @@ log message events left right =
                   , div [ class <| "infliction-status status " ++ toString status ]
                     [ toText status ]
                   ]
-                , div [ class "infliction-description" ] description
+                , (
+                  if severity < -6 then
+                    div [] []
+                  else
+                    div [ class "infliction-description" ] description
+                  )
                 ]
           Recovery status ->
             div [ class <| "event " ++ (toString side) ]

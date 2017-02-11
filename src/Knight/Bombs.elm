@@ -3,6 +3,7 @@ module Knight.Bombs exposing (..)
 import Knight.Values exposing (charge, attacks)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 
 bomb : Weapon
 bomb =
@@ -31,23 +32,23 @@ dbb =
   , damageType = Piercing
   }
 
-heavies : List Weapon
-heavies =
-  let
-    variants =
-      [ ("Irontech Destroyer", attacks.irontech, charge.irontech)
-      , ("Big Angry Bomb", attacks.bab, charge.long)
-      ]
-    copy (name, damage, chargeTime) =
-      { bomb
-      | name = name
-      , status = Just Stun
-      , chargeTime = chargeTime
-      , attacks = [ (Charge, damage) ]
-      , inflictions = [ (Charge, Fair, Minor) ]
-      }
-  in
-    List.map copy variants
+irontech : Weapon
+irontech =
+  { bomb
+  | name = "Irontech Destroyer"
+  , status = Just Stun
+  , chargeTime = charge.irontech
+  , attacks = [ (Charge, attacks.irontech) ]
+  , inflictions = [ (Charge, Fair, Minor) ]
+  }
+
+bab : Weapon
+bab =
+  { irontech
+  | name = "Big Angry Bomb"
+  , chargeTime = charge.long
+  , attacks = [ (Charge, attacks.bab) ]
+  }
 
 hazes : List Weapon
 hazes =
@@ -186,8 +187,7 @@ salt =
  
 bombs : List Weapon
 bombs =
-  []
-  ++ (nitro :: dbb :: heavies)
+  [nitro, irontech, bab, dbb]
   ++ hazes
   ++ (graviton :: vortexes)
   ++ [dr]

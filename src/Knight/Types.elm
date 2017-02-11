@@ -1,5 +1,6 @@
 module Knight.Types exposing (..)
 
+import Knight.Status exposing (..)
 import Knight.UV exposing (..)
 
 type WeaponType = Sword | Gun | Bomb

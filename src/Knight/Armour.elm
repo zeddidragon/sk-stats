@@ -2,6 +2,7 @@ module Knight.Armour exposing (..)
 
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 
 base =
   { hearts = 5

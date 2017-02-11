@@ -1,9 +1,9 @@
 module Events exposing (..)
 
 import Knight exposing (Knight)
-import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 import Knight.Types exposing (..)
-import Util exposing (find, rFind)
+import Util exposing (find)
 
 type Side
   = Left
@@ -34,6 +34,7 @@ resist resistance infliction =
 damage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> (Side, Event) -> Float
 damage lockdown offenderSide left right history (side, event) =
   let
+    defenderSide = if offenderSide == Left then Right else Left
     offender = if offenderSide == Left then left else right
     defender = if offenderSide == Left then right else left
     weapon =
@@ -58,12 +59,16 @@ damage lockdown offenderSide left right history (side, event) =
   in
     case (attack, weapon) of
       (Just (stage, damage), Just wpn)->
-        case wpn.piece.split of
-          Just splitType ->
-            defend (defence splitType) (damage / 2) +
-            defend (defence wpn.piece.damageType) (damage / 2)
-          Nothing ->
-            defend (defence wpn.piece.damageType) damage
+        let
+          aMod = attackModifier defenderSide left right history
+          dMod = defenceModifier offenderSide left right history
+        in
+          case wpn.piece.split of
+            Just splitType ->
+              defend (dMod * defence splitType) (aMod * damage / 2) +
+              defend (dMod * defence wpn.piece.damageType) (aMod * damage / 2)
+            Nothing ->
+              defend (dMod * defence wpn.piece.damageType) (aMod * damage)
       _ -> 0
 
 totalDamage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> Float
@@ -89,7 +94,7 @@ statuses offenderSide left right history =
         _ -> False
     knight = if offenderSide == Left then right else left
     toInfliction status =
-      case rFind (isStatus status) history of
+      case find (isStatus status) history of
         Just (side, (Infliction (s, strength))) ->
           let
             str = statusStrength strength
@@ -108,5 +113,28 @@ defenceModifier : Side -> Knight -> Knight -> List (Side, Event) -> Float
 defenceModifier offenderSide left right history =
   let
     inflictions = statuses offenderSide left right history
+    findStatus status = find (\(s, severity) -> s == status) inflictions
+    poison = 
+      case findStatus Poison of
+        Just (Poison, severity) ->
+          (200 - Knight.Status.poisonModifier severity) / 200
+        _ -> 1
+    deathmark =
+      case findStatus Deathmark of
+        Just (Deathmark, severity) -> 0
+        _ -> 1
   in
-    1
+    1 * poison * deathmark
+
+attackModifier : Side -> Knight -> Knight -> List (Side, Event) -> Float
+attackModifier offenderSide left right history = 
+  let
+    inflictions = statuses offenderSide left right history
+    findStatus status = find (\(s, severity) -> s == status) inflictions
+    poison =
+      case findStatus Poison of
+        Just (Poison, severity) ->
+          (100 - Knight.Status.poisonModifier severity) / 100
+        _ -> 1
+  in
+    1 * poison

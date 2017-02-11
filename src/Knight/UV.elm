@@ -1,4 +1,5 @@
 module Knight.UV exposing (..)
+import Knight.Status exposing (..)
 import Util exposing (index)
 
 type DamageType
@@ -6,17 +7,6 @@ type DamageType
   | Piercing
   | Elemental
   | Shadow
-
-type Status
-  = Fire
-  | Freeze
-  | Shock
-  | Poison
-  | Stun
-  | Curse
-  | Sleep
-  | Deathmark
-  | Random
 
 type Bonus
   = MSI

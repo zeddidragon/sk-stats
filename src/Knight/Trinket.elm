@@ -2,6 +2,7 @@ module Knight.Trinket exposing (..)
 
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 
 hearts trinkets =
   let

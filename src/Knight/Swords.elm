@@ -3,6 +3,7 @@ module Knight.Swords exposing (..)
 import Knight.Values exposing (charge, attacks)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 
 sword : Weapon
 sword =
@@ -111,7 +112,11 @@ flamberge =
   | name = "Furious Flamberge"
   , status = Just Fire
   , inflictions =
-    everyAttack (Fair, Moderate) rigadoon.attacks
+    [ (Basic, Slight, Moderate)
+    , (Heavy, Slight, Moderate)
+    , (Charge, Fair, Moderate)
+    , (Special, Fair, Moderate)
+    ]
   }
 
 hunting : Weapon

@@ -3,6 +3,7 @@ module Knight.Guns exposing (..)
 import Knight.Values exposing (charge, attacks)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 
 gun : Weapon
 gun =

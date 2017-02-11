@@ -46,7 +46,12 @@ h3 {
 }
 
 .infliction-description {
-  padding: 0 1em;
+  padding: 1em;
+  padding-top: 0;
+}
+
+.infliction-strength {
+  color: white;
 }
 
 .knight-form {
@@ -423,6 +428,10 @@ label.button {
 }
 
 .status-duration {
+  color: white;
+}
+
+.status-effect {
   color: white;
 }
 

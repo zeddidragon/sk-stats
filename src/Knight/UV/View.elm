@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
+import Knight.Status exposing (..)
 import Knight.Trinket as Trinket
 import Util exposing (index, atIndex, replace, remove)
 import View.Shortcuts exposing (selectList, selectListExclude, spacer, button)
