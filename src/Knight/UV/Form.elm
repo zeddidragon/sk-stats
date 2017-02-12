@@ -1,4 +1,4 @@
-module Knight.UV.View exposing (weaponForm, armourForm, trinketForms)
+module Knight.UV.Form exposing (weaponForm, armourForm, trinketForms)
 
 import Html exposing (div, select, text, h3, span, input)
 import Html.Attributes exposing (..)

@@ -1,9 +1,10 @@
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Knight exposing (..)
-import Knight.View
-import Events exposing (..)
-import Events.View
+import Html exposing (div, node)
+import Html.Attributes exposing (class, attribute, name, content)
+import Knight exposing (Knight)
+import Knight.Form exposing (form)
+import Knight.Stats exposing (stats)
+import Events exposing (Side(Left, Right), Event)
+import Events.View exposing (log)
 import View.Shortcuts exposing (tabs)
 
 main =
@@ -43,17 +44,17 @@ view model =
       , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
-            [ Knight.View.form EquipLeft model.left
-            , Knight.View.stats Nothing Left model.left model.right []
+            [ form EquipLeft model.left
+            , stats Nothing Left model.left model.right []
             ]
           Vs ->
-            [ Knight.View.stats (Just (addEvent Left)) Left model.left model.right model.events
-            , Events.View.log SetEvents model.events model.left model.right
-            , Knight.View.stats (Just (addEvent Right)) Right model.left model.right model.events
+            [ stats (Just (addEvent Left)) Left model.left model.right model.events
+            , log SetEvents model.events model.left model.right
+            , stats (Just (addEvent Right)) Right model.left model.right model.events
             ]
           Opponent ->
-            [ Knight.View.stats Nothing Right model.left model.right []
-            , Knight.View.form EquipRight model.right
+            [ stats Nothing Right model.left model.right []
+            , form EquipRight model.right
             ]
         )
       ]

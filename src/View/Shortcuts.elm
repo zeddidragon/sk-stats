@@ -61,3 +61,12 @@ tabs toLabel toClass message items selected =
     div [ class "tabs" ] <| List.map tab items
 
 button attributes = div <| [ class "button" ] ++ attributes
+
+item label content =
+  div [ class "item" ]
+    [ Html.label [] [ text label ]
+    , content
+    ]
+
+divisor =
+  div [ class "divisor" ] []
