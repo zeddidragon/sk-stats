@@ -3,6 +3,7 @@ module Events exposing (..)
 import Knight exposing (Knight)
 import Knight.Status exposing (..)
 import Knight.Types exposing (..)
+import Knight.UV exposing (..)
 import Util exposing (find)
 
 type Side
@@ -26,10 +27,7 @@ defend defence damage =
 
 resist : Float -> Float -> Float
 resist resistance infliction =
-  if infliction > 3 then
-    clamp -6 8 (infliction - resistance)
-  else
-    min 8 (infliction - resistance)
+  min 8 (infliction - resistance)
 
 damage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> (Side, Event) -> Float
 damage lockdown offenderSide left right history (side, event) =
@@ -51,25 +49,34 @@ damage lockdown offenderSide left right history (side, event) =
             |> List.map Tuple.first
             |> find (\attack -> Tuple.first attack == stage)
         _ -> Nothing
-    defence dType = defender
-      |> Knight.defences lockdown
-      |> find (\def -> Tuple.first def == dType)
-      |> Maybe.withDefault (dType, 0)
-      |> Tuple.second
+    defence dType = Knight.defence lockdown defender dType
+    aMod = attackModifier defenderSide left right history
+    dMod = defenceModifier offenderSide left right history
+    statusDamage =
+      case event of
+        Infliction (status, strength)->
+          let
+            resistance = Knight.resistance defender status
+            severity = resist resistance <| statusStrength strength
+          in
+            case status of
+              Fire -> toFloat <| Knight.Status.fireTotal severity
+              Shock -> defend (dMod * defence Elemental) Knight.Status.shockDamage
+              _ -> 0
+        _ -> 0
+
   in
-    case (attack, weapon) of
-      (Just (stage, damage), Just wpn)->
-        let
-          aMod = attackModifier defenderSide left right history
-          dMod = defenceModifier offenderSide left right history
-        in
+    if side /= offenderSide then 0
+    else
+      case (attack, weapon) of
+        (Just (stage, damage), Just wpn)->
           case wpn.piece.split of
             Just splitType ->
               defend (dMod * defence splitType) (aMod * damage / 2) +
               defend (dMod * defence wpn.piece.damageType) (aMod * damage / 2)
             Nothing ->
               defend (dMod * defence wpn.piece.damageType) (aMod * damage)
-      _ -> 0
+        _ -> statusDamage
 
 totalDamage : Bool -> Side -> Knight -> Knight -> List (Side, Event) -> Float
 totalDamage lockdown offenderSide left right history =

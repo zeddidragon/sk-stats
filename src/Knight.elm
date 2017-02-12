@@ -179,6 +179,14 @@ defences lockdown knight =
       |> map applyLockdown
       |> filter nonZero
 
+defence : Bool -> Knight -> DamageType -> Float
+defence lockdown knight dType =
+  knight
+    |> defences lockdown
+    |> find (\(d, amount)-> d == dType)
+    |> Maybe.withDefault (dType, 0)
+    |> Tuple.second
+
 toResistance : UV -> (Status, Float)
 toResistance uv =
   case uv of
