@@ -5,7 +5,8 @@ import Knight.UV exposing (..)
 import Knight.Status exposing (..)
 
 base =
-  { hearts = 5
+  { id = "base"
+  , hearts = 5
   , name = "Base Armour"
   , defences = [ (Normal, defences.base) ]
   , resistances = []
@@ -22,7 +23,8 @@ plate =
 
 cobalt =
   { base
-  | name = "Cobalt"
+  | id = "azure"
+  , name = "Azure Guardian"
   , defences =
     [ (Piercing, defences.base)
     , (Normal, defences.special)
@@ -31,7 +33,8 @@ cobalt =
 
 crusader =
   { base
-  | name = "Almirian Crusader"
+  | id = "almire"
+  , name = "Almirian Crusader"
   , defences =
     [ (Shadow, defences.base)
     , (Normal, defences.special)
@@ -44,7 +47,8 @@ crusader =
 
 skolver =
   { class
-  | name = "Skolver"
+  | id = "skolv"
+  , name = "Skolver"
   , defences = (Piercing, defences.base) :: class.defences
   , resistances = [ (Freeze, 4) ]
   , bonuses = [ (SwordDmg, Medium) ]
@@ -52,7 +56,8 @@ skolver =
   
 vog =
   { class
-  | name = "Vog Cub"
+  | id = "vog"
+  , name = "Vog Cub"
   , defences = (Elemental, defences.base) :: class.defences
   , resistances = [ (Fire, 4) ]
   , bonuses = [ (SwordASI, Medium) ]
@@ -60,7 +65,8 @@ vog =
 
 snarby =
   { skolver
-  | name = "Snarbolax"
+  | id = "snarb"
+  , name = "Snarbolax"
   , defences = (Shadow, defences.base) :: class.defences
   , resistances =
     [ (Freeze, 3)
@@ -71,28 +77,32 @@ snarby =
 
 justifier =
   { skolver
-  | name = "Justifier"
+  | id = "just"
+  , name = "Justifier"
   , resistances = [ (Stun, 4) ]
   , bonuses = [ (GunASI, Medium) ]
   }
 
 nameless =
   { vog
-  | name = "Nameless"
+  | id = "name"
+  , name = "Nameless"
   , resistances = [ (Freeze, 4) ]
   , bonuses = [ (GunASI, Medium) ]
   }
 
 shadowsun =
   { snarby
-  | name = "Shadowsun"
+  | id = "sun"
+  , name = "Shadowsun"
   , resistances = [ (Poison, 4) ]
   , bonuses = [ (GunDmg, Medium) ]
   }
 
 deadshot =
   { shadowsun
-  | name = "Deadshot"
+  | id = "dead"
+  , name = "Deadshot"
   , resistances = [ (Curse, 4) ]
   , bonuses =
     [ (GunASI, Low)
@@ -103,19 +113,22 @@ deadshot =
 
 volcDemo =
   { vog
-  | name = "Volcanic Demo"
+  | id = "demo"
+  , name = "Volcanic Demo"
   , bonuses = [ (BombCTR, Medium) ]
   }
 
 bombastic =
   { nameless
-  | name = "Bombastic Demo"
+  | id = "bomba"
+  , name = "Bombastic Demo"
   , bonuses = [ (BombDmg, Medium) ]
   }
 
 mercDemo =
   { volcDemo
-  | name = "Mercurial Demo"
+  | id = "mdemo"
+  , name = "Mercurial Demo"
   , resistances = [ (Shock, 4) ]
   , bonuses =
     [ (BombDmg, Low)
@@ -125,7 +138,8 @@ mercDemo =
 
 mad =
   { base
-  | name = "Mad Bomber"
+  | id = "mad"
+  , name = "Mad Bomber"
   , defences = (Elemental, defences.base) :: base.defences
   , resistances =
     [ (Fire, -2)
@@ -141,61 +155,74 @@ mad =
 
 jelly =
   { base
-  | name = "Royal Jelly"
+  | id = "jelly"
+  , name = "Royal Jelly"
   , defences = (Piercing, defences.special) :: base.defences
   , resistances =
-    [ (Stun, 2)
-    , (Sleep, 2)
+    [ (Stun, 4)
+    , (Sleep, 4)
     ]
+  }
+
+merc =
+  { jelly
+  | id = "merc"
+  , name = "Mercurial Jelly"
+  , resistances = [ (Shock, 4) ]
   }
 
 queen =
   { jelly
-  | name = "Ice Queen"
+  | id = "iq"
+  , name = "Ice Queen"
   , resistances =
-    [ (Stun, 2)
-    , (Freeze, 2)
+    [ (Stun, 4)
+    , (Freeze, 4)
     ]
   }
 
 gray =
   { base
-  | name = "Gray Feather"
+  | id = "gray"
+  , name = "Gray Feather"
   , defences = (Elemental, defences.special) :: base.defences
   , resistances =
-    [ (Fire, 2)
-    , (Shock, 2)
+    [ (Fire, 4)
+    , (Shock, 4)
     ]
   }
 
 divine =
   { base
-  | name = "Divine"
+  | id = "divine"
+  , name = "Divine"
   , defences = 
     [ (Elemental, defences.class)
     , (Shadow, defences.class)
     ]
   , resistances =
-    [ (Fire, 2)
-    , (Shock, 2)
-    , (Curse, 2)
+    [ (Fire, 4)
+    , (Shock, 4)
+    , (Curse, 4)
     ]
   , bonuses = [ (Fiend, Medium) ]
   }
 
 skelly =
   { base
-  | name = "Dread Skelly"
+  | id = "skelly"
+  , name = "Dread Skelly"
   , defences = (Shadow, defences.special) :: base.defences
   , resistances =
-    [ (Freeze, 2)
-    , (Poison, 2)
+    [ (Freeze, 4)
+    , (Poison, 4)
     ]
   }
 
 chaos =
   { mad
-  | name = "Chaos"
+  | id = "chaos"
+  , name = "Chaos"
   , resistances = (Curse, -2) :: mad.resistances
   , bonuses = 
     [ (Dmg, Medium)
@@ -205,7 +232,8 @@ chaos =
 
 kat =
   { base
-  | name = "Black Kat"
+  | id = "kat"
+  , name = "Black Kat"
   , defences = (Shadow, defences.base) :: base.defences
   , resistances =
     [ (Freeze, 4)
@@ -222,7 +250,8 @@ kat =
 
 claw =
   { base
-  | name = "Kat Claw"
+  | id = "claw"
+  , name = "Kat Claw"
   , defences = (Shadow, defences.special) :: base.defences
   , resistances =
     [ (Freeze, 4)
@@ -237,7 +266,8 @@ claw =
 
 eye =
   { claw
-  | name = "Kat Eye"
+  | id = "eye"
+  , name = "Kat Eye"
   , bonuses =
     [ (GunDmg, Low)
     , (GunASI, Low)
@@ -246,7 +276,8 @@ eye =
 
 hiss =
   { claw
-  | name = "Kat Hiss"
+  | id = "hiss"
+  , name = "Kat Hiss"
   , bonuses =
     [ (BombDmg, Low)
     , (BombCTR, Low)
@@ -255,7 +286,8 @@ hiss =
 
 ironmight =
   { plate
-  | name = "Ironmight Plate"
+  | id = "iron"
+  , name = "Ironmight Plate"
   , defences = (Piercing, defences.base) :: plate.defences
   , bonuses =
     [ (ASI, NegLow)
@@ -264,7 +296,8 @@ ironmight =
 
 volcPlate =
   { plate
-  | name = "Volcanic Plate"
+  | id = "vplate"
+  , name = "Volcanic Plate"
   , defences = (Elemental, defences.base) :: plate.defences
   , resistances = (Fire, 4) :: plate.resistances
   , bonuses = ironmight.bonuses
@@ -272,7 +305,8 @@ volcPlate =
 
 ancient =
   { plate
-  | name = "Ancient Plate"
+  | id = "ancient"
+  , name = "Ancient Plate"
   , hearts = 8
   , defences = [ (Normal, defences.ancient) ]
   , bonuses = ironmight.bonuses ++ [ (MSI, NegLow) ]
@@ -280,7 +314,8 @@ ancient =
 
 seerus =
   { base
-  | name = "Perfect Mask of Seerus"
+  | id = "pmos"
+  , name = "Perfect Mask of Seerus"
   , defences = (Elemental, defences.class) :: class.defences
   , resistances =
     [ (Fire, 4)
@@ -296,7 +331,8 @@ seerus =
 
 valkyrie =
   { base
-  | name = "Valkyrie"
+  | id = "valk"
+  , name = "Valkyrie"
   , defences =
     [ (Shadow, defences.base)
     , (Normal, defences.base)
@@ -311,7 +347,8 @@ valkyrie =
 
 fallen =
   { valkyrie
-  | name = "Fallen"
+  | id = "fallen"
+  , name = "Fallen"
   , resistances =
     [ (Fire, 4)
     , (Poison, 4)
@@ -325,7 +362,8 @@ fallen =
 
 heavenly =
   { base
-  | name = "Heavenly Iron"
+  | id = "heaven"
+  , name = "Heavenly Iron"
   , defences = (Shadow, defences.base) :: class.defences
   , resistances =
     [ (Shock, -4)
@@ -339,7 +377,8 @@ heavenly =
 
 virulisk =
   { base
-  | name = "Deadly Virulisk"
+  | id = "viru"
+  , name = "Deadly Virulisk"
   , defences = (Piercing, defences.base) :: class.defences
   , resistances = [ (Poison, 4) ]
   , bonuses = [ (Slime, Medium) ]
@@ -347,14 +386,16 @@ virulisk =
 
 salamander =
   { virulisk
-  | name = "Volcanic Salamander"
+  | id = "sal"
+  , name = "Volcanic Salamander"
   , defences = (Elemental, defences.base) :: class.defences
   , resistances = [ (Fire, 4) ]
   }
 
 arcane =
   { salamander
-  | name = "Arcane Salamander"
+  | id = "arcane"
+  , name = "Arcane Salamander"
   , defences = (Elemental, defences.class) :: class.defences
   , bonuses =
     [ (Slime, Low)
@@ -364,7 +405,8 @@ arcane =
 
 dragon =
   { base
-  | name = "Dragon Scale"
+  | id = "scale"
+  , name = "Dragon Scale"
   , defences =
     [ (Piercing, defences.class)
     , (Elemental, defences.class)
@@ -378,7 +420,8 @@ dragon =
 
 silver =
   { base
-  | name = "Radiant Silvermail"
+  | id = "silver"
+  , name = "Radiant Silvermail"
   , defences =
     [ (Piercing, defences.class)
     , (Shadow, defences.class)
@@ -410,6 +453,7 @@ armours =
 
   , jelly
   , queen
+  , merc
 
   , gray
   , divine
@@ -490,12 +534,18 @@ gunnerSets =
       List.map (compose defence bonus) statuses
     compose defence bonus status =
       { base
-      | name =
+      | id = String.toLower <| String.join ""
+        [ "gun"
+        , String.slice 0 1 <| toString defence
+        , String.slice 0 2 <| toString status
+        , String.slice 0 2 <| toString <| Tuple.first bonus
+        ]
+      , name =
         String.join " "
-          [ "Sacred"
-          , statusName status
-          , familyName bonus defence
-          ]
+        [ "Sacred"
+        , statusName status
+        , familyName bonus defence
+        ]
       , defences = (defence, defences.base) :: base.defences
       , resistances =
         [ (status, 4)

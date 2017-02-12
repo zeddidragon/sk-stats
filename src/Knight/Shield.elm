@@ -4,33 +4,45 @@ import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Status exposing (..)
 
+aegis : Shield
 aegis =
-  { name = "Aegis"
+  { id = "aegis"
+  , name = "Aegis"
   , effects = []
   }
 
+bts : Shield
 bts =
-  { name = "Barbarous Thorn Shield"
+  { id = "bts"
+  , name = "Barbarous Thorn Shield"
   , effects = [ WeaponUV (SwordDmg, Medium) ]
   }
 
+ssb : Shield
 ssb =
-  { name = "SwiftStrike Buckler"
+  { id = "ssb"
+  , name = "SwiftStrike Buckler"
   , effects = [ WeaponUV (ASI, High) ]
   }
 
+scarlet : Shield
 scarlet =
-  { name = "Scarlet Shield"
+  { id = "hearts"
+  , name = "Scarlet Shield"
   , effects = [ Hearts 2 ]
   }
 
+gorgo : Shield
 gorgo =
-  { name = "Gorgomega"
+  { id = "gorgo"
+  , name = "Gorgomega"
   , effects = [ WeaponUV (MSI, NegLow) ]
   }
 
+striker : Shield
 striker =
-  { name = "Strike Booster"
+  { id = "boost"
+  , name = "Strike Booster"
   , effects =
     [ WeaponUV (SwordDmg, Medium)
     , WeaponUV (SwordASI, Medium)
@@ -38,8 +50,10 @@ striker =
     ]
   }
 
+recon : Shield
 recon =
-  { name = "Recon Cloak"
+  { id = "cloak"
+  , name = "Recon Cloak"
   , effects =
     [ Hearts 10
     , WeaponUV (CTR, Medium)
@@ -49,12 +63,14 @@ recon =
     ]
   }
 
+guardian : Shield
 guardian =
   let
     composeStatus status = StatusUV (status, Medium)
     statuses = List.map composeStatus [Fire, Freeze, Shock, Poison, Stun, Curse]
   in
-    { name = "Guardian Shield"
+    { id = "guard"
+    , name = "Guardian Shield"
     , effects =
       [ Hearts 12
       , WeaponUV (SwordASI, Low)
@@ -63,6 +79,7 @@ guardian =
       ] ++ statuses
     }
 
+shields : List Shield
 shields =
   [ striker
   , recon

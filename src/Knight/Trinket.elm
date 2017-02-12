@@ -4,6 +4,7 @@ import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Status exposing (..)
 
+hearts : List Trinket -> Int
 hearts trinkets =
   let
     toHearts trinket =
@@ -13,96 +14,133 @@ hearts trinkets =
       |> List.concatMap toHearts
       |> List.sum
 
+effects : List Trinket -> List UV
 effects trinkets =
   List.concatMap .effects trinkets
 
+jelly : Trinket
 jelly =
-  { name = "Royal Jelly Band"
+  { id = "band"
+  , name = "Royal Jelly Band"
   , effects = [ DefenceUV (Piercing, High) ]
   }
 
+crystal : Trinket
 crystal =
-  { name = "Radiant Crystal Pin"
+  { id = "pin"
+  , name = "Radiant Crystal Pin"
   , effects = [ DefenceUV (Elemental, High) ]
   }
 
+skelly : Trinket
 skelly =
-  { name = "Dread Skelly Charm"
+  { id = "charm"
+  , name = "Dread Skelly Charm"
   , effects = [ DefenceUV (Shadow, High) ]
   }
 
+wetstone : Trinket
 wetstone =
-  { name = "Soaking Wetstone Pendant"
+  { id = "wet"
+  , name = "Soaking Wetstone Pendant"
   , effects = [ StatusUV (Fire, Medium) ]
   }
 
+hearthstone : Trinket
 hearthstone =
-  { name = "Sizzling Hearthstone Pendant"
+  { id = "hearth"
+  , name = "Sizzling Hearthstone Pendant"
   , effects = [ StatusUV (Freeze, Medium) ]
   }
 
+wyrmwood : Trinket
 wyrmwood =
-  { name = "Wyrmwood Bracelet"
+  { id = "wyrm"
+  , name = "Wyrmwood Bracelet"
   , effects = [ StatusUV (Shock, Medium) ]
   }
 
+laurel : Trinket
 laurel =
-  { name = "Pure White Laurel"
+  { id = "white"
+  , name = "Pure White Laurel"
   , effects = [ StatusUV (Poison, Medium) ]
   }
 
+amulet : Trinket
 amulet =
-  { name = "Saintly Silver Amulet"
+  { id = "saint"
+  , name = "Saintly Silver Amulet"
   , effects = [ StatusUV (Curse, Medium) ]
   }
 
+penta : Trinket
 penta =
-  { name = "Penta-Heart Pendant"
+  { id = "penta"
+  , name = "Penta-Heart Pendant"
   , effects = [ Hearts 6 ]
   }
 
+bomb : Trinket
 bomb =
-  { name = "Elite Bomb Focus Module"
+  { id = "bctr"
+  , name = "Elite Bomb Focus Module"
   , effects = [ WeaponUV (BombCTR, Medium) ]
   }
 
+boom : Trinket
 boom =
-  { name = "Elite Boom Module"
+  { id = "bdmg"
+  , name = "Elite Boom Module"
   , effects = [ WeaponUV (BombDmg, Medium) ]
   }
 
+handgun : Trinket
 handgun =
-  { name = "Elite Handgun Focus Module"
+  { id = "gctr"
+  , name = "Elite Handgun Focus Module"
   , effects = [ WeaponUV (GunCTR, Medium) ]
   }
 
+draw : Trinket
 draw =
-  { name = "Elite Quick Draw Module"
+  { id = "gasi"
+  , name = "Elite Quick Draw Module"
   , effects = [ WeaponUV (GunASI, Medium) ]
   }
 
+trueshot : Trinket
 trueshot =
-  { name = "Elite Trueshot Module"
+  { id = "gdmg"
+  , name = "Elite Trueshot Module"
   , effects = [ WeaponUV (GunDmg, Medium) ]
   }
 
+sword : Trinket
 sword =
-  { name = "Elite Sword Focus Module"
+  { id = "sctr"
+  , name = "Elite Sword Focus Module"
   , effects = [ WeaponUV (SwordCTR, Medium) ]
   }
 
+strike : Trinket
 strike =
-  { name = "Elite Quick Strike Module"
+  { id = "sasi"
+  , name = "Elite Quick Strike Module"
   , effects = [ WeaponUV (SwordASI, Medium) ]
   }
 
+slash : Trinket
 slash =
-  { name = "Elite Slash Module"
+  { id = "sdmg"
+  , name = "Elite Slash Module"
   , effects = [ WeaponUV (SwordDmg, Medium) ]
   }
 
+solstice : Trinket
 solstice =
-  { name = "Grand Solstice Ring"
+  { id = "solstice"
+  , name = "Grand Solstice Ring"
   , effects =
     [ Hearts 4
     , StatusUV (Fire, Low)

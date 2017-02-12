@@ -9,7 +9,8 @@ type StatusStrength = Minor | Moderate | Strong | Ultimate
 type Stage = Basic | Heavy | Shot | Charge | Special
 
 type alias Weapon =
-  { name: String
+  { id : String
+  , name: String
   , weaponType: WeaponType
   , damageType: DamageType
   , chargeTime: Float
@@ -21,7 +22,8 @@ type alias Weapon =
   }
 
 type alias Armour =
-  { name: String
+  { id : String
+  , name: String
   , hearts: Int
   , defences: List (DamageType, Float)
   , resistances: List (Status, Float)
@@ -29,12 +31,14 @@ type alias Armour =
   }
 
 type alias Shield =
-  { name: String
+  { id : String
+  , name: String
   , effects: List UV
   }
 
 type alias Trinket =
-  { name: String
+  { id : String
+  , name: String
   , effects: List UV
   }
 

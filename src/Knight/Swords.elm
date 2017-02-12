@@ -7,7 +7,8 @@ import Knight.Status exposing (..)
 
 sword : Weapon
 sword =
-  { weaponType = Sword
+  { id = "sword"
+  , weaponType = Sword
   , name = "Stock Sword" 
   , damageType = Normal
   , split = Nothing
@@ -21,7 +22,8 @@ sword =
 leviathan : Weapon
 leviathan =
   { sword
-  | name = "Leviathan Blade"
+  | id = "levi"
+  , name = "Leviathan Blade"
   , attacks =
     [ (Basic, attacks.sword)
     , (Heavy, attacks.swordFinish)
@@ -32,7 +34,8 @@ leviathan =
 civ : Weapon
 civ =
   { sword
-  | name = "Cold Iron Vanquisher"
+  | id = "civ"
+  , name = "Cold Iron Vanquisher"
   , attacks =
     [ (Basic, attacks.civ)
     , (Basic, attacks.civHeavy)
@@ -45,7 +48,8 @@ civ =
 dreams : Weapon
 dreams =
   { sword
-  | name = "Sweet Dreams"
+  | id = "dreams"
+  , name = "Sweet Dreams"
   , attacks =
     [ (Basic, attacks.civ)
     , (Basic, attacks.civHeavy)
@@ -58,7 +62,8 @@ dreams =
 flourish : Weapon
 flourish =
   { sword
-  | name = "Final Flourish"
+  | id = "ff"
+  , name = "Final Flourish"
   , damageType = Piercing
   , attacks =
     [ (Basic, attacks.sword)
@@ -98,7 +103,8 @@ rigadoon =
       ]
   in
     { sword
-    | name = "Fearless Rigadoon"
+    | id = "rig"
+    , name = "Fearless Rigadoon"
     , damageType = Piercing
     , status = Just Stun
     , attacks = rigadoonAttacks
@@ -109,7 +115,8 @@ rigadoon =
 flamberge : Weapon
 flamberge =
   { rigadoon
-  | name = "Furious Flamberge"
+  | id = "flamb"
+  , name = "Furious Flamberge"
   , status = Just Fire
   , inflictions =
     [ (Basic, Slight, Moderate)
@@ -122,7 +129,8 @@ flamberge =
 hunting : Weapon
 hunting =
   { sword
-  | name = "Wild Hunting Blade"
+  | id = "whb"
+  , name = "Wild Hunting Blade"
   , attacks =
     [ (Basic, attacks.blaster)
     , (Special, attacks.antigua)
@@ -134,7 +142,8 @@ hunting =
 dvs : Weapon
 dvs =
   { hunting
-  | name = "Dread Venom Striker"
+  | id = "dvs"
+  , name = "Dread Venom Striker"
   , status = Just Poison
   , bonuses = []
   , inflictions = everyAttack (Slight, Strong) hunting.attacks
@@ -143,7 +152,8 @@ dvs =
 suda : Weapon
 suda =
   { sword
-  | name = "Sudaruska"
+  | id = "suda"
+  , name = "Sudaruska"
   , status = Just Stun
   , chargeTime = charge.long
   , attacks =
@@ -159,7 +169,8 @@ suda =
 triglav : Weapon
 triglav =
   { suda
-  | name = "Triglav"
+  | id = "trig"
+  , name = "Triglav"
   , status = Just Freeze
   , inflictions =
     (Heavy, Slight, Moderate) :: suda.inflictions
@@ -168,7 +179,8 @@ triglav =
 hammer : Weapon
 hammer = 
   { sword
-  | name = "Warmaster Rocket Hammer"
+  | id = "wrh"
+  , name = "Warmaster Rocket Hammer"
   , damageType = Elemental
   , attacks =
     [ (Basic, attacks.swordHeavy)
@@ -181,7 +193,8 @@ hammer =
 combuster : Weapon
 combuster =
   { sword
-  | name = "Combuster"
+  | id = "comb"
+  , name = "Combuster"
   , damageType = Elemental
   , split = Just Normal
   , status = Just Fire
@@ -200,14 +213,16 @@ combuster =
 glacius : Weapon
 glacius =
   { combuster
-  | name = "Glacius"
+  | id = "glac"
+  , name = "Glacius"
   , status = Just Freeze
   }
 
 voltedge : Weapon
 voltedge =
   { combuster
-  | name = "Voltedge"
+  | id = "volt"
+  , name = "Voltedge"
   , status = Just Shock
   }
 
@@ -222,7 +237,8 @@ obsidian =
 acheron : Weapon
 acheron =
   { sword
-  | name = "Acheron"
+  | id = "ach"
+  , name = "Acheron"
   , damageType = Shadow
   , split = Just Normal
   , attacks =
@@ -236,7 +252,8 @@ acheron =
 avenger : Weapon
 avenger =
   { acheron
-  | name = "Divine Avenger"
+  | id = "da"
+  , name = "Divine Avenger"
   , chargeTime = charge.long
   , damageType = Elemental
   }
@@ -244,7 +261,8 @@ avenger =
 faust : Weapon
 faust =
   { acheron
-  | name = "Gran Faust"
+  | id = "gf"
+  , name = "Gran Faust"
   , status = Just Curse
   , chargeTime = charge.painful
   , inflictions =
@@ -257,7 +275,8 @@ faust =
 fang : Weapon
 fang =
   { sword
-  | name = "Fang of Vog"
+  | id = "fov"
+  , name = "Fang of Vog"
   , damageType = Elemental
   , split = Just Normal
   , status = Just Fire
@@ -276,7 +295,8 @@ fang =
 winmillion : Weapon
 winmillion =
   { sword
-  | name = "Winmillion"
+  | id = "win"
+  , name = "Winmillion"
   , attacks =
     [ (Basic, 300 / 1.24)
     , (Shot, 220 / 1.24)
@@ -289,7 +309,8 @@ winmillion =
 faust4star : Weapon
 faust4star =
   { faust
-  | name = "Faust (4*)"
+  | id = "faust"
+  , name = "Faust (4*)"
   , chargeTime = charge.long
   , attacks =
     [ (Basic, 502)
@@ -303,6 +324,7 @@ swords : List Weapon
 swords =
   [ leviathan
   , civ
+  , dreams
   , flourish
   , btb
   , rigadoon

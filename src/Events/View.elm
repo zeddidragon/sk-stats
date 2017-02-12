@@ -11,37 +11,11 @@ import Knight.Status exposing (..)
 import View.Shortcuts exposing (toText, button)
 import Util exposing (find, remove, pretty)
 
-unknownWeapon : Weapon
-unknownWeapon =
-  { name = "Unknown Weapon"
-  , weaponType = Sword
-  , damageType = Normal
-  , chargeTime = 0
-  , split = Nothing
-  , status = Nothing
-  , attacks = []
-  , inflictions = []
-  , bonuses = []
-  }
-
-unknownAttack : (Stage, Float)
-unknownAttack = (Basic, 0)
-
-unknownEquip : WeaponEquip
-unknownEquip =
-  { piece = unknownWeapon
-  , uvs = []
-  }
-
 log message events left right =
   let
     opposing side = if side == Left then Right else Left
     getKnight side = if side == Left then left else right
     getOpponent side = if side == Left then right else left
-    getWeapon name =
-      weapons
-        |> find (\w -> w.name == name)
-        |> Maybe.withDefault unknownWeapon
     eventLog index output events =
       case events of
         [] -> output

@@ -7,7 +7,8 @@ import Knight.Status exposing (..)
 
 bomb : Weapon
 bomb =
-  { weaponType = Bomb
+  { id = "bomb"
+  , weaponType = Bomb
   , name = "Stock Bomb"
   , damageType = Normal
   , split = Nothing
@@ -21,21 +22,24 @@ bomb =
 nitro : Weapon
 nitro =
   { bomb
-  | name = "Nitronome"
+  | id = "nitro"
+  , name = "Nitronome"
   , attacks = [ (Charge, attacks.nitro) ]
   }
 
 dbb : Weapon
 dbb =
   { nitro
-  | name = "Dark Briar Barrage"
+  | id = "dbb"
+  , name = "Dark Briar Barrage"
   , damageType = Piercing
   }
 
 irontech : Weapon
 irontech =
   { bomb
-  | name = "Irontech Destroyer"
+  | id = "iron"
+  , name = "Irontech Destroyer"
   , status = Just Stun
   , chargeTime = charge.irontech
   , attacks = [ (Charge, attacks.irontech) ]
@@ -45,7 +49,8 @@ irontech =
 bab : Weapon
 bab =
   { irontech
-  | name = "Big Angry Bomb"
+  | id = "bab"
+  , name = "Big Angry Bomb"
   , chargeTime = charge.long
   , attacks = [ (Charge, attacks.bab) ]
   }
@@ -53,7 +58,8 @@ bab =
 ash : Weapon
 ash =
   { bomb
-  | name = "Ash of Agni"
+  | id = "ash"
+  , name = "Ash of Agni"
   , damageType = Elemental
   , status = Just Fire
   , chargeTime = charge.long
@@ -62,21 +68,42 @@ ash =
   }
 
 shiver : Weapon
-shiver = { ash | name = "Shivermist Buster" , status = Just Freeze }
+shiver =
+  { ash
+  | id = "shiver"
+  , name = "Shivermist Buster"
+  , status = Just Freeze
+  }
 
 venom : Weapon
-venom = { ash | name = "Venom Veiler" , status = Just Poison }
+venom =
+  { ash
+  | id = "vv"
+  , name = "Venom Veiler"
+  , status = Just Poison
+  }
 
 tempest : Weapon
-tempest = { ash | name = "Voltaic Tempest" , status = Just Shock }
+tempest =
+  { ash
+  | id = "vt"
+  , name = "Voltaic Tempest"
+  , status = Just Shock
+  }
 
 stagger : Weapon
-stagger = { ash | name = "Stagger Storm" , status = Just Stun }
+stagger =
+  { ash
+  | id = "swag"
+  , name = "Stagger Storm"
+  , status = Just Stun
+  }
 
 graviton : Weapon
 graviton =
   { bomb
-  | name = "Graviton Vortex"
+  | id = "grav"
+  , name = "Graviton Vortex"
   , damageType = Shadow
   , chargeTime = charge.long
   , attacks =
@@ -89,13 +116,14 @@ vortexes : List Weapon
 vortexes =
   let
     variants =
-      [ ("Electron Vortex", Elemental, Shock)
-      , ("Obsidian Crusher", Shadow, Poison)
-      , ("Celestial Vortex", Elemental, Fire)
+      [ ("ev", "Electron Vortex", Elemental, Shock)
+      , ("ograv", "Obsidian Crusher", Shadow, Poison)
+      , ("fgrav", "Celestial Vortex", Elemental, Fire)
       ]
-    copy (name, dType, status) =
+    copy (id, name, dType, status) =
       { bomb
-      | name = name
+      | id = id
+      , name = name
       , damageType = dType
       , chargeTime = charge.long
       , status = Just status
@@ -112,7 +140,8 @@ vortexes =
 dr : Weapon
 dr =
   { bomb
-  | name = "Dark Retribution"
+  | id = "dr"
+  , name = "Dark Retribution"
   , damageType = Shadow
   , attacks = [ (Charge, attacks.dr) ]
   }
@@ -120,7 +149,8 @@ dr =
 sss : Weapon
 sss =
   { bomb
-  | name = "Scintillating Sun Shards"
+  | id = "sun"
+  , name = "Scintillating Sun Shards"
   , damageType = Piercing
   , status = Just Stun
   , attacks =
@@ -137,7 +167,8 @@ sss =
 ssb : Weapon
 ssb =
   { sss
-  | name = "Shocking Salt Bomb"
+  | id = "salt"
+  , name = "Shocking Salt Bomb"
   , damageType = Shadow
   , status = Just Shock
   , bonuses = [ (Slime, VeryHigh) ]
@@ -147,14 +178,15 @@ shards : List Weapon
 shards =
   let
     variants =
-      [ ("Deadly Shard Bomb", Normal)
-      , ("Deadly Splinter Bomb", Piercing)
-      , ("Deadly Crystal Bomb", Elemental)
-      , ("Deadly Dark Matter Bomb", Shadow)
+      [ ("nshard", "Deadly Shard Bomb", Normal)
+      , ("pshard", "Deadly Splinter Bomb", Piercing)
+      , ("eshard", "Deadly Crystal Bomb", Elemental)
+      , ("sshard", "Deadly Dark Matter Bomb", Shadow)
       ]
-    copy (name, dType) =
+    copy (id, name, dType) =
       { bomb
-      | name = name
+      | id = id
+      , name = name
       , damageType = dType
       , attacks =
         [ (Charge, attacks.shardCore)
@@ -167,7 +199,8 @@ shards =
 rss : Weapon
 rss =
   { bomb
-  | name = "Radiant Sun Shards (Old)"
+  | id = "orss"
+  , name = "Radiant Sun Shards (Old)"
   , damageType = Piercing
   , split = Just Elemental
   , attacks = [ (Charge, attacks.shardOld) ]
@@ -177,7 +210,8 @@ rss =
 salt : Weapon
 salt =
   { bomb
-  | name = "Ionized Salt Bomb (Old)"
+  | id = "osalt"
+  , name = "Ionized Salt Bomb (Old)"
   , damageType = Piercing
   , status = Just Shock
   , chargeTime = charge.painful

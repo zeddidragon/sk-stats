@@ -7,7 +7,8 @@ import Knight.Status exposing (..)
 
 gun : Weapon
 gun =
-  { weaponType = Gun
+  { id = "gun"
+  , weaponType = Gun
   , name = "Stock Gun"
   , damageType = Normal
   , split = Nothing
@@ -21,38 +22,43 @@ gun =
 valiance : Weapon
 valiance =
   { gun
-  | name = "Valiance"
+  | id = "vali"
+  , name = "Valiance"
   , attacks =
     [ (Shot, attacks.blaster)
     , (Charge, attacks.blasterCharge)
     ]
   }
 
-blasters : List Weapon
-blasters =
-  let
-    variants =
-      [ ("Riftlocker", Piercing)
-      , ("Arcana", Elemental)
-      , ("Phantomos", Shadow)
-      ]
-    copy (name, dType) =
-      { valiance
-      | name = name
-      , damageType = dType
-      }
-  in
-    List.map copy variants
+rift : Weapon
+rift = 
+  { valiance
+  | id = "rift"
+  , name = "Riftlocker"
+  , damageType = Piercing
+  }
 
-arcana =
-  case List.head <| List.drop 1 blasters of
-    Just gun -> gun
-    Nothing -> valiance
+arcana : Weapon
+arcana = 
+  { valiance
+  | id = "arc"
+  , name = "Arcana"
+  , damageType = Elemental
+  }
+
+phant : Weapon
+phant = 
+  { valiance
+  | id = "phant"
+  , name = "Phantomos"
+  , damageType = Shadow
+  }
 
 nova : Weapon
 nova =
   { gun
-  | name = "Nova Driver"
+  | id = "nova"
+  , name = "Nova Driver"
   , damageType = Elemental
   , attacks =
     [ (Shot, attacks.nova)
@@ -63,38 +69,48 @@ nova =
 umbra : Weapon
 umbra =
   { nova
-  | name = "Umbra Driver"
+  | id = "umbra"
+  , name = "Umbra Driver"
   , damageType = Shadow
   }
 
-alchemers : List Weapon
-alchemers =
-  let
-    variants =
-      [ ("Magma Driver", Fire)
-      , ("Hail Driver", Freeze)
-      , ("Storm Driver", Shock)
-      ]
-    copy (name, status) =
-      { nova
-      | name = name
-      , status = Just status
-      , attacks =
-        [ (Shot, attacks.driver)
-        , (Charge, attacks.driverCharge)
-        ]
-      , inflictions =
-        [ (Shot, Good, Moderate)
-        , (Charge, Good, Moderate)
-        ]
-      }
-  in
-    List.map copy variants
+magma : Weapon
+magma =
+  { nova
+  | id = "magma"
+  , name = "Magma Driver"
+  , status = Just Fire
+  , attacks =
+    [ (Shot, attacks.driver)
+    , (Charge, attacks.driverCharge)
+    ]
+  , inflictions =
+    [ (Shot, Good, Moderate)
+    , (Charge, Good, Moderate)
+    ]
+  }
+
+cryo : Weapon
+cryo =
+  { magma
+  | id = "cryo"
+  , name = "Cryo Driver"
+  , status = Just Freeze
+  }
+
+storm : Weapon
+storm =
+  { magma
+  | id = "storm"
+  , name = "Storm Driver"
+  , status = Just Shock
+  }
 
 pepper : Weapon
 pepper =
   { gun
-  | name = "Volcanic Pepperbox"
+  | id = "pbox"
+  , name = "Volcanic Pepperbox"
   , status = Just Fire
   , attacks =
     [ (Shot, attacks.pepper)
@@ -109,7 +125,9 @@ pepper =
 plague : Weapon
 plague =
   { pepper
-  | name = "Plague Needle"
+  | id = "plague"
+  , name = "Plague Needle"
+  , damageType = Piercing
   , status = Just Poison
   , inflictions =
     [ (Shot, Slight, Strong)
@@ -117,91 +135,102 @@ plague =
     ]
   }
 
-autoguns : List Weapon
-autoguns =
-  let
-    variants =
-      [ ("Blitz Needle", Piercing)
-      , ("Grim Repeater", Shadow)
-      ]
-    copy (name, dType) =
-      { gun
-      | name = name
-      , damageType = dType
-      , attacks =
-        [ (Shot, attacks.antigua)
-        , (Charge, attacks.antiguaCharge)
-        ]
-      }
-  in
-    List.map copy variants
-
-antiguas : List Weapon
-antiguas =
-  let
-    variants =
-      [ ("Gilded Griffin", Piercing, Beast)
-      , ("Argent Peacemaker", Elemental, Undead)
-      , ("Sentenza", Shadow, Gremlin)
-      ]
-    copy (name, dType, bonus) =
-      { gun
-      | name = name
-      , damageType = dType
-      , attacks =
-        [ (Shot, attacks.antigua)
-        , (Charge, attacks.antiguaCharge)
-        ]
-      , bonuses = [ (bonus, High) ]
-      }
-  in
-    List.map copy variants
-
-obsidian : Weapon
-obsidian =
+blitz : Weapon
+blitz =
   { gun
-  | name = "Obsidian Carbine"
-  , damageType = Shadow
-  , status = Just Poison
+  | id = "blitz"
+  , name = "Blitz Needle"
+  , damageType = Piercing
   , attacks =
     [ (Shot, attacks.antigua)
     , (Charge, attacks.antiguaCharge)
     ]
+  }
+
+grim : Weapon
+grim =
+  { blitz
+  | id = "grim"
+  , name = "Grim Repeater"
+  , damageType = Shadow
+  }
+
+gg : Weapon
+gg =
+  { blitz
+  | id = "gg"
+  , name = "Gilded Griffin"
+  , bonuses = [ (Beast, High) ]
+  }
+
+ap : Weapon
+ap =
+  { gg
+  | id = "ap"
+  , name = "Argent Peacemaker"
+  , damageType = Elemental
+  , bonuses = [ (Undead, High) ]
+  }
+
+sent : Weapon
+sent =
+  { ap
+  | id = "sent"
+  , name = "Sentenza"
+  , damageType = Shadow
+  , bonuses = [ (Gremlin, High) ]
+  }
+
+obsidian : Weapon
+obsidian =
+  { grim
+  | id = "oc"
+  , name = "Obsidian Carbine"
+  , status = Just Poison
   , inflictions =
     [ (Shot, Slight, Moderate)
     , (Charge, Fair, Moderate)
     ]
   }
 
-magnuses : List Weapon
-magnuses =
-  let
-    variants =
-      [ ("Callahan", Piercing, Stun)
-      , ("Iron Slug", Normal, Stun)
-      , ("Winter Grave", Shadow, Freeze)
-      ]
-    copy (name, dType, status) =
-      { gun
-      | name = name
-      , damageType = dType
-      , status = Just status
-      , attacks =
-        [ (Shot, attacks.magnus)
-        , (Charge, attacks.magnusCharge)
-        ]
-      , inflictions =
-        [ (Shot, Fair, Moderate)
-        , (Charge, Good, Moderate)
-        ]
-      }
-  in
-    List.map copy variants
+slug : Weapon
+slug =
+  { gun
+  | id = "slug"
+  , name = "Iron Slug"
+  , status = Just Stun
+  , attacks =
+    [ (Shot, attacks.magnus)
+    , (Charge, attacks.magnusCharge)
+    ]
+  , inflictions =
+    [ (Shot, Fair, Moderate)
+    , (Charge, Good, Moderate)
+    ]
+  }
+
+cal : Weapon
+cal =
+  { slug
+  | id = "cal"
+  , name = "Callahan"
+  , damageType = Piercing
+  }
+
+wg : Weapon
+wg =
+  { slug
+  | id = "wg"
+  , name = "Winter Grave"
+  , damageType = Shadow
+  , status = Just Freeze
+  }
 
 supernova : Weapon
 supernova =
   { gun
-  | name = "Supernova"
+  | id = "super"
+  , name = "Supernova"
   , attacks =
     [ (Shot, attacks.driver)
     , (Heavy, attacks.nova)
@@ -212,7 +241,8 @@ supernova =
 polaris : Weapon
 polaris =
   { gun
-  | name = "Polaris"
+  | id = "pola"
+  , name = "Polaris"
   , damageType = Elemental
   , status = Just Shock
   , attacks =
@@ -230,21 +260,24 @@ polaris =
 wildfire : Weapon
 wildfire =
   { polaris
-  | name = "Wildfire"
+  | id = "wf"
+  , name = "Wildfire"
   , status = Just Fire
   }
 
 permafroster : Weapon
 permafroster =
   { polaris
-  | name = "Permafroster"
+  | id = "pf"
+  , name = "Permafroster"
   , status = Just Freeze
   }
 
 neutralizer : Weapon
 neutralizer =
   { gun
-  | name = "Neutralizer"
+  | id = "neutra"
+  , name = "Neutralizer"
   , chargeTime = charge.quick
   , attacks =
     [ (Charge, attacks.neutralizer)
@@ -255,7 +288,8 @@ neutralizer =
 biohazard : Weapon
 biohazard =
   { neutralizer
-  | name = "Biohazard"
+  | id = "bio"
+  , name = "Biohazard"
   , status = Just Poison
   , attacks =
     [ (Charge, attacks.magnusCharge)
@@ -271,14 +305,15 @@ tortofists : List Weapon
 tortofists =
   let
     variants =
-      [ ("Gorgofist", Shadow)
-      , ("Grand Tortofist", Normal)
-      , ("Savage Tortofist", Piercing)
-      , ("Omega Tortofist", Elemental)
+      [ ("gorgo", "Gorgofist", Shadow)
+      , ("grand", "Grand Tortofist", Normal)
+      , ("savage", "Savage Tortofist", Piercing)
+      , ("omega", "Omega Tortofist", Elemental)
       ]
-    copy (name, dType) =
+    copy (id, name, dType) =
       { gun
-      | name = name
+      | id = id
+      , name = name
       , damageType = dType
       , attacks =
         [ (Basic, attacks.tortofist)
@@ -294,12 +329,13 @@ mixmasters : List Weapon
 mixmasters =
   let
     variants =
-      [ ("Overcharged Mixmaster", Shock)
-      , ("Celestial Orbitgun", Fire)
+      [ ("mix", "Overcharged Mixmaster", Shock)
+      , ("fmix", "Celestial Orbitgun", Fire)
       ]
-    copy (name, status) =
+    copy (id, name, status) =
       { gun
-      | name = name
+      | id = id
+      , name = name
       , damageType = Elemental
       , status = Just status
       , attacks =
@@ -316,12 +352,11 @@ mixmasters =
 
 guns : List Weapon
 guns =
-  []
-  ++ (valiance :: blasters)
-  ++ (nova :: umbra :: alchemers)
-  ++ autoguns ++ [pepper, plague]
-  ++ magnuses
-  ++ antiguas ++ [obsidian]
+  [valiance, rift, arcana, phant]
+  ++ [nova, umbra, magma, storm, cryo]
+  ++ [blitz, grim, pepper, plague]
+  ++ [slug, cal, wg]
+  ++ [gg, ap, sent, obsidian]
   ++ [supernova, polaris, wildfire, permafroster]
   ++ [neutralizer, biohazard]
   ++ tortofists
