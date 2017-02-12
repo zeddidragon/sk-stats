@@ -117,7 +117,7 @@ defenceModifier offenderSide left right history =
     poison = 
       case findStatus Poison of
         Just (Poison, severity) ->
-          (200 - Knight.Status.poisonModifier severity) / 200
+          (200 - Knight.Status.poisonFactor severity) / 200
         _ -> 1
     deathmark =
       case findStatus Deathmark of
@@ -134,7 +134,7 @@ attackModifier offenderSide left right history =
     poison =
       case findStatus Poison of
         Just (Poison, severity) ->
-          (100 - Knight.Status.poisonModifier severity) / 100
+          (100 - Knight.Status.poisonFactor severity) / 100
         _ -> 1
   in
     1 * poison

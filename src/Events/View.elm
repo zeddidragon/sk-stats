@@ -161,6 +161,13 @@ log message events left right =
                       , text " damage"
                       ]
                     ]
+                  Stun ->
+                    [ div []
+                      [ text "Speed reduced "
+                      , span [ class "status-effect" ]
+                        [ text <| (pretty stun) ++ "%" ]
+                      ]
+                    ]
                   Curse ->
                     [ div []
                       [ text "Curse "

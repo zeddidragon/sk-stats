@@ -51,7 +51,7 @@ recon =
 
 guardian =
   let
-    composeStatus status = StatusUV (status, Low)
+    composeStatus status = StatusUV (status, Medium)
     statuses = List.map composeStatus [Fire, Freeze, Shock, Poison, Stun, Curse]
   in
     { name = "Guardian Shield"

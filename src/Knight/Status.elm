@@ -47,7 +47,7 @@ fireTotal severity =
   fireDamage severity * fireTicks severity
 
 poisonFactor : Float -> Float
-poisonModifier severity =
+poisonFactor severity =
   50 - 1.5 * factor severity
 
 shockDamage : Float
@@ -70,4 +70,6 @@ curseVials severity =
   min 4 <| ceiling <| (duration Curse severity + 1) / 10 - 2
 
 stunFactor : Float -> Float
-stunFactor severity = 1
+stunFactor severity =
+  100 - 3 * factor severity
+
