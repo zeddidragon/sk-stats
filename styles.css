@@ -33,7 +33,7 @@ h3 {
   flex: 1;
 }
 
-.attack-flow.header {
+.flow.header {
   background-color: #273845
 }
 
@@ -41,8 +41,17 @@ h3 {
   color: white;
 }
 
-.attack-flow .knight-name {
+.flow .knight-name {
   color: #FFC134;
+}
+
+.infliction-description {
+  padding: 0.5em 1em;
+  padding-top: 0;
+}
+
+.infliction-strength {
+  color: white;
 }
 
 .knight-form {
@@ -166,6 +175,7 @@ body {
 .item {
   padding: 0.5em;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -286,6 +296,7 @@ label {
 .status.Poison { color: #218221; }
 .status.Stun { color: #fafa82; }
 .status.Curse { color: #822182; }
+.status.Deathmark { color: #828282; }
 
 .weapon.slot {
   display: flex;
@@ -363,7 +374,6 @@ select {
 
 label.button {
   margin-right: 1em;
-  box-sizing: border-box;
 }
 
 @media (max-width: 799px) {
@@ -401,28 +411,32 @@ label.button {
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.attack-flow {
+.flow {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
+  padding: 0.5em 1em;
   box-sizing: border-box;
 }
 
-.Right .attack-flow {
+.Right .flow {
   flex-direction: row-reverse;
+}
+
+.status-duration {
+  color: white;
+}
+
+.status-effect {
+  color: white;
 }
 
 @media (max-width: 639px) {
   .knight-form {
     min-width: 240px;
-  }
-  .item {
-    flex-direction: column;
   }
   .Vs.main {
     flex-direction: column;
