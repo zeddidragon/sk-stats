@@ -4,6 +4,20 @@ import Knight exposing (Knight)
 import Knight.UV exposing (..)
 import Util exposing (index)
 
+{-
+decode : String -> Knight
+decode code =
+  let
+    split = String.split " " code
+  in
+    { name = "Encoded"
+    , weapons = weapons
+    , helmet = helmet
+    , armour = armour
+    , shield = shield
+    , trinkets = trinkets
+    -}
+
 encode : Knight -> String
 encode knight =
   let
