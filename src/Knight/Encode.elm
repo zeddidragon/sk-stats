@@ -4,6 +4,7 @@ import String
 import Knight exposing (Knight)
 import Knight.UV exposing (..)
 import Util exposing (index)
+import Base64
 
 {-
 decode : String -> Knight
@@ -68,11 +69,15 @@ encode knight =
       knight.trinkets
         |> List.map .id
         |> String.join "|"
+    raw = 
+      String.join " "
+        [ shield
+        , gear
+        , weapons
+        , trinkets
+        ]
   in
-    String.join " "
-      [ shield
-      , gear
-      , weapons
-      , trinkets
-      ]
+    case Base64.encode raw of
+      Result.Ok ret -> ret
+      Result.Err err -> err
 

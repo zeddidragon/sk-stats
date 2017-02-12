@@ -8,6 +8,10 @@
 </head>
 <body>
   <script>
-    Elm.Main.fullscreen({qs: window.location.search})
+    if(Elm.Main) {
+      Elm.Main.fullscreen({qs: window.location.search})
+    } else {
+      runElmProgram()
+    }
   </script>
 </body>
