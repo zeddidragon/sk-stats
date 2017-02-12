@@ -2,23 +2,77 @@ module Knight.Encode exposing (..)
 
 import String
 import Knight exposing (Knight)
+import Knight.Swords exposing (sword)
 import Knight.UV exposing (..)
+import Knight.Status exposing (Status(..))
 import Util exposing (index)
 import Base64
 
-{-
-decode : String -> Knight
+decode : String -> Maybe Knight
 decode code =
-  let
-    split = String.split " " code
-  in
-    { name = "Encoded"
-    , weapons = weapons
-    , helmet = helmet
-    , armour = armour
-    , shield = shield
-    , trinkets = trinkets
-    -}
+  case Base64.decode code of
+    Result.Ok seed ->
+      case String.split " " seed of
+        shield :: helmet :: armour :: weapons :: trinkets ->
+          let
+            bonuses =
+              [ NegMaximum
+              , Low
+              , Medium
+              , High
+              , VeryHigh
+              , Ultra
+              , Maximum
+              ]
+            decodeUv str =
+              let
+                strength =
+                  str
+                    |> String.right 1
+                    |> String.toInt
+                    |> Result.withDefault 0
+                    |> (flip Util.atIndex) bonuses
+                    |> Maybe.withDefault NegMaximum
+              in
+                (Fire, strength)
+            decodeWeapon str =
+              let
+                id =
+                  str
+                    |> String.split "+"
+                    |> List.head
+                    |> Maybe.withDefault "sword"
+                piece =
+                  Knight.weapons
+                    |> Util.find (\wpn -> wpn.id == id)
+                    |> Maybe.withDefault sword
+                uvs =
+                  str
+                    |> String.split "+"
+                    |> List.drop 1
+                    |> List.map decodeUv
+              in
+                { piece = piece
+                , uvs = uvs
+                }
+            weapons_ =
+              weapons
+                |> String.split "|"
+                |> List.map decodeWeapon
+          in
+            Nothing
+            {-
+            Just
+              { name = "Encoded"
+              , weapons = weapons_
+              , helmet = helmet_
+              , armour = armour_
+              , shield = shield_
+              , trinkets = trinkets_
+              }
+            --}
+        _ -> Nothing
+    _ -> Nothing
 
 encode : Knight -> String
 encode knight =
@@ -78,6 +132,6 @@ encode knight =
         ]
   in
     case Base64.encode raw of
-      Result.Ok ret -> ret
+      Result.Ok ret -> raw
       Result.Err err -> err
 
