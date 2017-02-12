@@ -1,5 +1,7 @@
 module Knight.Armour exposing (..)
 
+import Tuple
+import String
 import Knight.Types exposing (..)
 import Knight.UV exposing (..)
 import Knight.Status exposing (..)

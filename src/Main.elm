@@ -1,4 +1,4 @@
-import Html exposing (div, node)
+import Html exposing (Html, programWithFlags, div, node)
 import Html.Attributes exposing (class, attribute, name, content)
 import Knight exposing (Knight)
 import Knight.Form exposing (form)
@@ -7,16 +7,32 @@ import Events exposing (Side(Left, Right), Event)
 import Events.View exposing (log)
 import View.Shortcuts exposing (tabs)
 
+main : Program Flags Model Msg
 main =
-  Html.beginnerProgram {model = model, view = view, update = update}
+  programWithFlags
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
 
-model =
-  { left = Knight.you
-  , right = Knight.opponent
-  , state = Vs
-  , events = []
-  }
+type alias Flags =
+  { qs : String }
 
+init : Flags -> (Model, Cmd Msg)
+init flags =
+  let
+    model =
+      { query = ""
+      , left = Knight.you
+      , right = Knight.opponent
+      , state = Vs
+      , events = []
+      }
+  in
+    (model, Cmd.none)
+
+view : Model -> Html Msg
 view model =
   let
     stateToLabel state =
@@ -29,18 +45,8 @@ view model =
     rightEvents = model.events
   in
     div [class "body"]
-      [ node "link"
-        [ attribute "rel" "stylesheet"
-        , attribute "type" "text/css"
-        , attribute "href" "styles.css"
-        ] []
-      , node "meta"
-        [ name "viewport"
-        , content "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        ] []
-      , div [ class "state-tabs" ]
-        [ tabs stateToLabel toString SetState [You, Vs, Opponent] model.state
-        ]
+      [ div [ class "state-tabs" ]
+        [ tabs stateToLabel toString SetState [You, Vs, Opponent] model.state ]
       , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
@@ -59,12 +65,20 @@ view model =
         )
       ]
 
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-  case msg of
-    EquipLeft new -> {model | left = new}
-    EquipRight new -> {model | right = new}
-    SetEvents new -> {model | events = new}
-    SetState new -> {model | state = new}
+  let
+    next = 
+      case msg of
+        EquipLeft new -> {model | left = new}
+        EquipRight new -> {model | right = new}
+        SetEvents new -> {model | events = new}
+        SetState new -> {model | state = new}
+  in
+    (next, Cmd.none)
+
+subscriptions : Model -> Sub Msg
+subscriptions model = Sub.none
 
 type Msg
   = EquipLeft Knight
@@ -76,3 +90,12 @@ type State
   = You
   | Opponent
   | Vs
+
+type alias Model =
+  { query : String
+  , left : Knight
+  , right : Knight
+  , state : State
+  , events : List (Side, Event)
+  }
+

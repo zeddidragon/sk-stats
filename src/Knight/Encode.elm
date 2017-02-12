@@ -1,5 +1,6 @@
 module Knight.Encode exposing (..)
 
+import String
 import Knight exposing (Knight)
 import Knight.UV exposing (..)
 import Util exposing (index)

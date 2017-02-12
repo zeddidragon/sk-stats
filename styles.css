@@ -45,6 +45,13 @@ h3 {
   color: #FFC134;
 }
 
+.flow, .knight-name,
+.flow, .weapon {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .infliction-description {
   padding: 0.5em 1em;
   padding-top: 0;
@@ -353,7 +360,19 @@ h3 {
 
 select {
   color: white;
-  background-color: #1C252B;
+  background: transparent;
+}
+
+input {
+  font-size: 1.1em;
+  color: white;
+  background: transparent;
+  margin: 1em;
+  border: none;
+  border-bottom: thin solid rgba(255, 255, 255, 0.7);
+  width: calc(100% - 2em);
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .button {

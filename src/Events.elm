@@ -1,5 +1,7 @@
 module Events exposing (..)
 
+import String
+import Tuple
 import Knight exposing (Knight)
 import Knight.Status exposing (..)
 import Knight.Types exposing (..)
