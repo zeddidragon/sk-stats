@@ -5,15 +5,16 @@ import Knight.Bombs
 import Knight.Shield exposing (shields)
 import Knight.Armour exposing (armours)
 import Knight.UV.Form exposing (weaponForm, armourForm, trinketForms)
-import Html exposing (Html, div, text)
-import Html.Attributes exposing (class)
-import Html.Events exposing (onClick)
+import Html exposing (Html, div, text, input)
+import Html.Attributes exposing (class, type_, value)
+import Html.Events exposing (onClick, onInput)
 import Util exposing (replace, remove)
 import View.Shortcuts exposing (selectList, item, divisor, button)
 
 form : (Knight -> b) -> Knight -> Html b
 form message knight =
   let
+    rename name = message {knight | name = name}
     equipShield equip = message {knight | shield = equip}
     equipHelmet equip = message {knight | helmet = equip}
     equipArmour equip = message {knight | armour = equip}
@@ -66,7 +67,12 @@ form message knight =
   in
     div [ class "knight-form" ]
       (
-      [ slot equipShield knight.shield shields "Shield" armourForm
+      [ input
+        [ type_ "text"
+        , value knight.name
+        , onInput rename
+        ] []
+      , slot equipShield knight.shield shields "Shield" armourForm
       , divisor
       , slot equipHelmet knight.helmet armours "Helmet" armourForm
       , slot equipArmour knight.armour armours "Armour" armourForm

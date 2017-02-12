@@ -301,10 +301,10 @@ you : Knight
 you =
   { name = "You"
   , weapons =
-    [ { piece = Swords.obsidian
+    [ { piece = Swords.leviathan
       , uvs = []
       }
-    , { piece = Bombs.irontech
+    , { piece = Guns.valiance
       , uvs = []
       }
     ]
