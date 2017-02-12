@@ -23,7 +23,7 @@ plate =
 
 cobalt =
   { base
-  | id = "azure"
+  | id = "azr"
   , name = "Azure Guardian"
   , defences =
     [ (Piercing, defences.base)
@@ -33,7 +33,7 @@ cobalt =
 
 crusader =
   { base
-  | id = "almire"
+  | id = "alm"
   , name = "Almirian Crusader"
   , defences =
     [ (Shadow, defences.base)
@@ -47,7 +47,7 @@ crusader =
 
 skolver =
   { class
-  | id = "skolv"
+  | id = "sko"
   , name = "Skolver"
   , defences = (Piercing, defences.base) :: class.defences
   , resistances = [ (Freeze, 4) ]
@@ -65,7 +65,7 @@ vog =
 
 snarby =
   { skolver
-  | id = "snarb"
+  | id = "snr"
   , name = "Snarbolax"
   , defences = (Shadow, defences.base) :: class.defences
   , resistances =
@@ -77,7 +77,7 @@ snarby =
 
 justifier =
   { skolver
-  | id = "just"
+  | id = "jus"
   , name = "Justifier"
   , resistances = [ (Stun, 4) ]
   , bonuses = [ (GunASI, Medium) ]
@@ -101,7 +101,7 @@ shadowsun =
 
 deadshot =
   { shadowsun
-  | id = "dead"
+  | id = "ded"
   , name = "Deadshot"
   , resistances = [ (Curse, 4) ]
   , bonuses =
@@ -113,21 +113,21 @@ deadshot =
 
 volcDemo =
   { vog
-  | id = "demo"
+  | id = "dem"
   , name = "Volcanic Demo"
   , bonuses = [ (BombCTR, Medium) ]
   }
 
 bombastic =
   { nameless
-  | id = "bomba"
+  | id = "bmb"
   , name = "Bombastic Demo"
   , bonuses = [ (BombDmg, Medium) ]
   }
 
 mercDemo =
   { volcDemo
-  | id = "mdemo"
+  | id = "mdm"
   , name = "Mercurial Demo"
   , resistances = [ (Shock, 4) ]
   , bonuses =
@@ -155,7 +155,7 @@ mad =
 
 jelly =
   { base
-  | id = "jelly"
+  | id = "jel"
   , name = "Royal Jelly"
   , defences = (Piercing, defences.special) :: base.defences
   , resistances =
@@ -166,7 +166,7 @@ jelly =
 
 merc =
   { jelly
-  | id = "merc"
+  | id = "mrc"
   , name = "Mercurial Jelly"
   , resistances = [ (Shock, 4) ]
   }
@@ -183,7 +183,7 @@ queen =
 
 gray =
   { base
-  | id = "gray"
+  | id = "gry"
   , name = "Gray Feather"
   , defences = (Elemental, defences.special) :: base.defences
   , resistances =
@@ -194,7 +194,7 @@ gray =
 
 divine =
   { base
-  | id = "divine"
+  | id = "div"
   , name = "Divine"
   , defences = 
     [ (Elemental, defences.class)
@@ -210,7 +210,7 @@ divine =
 
 skelly =
   { base
-  | id = "skelly"
+  | id = "skl"
   , name = "Dread Skelly"
   , defences = (Shadow, defences.special) :: base.defences
   , resistances =
@@ -221,7 +221,7 @@ skelly =
 
 chaos =
   { mad
-  | id = "chaos"
+  | id = "cha"
   , name = "Chaos"
   , resistances = (Curse, -2) :: mad.resistances
   , bonuses = 
@@ -250,7 +250,7 @@ kat =
 
 claw =
   { base
-  | id = "claw"
+  | id = "cla"
   , name = "Kat Claw"
   , defences = (Shadow, defences.special) :: base.defences
   , resistances =
@@ -276,7 +276,7 @@ eye =
 
 hiss =
   { claw
-  | id = "hiss"
+  | id = "his"
   , name = "Kat Hiss"
   , bonuses =
     [ (BombDmg, Low)
@@ -286,7 +286,7 @@ hiss =
 
 ironmight =
   { plate
-  | id = "iron"
+  | id = "irn"
   , name = "Ironmight Plate"
   , defences = (Piercing, defences.base) :: plate.defences
   , bonuses =
@@ -296,7 +296,7 @@ ironmight =
 
 volcPlate =
   { plate
-  | id = "vplate"
+  | id = "vpl"
   , name = "Volcanic Plate"
   , defences = (Elemental, defences.base) :: plate.defences
   , resistances = (Fire, 4) :: plate.resistances
@@ -305,7 +305,7 @@ volcPlate =
 
 ancient =
   { plate
-  | id = "ancient"
+  | id = "apl"
   , name = "Ancient Plate"
   , hearts = 8
   , defences = [ (Normal, defences.ancient) ]
@@ -314,7 +314,7 @@ ancient =
 
 seerus =
   { base
-  | id = "pmos"
+  | id = "pms"
   , name = "Perfect Mask of Seerus"
   , defences = (Elemental, defences.class) :: class.defences
   , resistances =
@@ -331,7 +331,7 @@ seerus =
 
 valkyrie =
   { base
-  | id = "valk"
+  | id = "vlk"
   , name = "Valkyrie"
   , defences =
     [ (Shadow, defences.base)
@@ -347,7 +347,7 @@ valkyrie =
 
 fallen =
   { valkyrie
-  | id = "fallen"
+  | id = "fal"
   , name = "Fallen"
   , resistances =
     [ (Fire, 4)
@@ -362,7 +362,7 @@ fallen =
 
 heavenly =
   { base
-  | id = "heaven"
+  | id = "hvn"
   , name = "Heavenly Iron"
   , defences = (Shadow, defences.base) :: class.defences
   , resistances =
@@ -377,7 +377,7 @@ heavenly =
 
 virulisk =
   { base
-  | id = "viru"
+  | id = "vir"
   , name = "Deadly Virulisk"
   , defences = (Piercing, defences.base) :: class.defences
   , resistances = [ (Poison, 4) ]
@@ -394,7 +394,7 @@ salamander =
 
 arcane =
   { salamander
-  | id = "arcane"
+  | id = "arc"
   , name = "Arcane Salamander"
   , defences = (Elemental, defences.class) :: class.defences
   , bonuses =
@@ -405,7 +405,7 @@ arcane =
 
 dragon =
   { base
-  | id = "scale"
+  | id = "scl"
   , name = "Dragon Scale"
   , defences =
     [ (Piercing, defences.class)
@@ -420,7 +420,7 @@ dragon =
 
 silver =
   { base
-  | id = "silver"
+  | id = "slv"
   , name = "Radiant Silvermail"
   , defences =
     [ (Piercing, defences.class)

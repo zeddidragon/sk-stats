@@ -22,7 +22,7 @@ gun =
 valiance : Weapon
 valiance =
   { gun
-  | id = "vali"
+  | id = "val"
   , name = "Valiance"
   , attacks =
     [ (Shot, attacks.blaster)
@@ -33,7 +33,7 @@ valiance =
 rift : Weapon
 rift = 
   { valiance
-  | id = "rift"
+  | id = "rif"
   , name = "Riftlocker"
   , damageType = Piercing
   }
@@ -49,7 +49,7 @@ arcana =
 phant : Weapon
 phant = 
   { valiance
-  | id = "phant"
+  | id = "pha"
   , name = "Phantomos"
   , damageType = Shadow
   }
@@ -57,7 +57,7 @@ phant =
 nova : Weapon
 nova =
   { gun
-  | id = "nova"
+  | id = "nov"
   , name = "Nova Driver"
   , damageType = Elemental
   , attacks =
@@ -69,7 +69,7 @@ nova =
 umbra : Weapon
 umbra =
   { nova
-  | id = "umbra"
+  | id = "umb"
   , name = "Umbra Driver"
   , damageType = Shadow
   }
@@ -77,7 +77,7 @@ umbra =
 magma : Weapon
 magma =
   { nova
-  | id = "magma"
+  | id = "mag"
   , name = "Magma Driver"
   , status = Just Fire
   , attacks =
@@ -93,7 +93,7 @@ magma =
 cryo : Weapon
 cryo =
   { magma
-  | id = "cryo"
+  | id = "cry"
   , name = "Cryo Driver"
   , status = Just Freeze
   }
@@ -101,7 +101,7 @@ cryo =
 storm : Weapon
 storm =
   { magma
-  | id = "storm"
+  | id = "sto"
   , name = "Storm Driver"
   , status = Just Shock
   }
@@ -109,7 +109,7 @@ storm =
 pepper : Weapon
 pepper =
   { gun
-  | id = "pbox"
+  | id = "pbx"
   , name = "Volcanic Pepperbox"
   , status = Just Fire
   , attacks =
@@ -125,7 +125,7 @@ pepper =
 plague : Weapon
 plague =
   { pepper
-  | id = "plague"
+  | id = "plg"
   , name = "Plague Needle"
   , damageType = Piercing
   , status = Just Poison
@@ -138,7 +138,7 @@ plague =
 blitz : Weapon
 blitz =
   { gun
-  | id = "blitz"
+  | id = "blt"
   , name = "Blitz Needle"
   , damageType = Piercing
   , attacks =
@@ -150,7 +150,7 @@ blitz =
 grim : Weapon
 grim =
   { blitz
-  | id = "grim"
+  | id = "grm"
   , name = "Grim Repeater"
   , damageType = Shadow
   }
@@ -175,7 +175,7 @@ ap =
 sent : Weapon
 sent =
   { ap
-  | id = "sent"
+  | id = "snt"
   , name = "Sentenza"
   , damageType = Shadow
   , bonuses = [ (Gremlin, High) ]
@@ -184,7 +184,7 @@ sent =
 obsidian : Weapon
 obsidian =
   { grim
-  | id = "oc"
+  | id = "car"
   , name = "Obsidian Carbine"
   , status = Just Poison
   , inflictions =
@@ -196,7 +196,7 @@ obsidian =
 slug : Weapon
 slug =
   { gun
-  | id = "slug"
+  | id = "slg"
   , name = "Iron Slug"
   , status = Just Stun
   , attacks =
@@ -229,7 +229,7 @@ wg =
 supernova : Weapon
 supernova =
   { gun
-  | id = "super"
+  | id = "sup"
   , name = "Supernova"
   , attacks =
     [ (Shot, attacks.driver)
@@ -241,7 +241,7 @@ supernova =
 polaris : Weapon
 polaris =
   { gun
-  | id = "pola"
+  | id = "pol"
   , name = "Polaris"
   , damageType = Elemental
   , status = Just Shock
@@ -276,7 +276,7 @@ permafroster =
 neutralizer : Weapon
 neutralizer =
   { gun
-  | id = "neutra"
+  | id = "ntr"
   , name = "Neutralizer"
   , chargeTime = charge.quick
   , attacks =
@@ -305,10 +305,10 @@ tortofists : List Weapon
 tortofists =
   let
     variants =
-      [ ("gorgo", "Gorgofist", Shadow)
-      , ("grand", "Grand Tortofist", Normal)
-      , ("savage", "Savage Tortofist", Piercing)
-      , ("omega", "Omega Tortofist", Elemental)
+      [ ("grg", "Gorgofist", Shadow)
+      , ("grn", "Grand Tortofist", Normal)
+      , ("sav", "Savage Tortofist", Piercing)
+      , ("omg", "Omega Tortofist", Elemental)
       ]
     copy (id, name, dType) =
       { gun
@@ -329,8 +329,8 @@ mixmasters : List Weapon
 mixmasters =
   let
     variants =
-      [ ("mix", "Overcharged Mixmaster", Shock)
-      , ("fmix", "Celestial Orbitgun", Fire)
+      [ ("omm", "Overcharged Mixmaster", Shock)
+      , ("cog", "Celestial Orbitgun", Fire)
       ]
     copy (id, name, status) =
       { gun

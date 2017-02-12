@@ -20,63 +20,63 @@ effects trinkets =
 
 jelly : Trinket
 jelly =
-  { id = "band"
+  { id = "prc"
   , name = "Royal Jelly Band"
   , effects = [ DefenceUV (Piercing, High) ]
   }
 
 crystal : Trinket
 crystal =
-  { id = "pin"
+  { id = "ele"
   , name = "Radiant Crystal Pin"
   , effects = [ DefenceUV (Elemental, High) ]
   }
 
 skelly : Trinket
 skelly =
-  { id = "charm"
+  { id = "sha"
   , name = "Dread Skelly Charm"
   , effects = [ DefenceUV (Shadow, High) ]
   }
 
 wetstone : Trinket
 wetstone =
-  { id = "wet"
+  { id = "frz"
   , name = "Soaking Wetstone Pendant"
   , effects = [ StatusUV (Fire, Medium) ]
   }
 
 hearthstone : Trinket
 hearthstone =
-  { id = "hearth"
+  { id = "fir"
   , name = "Sizzling Hearthstone Pendant"
   , effects = [ StatusUV (Freeze, Medium) ]
   }
 
 wyrmwood : Trinket
 wyrmwood =
-  { id = "wyrm"
+  { id = "shk"
   , name = "Wyrmwood Bracelet"
   , effects = [ StatusUV (Shock, Medium) ]
   }
 
 laurel : Trinket
 laurel =
-  { id = "white"
+  { id = "psn"
   , name = "Pure White Laurel"
   , effects = [ StatusUV (Poison, Medium) ]
   }
 
 amulet : Trinket
 amulet =
-  { id = "saint"
+  { id = "cur"
   , name = "Saintly Silver Amulet"
   , effects = [ StatusUV (Curse, Medium) ]
   }
 
 penta : Trinket
 penta =
-  { id = "penta"
+  { id = "hp"
   , name = "Penta-Heart Pendant"
   , effects = [ Hearts 6 ]
   }
@@ -139,7 +139,7 @@ slash =
 
 solstice : Trinket
 solstice =
-  { id = "solstice"
+  { id = "sol"
   , name = "Grand Solstice Ring"
   , effects =
     [ Hearts 4

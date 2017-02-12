@@ -22,7 +22,7 @@ sword =
 leviathan : Weapon
 leviathan =
   { sword
-  | id = "levi"
+  | id = "lev"
   , name = "Leviathan Blade"
   , attacks =
     [ (Basic, attacks.sword)
@@ -48,7 +48,7 @@ civ =
 dreams : Weapon
 dreams =
   { sword
-  | id = "dreams"
+  | id = "drm"
   , name = "Sweet Dreams"
   , attacks =
     [ (Basic, attacks.civ)
@@ -76,7 +76,8 @@ flourish =
 btb : Weapon
 btb =
   { sword
-  | name = "Barbarous Thorn Blade"
+  | id = "btb"
+  , name = "Barbarous Thorn Blade"
   , damageType = Piercing
   , attacks =
     [ (Basic, attacks.sword)
@@ -115,7 +116,7 @@ rigadoon =
 flamberge : Weapon
 flamberge =
   { rigadoon
-  | id = "flamb"
+  | id = "fla"
   , name = "Furious Flamberge"
   , status = Just Fire
   , inflictions =
@@ -152,7 +153,7 @@ dvs =
 suda : Weapon
 suda =
   { sword
-  | id = "suda"
+  | id = "sud"
   , name = "Sudaruska"
   , status = Just Stun
   , chargeTime = charge.long
@@ -169,7 +170,7 @@ suda =
 triglav : Weapon
 triglav =
   { suda
-  | id = "trig"
+  | id = "tri"
   , name = "Triglav"
   , status = Just Freeze
   , inflictions =
@@ -193,7 +194,7 @@ hammer =
 combuster : Weapon
 combuster =
   { sword
-  | id = "comb"
+  | id = "cmb"
   , name = "Combuster"
   , damageType = Elemental
   , split = Just Normal
@@ -213,7 +214,7 @@ combuster =
 glacius : Weapon
 glacius =
   { combuster
-  | id = "glac"
+  | id = "glc"
   , name = "Glacius"
   , status = Just Freeze
   }
@@ -221,7 +222,7 @@ glacius =
 voltedge : Weapon
 voltedge =
   { combuster
-  | id = "volt"
+  | id = "vlt"
   , name = "Voltedge"
   , status = Just Shock
   }
@@ -229,7 +230,8 @@ voltedge =
 obsidian : Weapon
 obsidian =
   { combuster
-  | name = "Obsidian Edge"
+  | id = "obs"
+  , name = "Obsidian Edge"
   , damageType = Shadow
   , status = Just Poison
   }
@@ -309,7 +311,7 @@ winmillion =
 faust4star : Weapon
 faust4star =
   { faust
-  | id = "faust"
+  | id = "fau"
   , name = "Faust (4*)"
   , chargeTime = charge.long
   , attacks =

@@ -22,7 +22,7 @@ bomb =
 nitro : Weapon
 nitro =
   { bomb
-  | id = "nitro"
+  | id = "ntr"
   , name = "Nitronome"
   , attacks = [ (Charge, attacks.nitro) ]
   }
@@ -38,7 +38,7 @@ dbb =
 irontech : Weapon
 irontech =
   { bomb
-  | id = "iron"
+  | id = "irn"
   , name = "Irontech Destroyer"
   , status = Just Stun
   , chargeTime = charge.irontech
@@ -70,7 +70,7 @@ ash =
 shiver : Weapon
 shiver =
   { ash
-  | id = "shiver"
+  | id = "shv"
   , name = "Shivermist Buster"
   , status = Just Freeze
   }
@@ -94,7 +94,7 @@ tempest =
 stagger : Weapon
 stagger =
   { ash
-  | id = "swag"
+  | id = "stg"
   , name = "Stagger Storm"
   , status = Just Stun
   }
@@ -102,7 +102,7 @@ stagger =
 graviton : Weapon
 graviton =
   { bomb
-  | id = "grav"
+  | id = "grv"
   , name = "Graviton Vortex"
   , damageType = Shadow
   , chargeTime = charge.long
@@ -117,8 +117,8 @@ vortexes =
   let
     variants =
       [ ("ev", "Electron Vortex", Elemental, Shock)
-      , ("ograv", "Obsidian Crusher", Shadow, Poison)
-      , ("fgrav", "Celestial Vortex", Elemental, Fire)
+      , ("ogr", "Obsidian Crusher", Shadow, Poison)
+      , ("fgr", "Celestial Vortex", Elemental, Fire)
       ]
     copy (id, name, dType, status) =
       { bomb
@@ -167,7 +167,7 @@ sss =
 ssb : Weapon
 ssb =
   { sss
-  | id = "salt"
+  | id = "slt"
   , name = "Shocking Salt Bomb"
   , damageType = Shadow
   , status = Just Shock
@@ -178,10 +178,10 @@ shards : List Weapon
 shards =
   let
     variants =
-      [ ("nshard", "Deadly Shard Bomb", Normal)
-      , ("pshard", "Deadly Splinter Bomb", Piercing)
-      , ("eshard", "Deadly Crystal Bomb", Elemental)
-      , ("sshard", "Deadly Dark Matter Bomb", Shadow)
+      [ ("nshr", "Deadly Shard Bomb", Normal)
+      , ("pshr", "Deadly Splinter Bomb", Piercing)
+      , ("eshr", "Deadly Crystal Bomb", Elemental)
+      , ("sshr", "Deadly Dark Matter Bomb", Shadow)
       ]
     copy (id, name, dType) =
       { bomb
@@ -199,7 +199,7 @@ shards =
 rss : Weapon
 rss =
   { bomb
-  | id = "orss"
+  | id = "rss"
   , name = "Radiant Sun Shards (Old)"
   , damageType = Piercing
   , split = Just Elemental
@@ -210,7 +210,7 @@ rss =
 salt : Weapon
 salt =
   { bomb
-  | id = "osalt"
+  | id = "isb"
   , name = "Ionized Salt Bomb (Old)"
   , damageType = Piercing
   , status = Just Shock

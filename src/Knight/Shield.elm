@@ -6,7 +6,7 @@ import Knight.Status exposing (..)
 
 aegis : Shield
 aegis =
-  { id = "aegis"
+  { id = "aeg"
   , name = "Aegis"
   , effects = []
   }
@@ -27,21 +27,21 @@ ssb =
 
 scarlet : Shield
 scarlet =
-  { id = "hearts"
+  { id = "hp"
   , name = "Scarlet Shield"
   , effects = [ Hearts 2 ]
   }
 
 gorgo : Shield
 gorgo =
-  { id = "gorgo"
+  { id = "grg"
   , name = "Gorgomega"
   , effects = [ WeaponUV (MSI, NegLow) ]
   }
 
 striker : Shield
 striker =
-  { id = "boost"
+  { id = "str"
   , name = "Strike Booster"
   , effects =
     [ WeaponUV (SwordDmg, Medium)
@@ -52,7 +52,7 @@ striker =
 
 recon : Shield
 recon =
-  { id = "cloak"
+  { id = "rec"
   , name = "Recon Cloak"
   , effects =
     [ Hearts 10
@@ -69,7 +69,7 @@ guardian =
     composeStatus status = StatusUV (status, Medium)
     statuses = List.map composeStatus [Fire, Freeze, Shock, Poison, Stun, Curse]
   in
-    { id = "guard"
+    { id = "gua"
     , name = "Guardian Shield"
     , effects =
       [ Hearts 12

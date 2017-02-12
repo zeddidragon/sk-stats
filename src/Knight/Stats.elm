@@ -15,6 +15,7 @@ import Knight.Types exposing
   , StatusChance(..)
   , StatusStrength(..)
   )
+import Knight.Encode
 
 stats message side left right events =
   let
@@ -202,7 +203,8 @@ stats message side left right events =
 
   in
     List.concat
-      [ inflictions
+      [ [ h3 [] [ text <| Knight.Encode.encode knight ] ]
+      , inflictions
       , [ divisor
         , health |> item "Health"
         , mobility knight |> item "Mobility"
