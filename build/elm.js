@@ -8570,13 +8570,22 @@ var _truqu$elm_base64$Base64$encode = function (s) {
 					_truqu$elm_base64$Base64$toCodeList(s)))));
 };
 
+var _user$project$Util$orMaybe = F2(
+	function (maybe, alternative) {
+		var _p0 = maybe;
+		if (_p0.ctor === 'Nothing') {
+			return alternative;
+		} else {
+			return maybe;
+		}
+	});
 var _user$project$Util$querify = function (tuples) {
-	var toQuery = function (_p0) {
-		var _p1 = _p0;
+	var toQuery = function (_p1) {
+		var _p2 = _p1;
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
-			_p1._0,
-			A2(_elm_lang$core$Basics_ops['++'], '=', _p1._1));
+			_p2._0,
+			A2(_elm_lang$core$Basics_ops['++'], '=', _p2._1));
 	};
 	return A2(
 		_elm_lang$core$String$join,
@@ -8632,6 +8641,14 @@ var _user$project$Util$strReplace = F3(
 			$new,
 			A2(_elm_lang$core$String$split, old, str));
 	});
+var _user$project$Util$btoa = function (string) {
+	var _p3 = _truqu$elm_base64$Base64$encode(string);
+	if (_p3.ctor === 'Ok') {
+		return A3(_user$project$Util$strReplace, _p3._0, '=', '');
+	} else {
+		return _p3._0;
+	}
+};
 var _user$project$Util$replace = F3(
 	function (list, index, $new) {
 		return A2(
@@ -8657,9 +8674,9 @@ var _user$project$Util$rFind = F2(
 var _user$project$Util$queryValue = F2(
 	function (qstring, key) {
 		var toValue = function (tuple) {
-			var _p2 = tuple;
-			if ((_p2.ctor === 'Just') && (_p2._0.ctor === '_Tuple2')) {
-				return _elm_lang$core$Maybe$Just(_p2._0._1);
+			var _p4 = tuple;
+			if ((_p4.ctor === 'Just') && (_p4._0.ctor === '_Tuple2')) {
+				return _elm_lang$core$Maybe$Just(_p4._0._1);
 			} else {
 				return _elm_lang$core$Maybe$Nothing;
 			}
@@ -8667,9 +8684,9 @@ var _user$project$Util$queryValue = F2(
 		return toValue(
 			A2(
 				_user$project$Util$find,
-				function (_p3) {
-					var _p4 = _p3;
-					return _elm_lang$core$Native_Utils.eq(_p4._0, key);
+				function (_p5) {
+					var _p6 = _p5;
+					return _elm_lang$core$Native_Utils.eq(_p6._0, key);
 				},
 				_user$project$Util$query(qstring)));
 	});
@@ -8682,9 +8699,9 @@ var _user$project$Util$rIndex = F2(
 					_elm_lang$core$Tuple$first,
 					A2(
 						_elm_lang$core$List$filter,
-						function (_p5) {
-							var _p6 = _p5;
-							return _elm_lang$core$Native_Utils.eq(item, _p6._1);
+						function (_p7) {
+							var _p8 = _p7;
+							return _elm_lang$core$Native_Utils.eq(item, _p8._1);
 						},
 						A2(
 							_elm_lang$core$List$indexedMap,
@@ -8702,9 +8719,9 @@ var _user$project$Util$index = F2(
 				_elm_lang$core$Tuple$first,
 				A2(
 					_elm_lang$core$List$filter,
-					function (_p7) {
-						var _p8 = _p7;
-						return _elm_lang$core$Native_Utils.eq(item, _p8._1);
+					function (_p9) {
+						var _p10 = _p9;
+						return _elm_lang$core$Native_Utils.eq(item, _p10._1);
 					},
 					A2(
 						_elm_lang$core$List$indexedMap,
@@ -9946,7 +9963,7 @@ var _user$project$Knight_Guns$permafroster = _elm_lang$core$Native_Utils.update(
 var _user$project$Knight_Guns$neutralizer = _elm_lang$core$Native_Utils.update(
 	_user$project$Knight_Guns$gun,
 	{
-		id: 'ntr',
+		id: 'neu',
 		name: 'Neutralizer',
 		chargeTime: _user$project$Knight_Values$charge.quick,
 		attacks: {
@@ -13403,10 +13420,30 @@ var _user$project$View_Shortcuts$selectListExclude = F5(
 					A2(_elm_lang$core$Json_Decode$map, selectThing, _elm_lang$html$Html_Events$targetValue)),
 				_1: {ctor: '[]'}
 			},
-			A2(
-				_elm_lang$core$List$map,
-				A3(_user$project$View_Shortcuts$selectOption, exclude, label, current),
-				things));
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$option,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$disabled(true),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$selected(
+								!A2(_elm_lang$core$List$member, current, things)),
+							_1: {ctor: '[]'}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('-- Pick a loadout -- '),
+						_1: {ctor: '[]'}
+					}),
+				_1: A2(
+					_elm_lang$core$List$map,
+					A3(_user$project$View_Shortcuts$selectOption, exclude, label, current),
+					things)
+			});
 	});
 var _user$project$View_Shortcuts$selectList = _user$project$View_Shortcuts$selectListExclude(
 	{ctor: '[]'});
@@ -14466,18 +14503,13 @@ var _user$project$Knight_Encode$encode = function (knight) {
 				}
 			}
 		});
-	var _p3 = _truqu$elm_base64$Base64$encode(raw);
-	if (_p3.ctor === 'Ok') {
-		return A3(_user$project$Util$strReplace, _p3._0, '=', '');
-	} else {
-		return _p3._0;
-	}
+	return _user$project$Util$btoa(raw);
 };
 var _user$project$Knight_Encode$decode = function (code) {
-	var _p4 = _truqu$elm_base64$Base64$decode(code);
-	if (_p4.ctor === 'Ok') {
-		var _p5 = A2(_elm_lang$core$String$split, ' ', _p4._0);
-		if ((((_p5.ctor === '::') && (_p5._1.ctor === '::')) && (_p5._1._1.ctor === '::')) && (_p5._1._1._1.ctor === '::')) {
+	var _p3 = _truqu$elm_base64$Base64$decode(code);
+	if (_p3.ctor === 'Ok') {
+		var _p4 = A2(_elm_lang$core$String$split, ' ', _p3._0);
+		if ((((_p4.ctor === '::') && (_p4._1.ctor === '::')) && (_p4._1._1.ctor === '::')) && (_p4._1._1._1.ctor === '::')) {
 			var id = function (str) {
 				return A2(
 					_elm_lang$core$Maybe$withDefault,
@@ -14705,15 +14737,15 @@ var _user$project$Knight_Encode$decode = function (code) {
 						}
 					}
 				};
-				var _p8 = A2(
+				var _p7 = A2(
 					_user$project$Util$find,
-					function (_p6) {
-						var _p7 = _p6;
-						return _elm_lang$core$Native_Utils.eq(id, _p7._0);
+					function (_p5) {
+						var _p6 = _p5;
+						return _elm_lang$core$Native_Utils.eq(id, _p6._0);
 					},
 					bonusIds);
-				if ((_p8.ctor === 'Just') && (_p8._0.ctor === '_Tuple2')) {
-					return _elm_lang$core$Maybe$Just(_p8._0._1);
+				if ((_p7.ctor === 'Just') && (_p7._0.ctor === '_Tuple2')) {
+					return _elm_lang$core$Maybe$Just(_p7._0._1);
 				} else {
 					return _elm_lang$core$Maybe$Nothing;
 				}
@@ -14760,10 +14792,10 @@ var _user$project$Knight_Encode$decode = function (code) {
 					weapons: A2(
 						_elm_lang$core$List$map,
 						decodeWeapon,
-						A2(_elm_lang$core$String$split, '|', _p5._1._1._1._0)),
-					helmet: decodeArmour(_p5._1._0),
-					armour: decodeArmour(_p5._1._1._0),
-					shield: decodeShield(_p5._0),
+						A2(_elm_lang$core$String$split, '|', _p4._1._1._1._0)),
+					helmet: decodeArmour(_p4._1._0),
+					armour: decodeArmour(_p4._1._1._0),
+					shield: decodeShield(_p4._0),
 					trinkets: A2(
 						_elm_lang$core$List$filterMap,
 						decodeTrinket,
@@ -14773,7 +14805,7 @@ var _user$project$Knight_Encode$decode = function (code) {
 							A2(
 								_elm_lang$core$Maybe$withDefault,
 								'',
-								_elm_lang$core$List$head(_p5._1._1._1._1))))
+								_elm_lang$core$List$head(_p4._1._1._1._1))))
 				});
 		} else {
 			return _elm_lang$core$Maybe$Nothing;
@@ -15364,8 +15396,8 @@ var _user$project$Knight_UV_Form$armourForm = A2(
 		}
 	});
 
-var _user$project$Knight_Form$form = F2(
-	function (message, knight) {
+var _user$project$Knight_Form$form = F4(
+	function (loadouts, save, equip, knight) {
 		var slot = F5(
 			function (message, equipment, items, title, uvForm) {
 				var equipUv = function (uvs) {
@@ -15491,38 +15523,54 @@ var _user$project$Knight_Form$form = F2(
 						_1: {ctor: '[]'}
 					} : {ctor: '[]'});
 			});
-		var equipTrinkets = function (equip) {
-			return message(
-				_elm_lang$core$Native_Utils.update(
+		var equipLoadout = function (_p0) {
+			var _p1 = _p0;
+			var rename = function (knight) {
+				return _elm_lang$core$Native_Utils.update(
 					knight,
-					{trinkets: equip}));
+					{name: _p1._0});
+			};
+			var loaded = A2(
+				_elm_lang$core$Maybe$withDefault,
+				knight,
+				A2(
+					_elm_lang$core$Maybe$map,
+					rename,
+					_user$project$Knight_Encode$decode(_p1._1)));
+			return equip(loaded);
 		};
-		var equipWeapons = function (equip) {
-			return message(
+		var equipTrinkets = function (slot) {
+			return equip(
 				_elm_lang$core$Native_Utils.update(
 					knight,
-					{weapons: equip}));
+					{trinkets: slot}));
 		};
-		var equipArmour = function (equip) {
-			return message(
+		var equipWeapons = function (slot) {
+			return equip(
 				_elm_lang$core$Native_Utils.update(
 					knight,
-					{armour: equip}));
+					{weapons: slot}));
 		};
-		var equipHelmet = function (equip) {
-			return message(
+		var equipArmour = function (slot) {
+			return equip(
 				_elm_lang$core$Native_Utils.update(
 					knight,
-					{helmet: equip}));
+					{armour: slot}));
 		};
-		var equipShield = function (equip) {
-			return message(
+		var equipHelmet = function (slot) {
+			return equip(
 				_elm_lang$core$Native_Utils.update(
 					knight,
-					{shield: equip}));
+					{helmet: slot}));
+		};
+		var equipShield = function (slot) {
+			return equip(
+				_elm_lang$core$Native_Utils.update(
+					knight,
+					{shield: slot}));
 		};
 		var rename = function (name) {
-			return message(
+			return equip(
 				_elm_lang$core$Native_Utils.update(
 					knight,
 					{name: name}));
@@ -15556,20 +15604,65 @@ var _user$project$Knight_Form$form = F2(
 						{ctor: '[]'}),
 					_1: {
 						ctor: '::',
-						_0: A5(slot, equipShield, knight.shield, _user$project$Knight_Shield$shields, 'Shield', _user$project$Knight_UV_Form$armourForm),
-						_1: {
-							ctor: '::',
-							_0: _user$project$View_Shortcuts$divisor,
-							_1: {
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
 								ctor: '::',
-								_0: A5(slot, equipHelmet, knight.helmet, _user$project$Knight_Armour$armours, 'Helmet', _user$project$Knight_UV_Form$armourForm),
+								_0: _elm_lang$html$Html_Attributes$class('button'),
 								_1: {
 									ctor: '::',
-									_0: A5(slot, equipArmour, knight.armour, _user$project$Knight_Armour$armours, 'Armour', _user$project$Knight_UV_Form$armourForm),
+									_0: _elm_lang$html$Html_Events$onClick(
+										save(
+											{
+												ctor: '_Tuple2',
+												_0: knight.name,
+												_1: _user$project$Knight_Encode$encode(knight)
+											})),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Save Loadout'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$View_Shortcuts$item,
+								'Loadout',
+								A4(
+									_user$project$View_Shortcuts$selectList,
+									_elm_lang$core$Tuple$first,
+									equipLoadout,
+									loadouts,
+									{
+										ctor: '_Tuple2',
+										_0: knight.name,
+										_1: _user$project$Knight_Encode$encode(knight)
+									})),
+							_1: {
+								ctor: '::',
+								_0: _user$project$View_Shortcuts$divisor,
+								_1: {
+									ctor: '::',
+									_0: A5(slot, equipShield, knight.shield, _user$project$Knight_Shield$shields, 'Shield', _user$project$Knight_UV_Form$armourForm),
 									_1: {
 										ctor: '::',
 										_0: _user$project$View_Shortcuts$divisor,
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: A5(slot, equipHelmet, knight.helmet, _user$project$Knight_Armour$armours, 'Helmet', _user$project$Knight_UV_Form$armourForm),
+											_1: {
+												ctor: '::',
+												_0: A5(slot, equipArmour, knight.armour, _user$project$Knight_Armour$armours, 'Armour', _user$project$Knight_UV_Form$armourForm),
+												_1: {
+													ctor: '::',
+													_0: _user$project$View_Shortcuts$divisor,
+													_1: {ctor: '[]'}
+												}
+											}
+										}
 									}
 								}
 							}
@@ -16524,42 +16617,153 @@ var _user$project$Knight_Stats$stats = F5(
 				}));
 	});
 
-var _user$project$Main$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
-};
+var _user$project$LocalStorage$lsSave = _elm_lang$core$Native_Platform.outgoingPort(
+	'lsSave',
+	function (v) {
+		return _elm_lang$core$Native_List.toArray(v).map(
+			function (v) {
+				return [v._0, v._1];
+			});
+	});
+var _user$project$LocalStorage$lsData = _elm_lang$core$Native_Platform.incomingPort(
+	'lsData',
+	_elm_lang$core$Json_Decode$list(
+		A2(
+			_elm_lang$core$Json_Decode$andThen,
+			function (x0) {
+				return A2(
+					_elm_lang$core$Json_Decode$andThen,
+					function (x1) {
+						return _elm_lang$core$Json_Decode$succeed(
+							{ctor: '_Tuple2', _0: x0, _1: x1});
+					},
+					A2(_elm_lang$core$Json_Decode$index, 1, _elm_lang$core$Json_Decode$string));
+			},
+			A2(_elm_lang$core$Json_Decode$index, 0, _elm_lang$core$Json_Decode$string))));
+
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var next = function () {
+		var cmd = function () {
 			var _p0 = msg;
-			switch (_p0.ctor) {
+			_v0_3:
+			do {
+				switch (_p0.ctor) {
+					case 'SaveLoadout':
+						if (_p0._0.ctor === '_Tuple2') {
+							return _user$project$LocalStorage$lsSave(
+								{
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: A2(_elm_lang$core$Basics_ops['++'], 'loadout|', _p0._0._0),
+										_1: _p0._0._1
+									},
+									_1: {ctor: '[]'}
+								});
+						} else {
+							break _v0_3;
+						}
+					case 'EquipLeft':
+						var _p1 = _p0._0;
+						return _user$project$LocalStorage$lsSave(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'leftName', _1: _p1.name},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'left',
+										_1: _user$project$Knight_Encode$encode(_p1)
+									},
+									_1: {ctor: '[]'}
+								}
+							});
+					case 'EquipRight':
+						var _p2 = _p0._0;
+						return _user$project$LocalStorage$lsSave(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'rightName', _1: _p2.name},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'right',
+										_1: _user$project$Knight_Encode$encode(_p2)
+									},
+									_1: {ctor: '[]'}
+								}
+							});
+					default:
+						break _v0_3;
+				}
+			} while(false);
+			return _elm_lang$core$Platform_Cmd$none;
+		}();
+		var next = function () {
+			var _p3 = msg;
+			switch (_p3.ctor) {
 				case 'EquipLeft':
 					return _elm_lang$core$Native_Utils.update(
 						model,
-						{left: _p0._0});
+						{left: _p3._0});
 				case 'EquipRight':
 					return _elm_lang$core$Native_Utils.update(
 						model,
-						{right: _p0._0});
+						{right: _p3._0});
 				case 'SetEvents':
 					return _elm_lang$core$Native_Utils.update(
 						model,
-						{events: _p0._0});
-				default:
+						{events: _p3._0});
+				case 'SetState':
 					return _elm_lang$core$Native_Utils.update(
 						model,
-						{state: _p0._0});
+						{state: _p3._0});
+				case 'Loadouts':
+					var $new = A2(
+						_elm_lang$core$List$map,
+						function (_p4) {
+							var _p5 = _p4;
+							return {
+								ctor: '_Tuple2',
+								_0: A2(_elm_lang$core$String$dropLeft, 8, _p5._0),
+								_1: _p5._1
+							};
+						},
+						A2(
+							_elm_lang$core$List$filter,
+							function (_p6) {
+								var _p7 = _p6;
+								return A2(_elm_lang$core$String$startsWith, 'loadout|', _p7._0);
+							},
+							_p3._0));
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{loadouts: $new});
+				default:
+					return model;
 			}
 		}();
-		return {ctor: '_Tuple2', _0: next, _1: _elm_lang$core$Platform_Cmd$none};
+		return {ctor: '_Tuple2', _0: next, _1: cmd};
 	});
-var _user$project$Main$Flags = F2(
-	function (a, b) {
-		return {qs: a, path: b};
+var _user$project$Main$Flags = F6(
+	function (a, b, c, d, e, f) {
+		return {qs: a, path: b, left: c, leftName: d, right: e, rightName: f};
 	});
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {path: a, left: b, right: c, state: d, events: e};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {path: a, left: b, right: c, state: d, events: e, loadouts: f};
 	});
+var _user$project$Main$SaveLoadout = function (a) {
+	return {ctor: 'SaveLoadout', _0: a};
+};
+var _user$project$Main$Loadouts = function (a) {
+	return {ctor: 'Loadouts', _0: a};
+};
+var _user$project$Main$subscriptions = function (model) {
+	return _user$project$LocalStorage$lsData(_user$project$Main$Loadouts);
+};
 var _user$project$Main$SetEvents = function (a) {
 	return {ctor: 'SetEvents', _0: a};
 };
@@ -16574,6 +16778,29 @@ var _user$project$Main$EquipLeft = function (a) {
 };
 var _user$project$Main$Vs = {ctor: 'Vs'};
 var _user$project$Main$init = function (flags) {
+	var readName = function (attr) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			_elm_lang$core$Result$withDefault('Decoded'),
+			A2(
+				_elm_lang$core$Maybe$map,
+				_truqu$elm_base64$Base64$decode,
+				A2(_user$project$Util$queryValue, flags.qs, attr)));
+	};
+	var leftName = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'Left',
+		A2(
+			_user$project$Util$orMaybe,
+			flags.leftName,
+			readName('leftname')));
+	var rightName = A2(
+		_elm_lang$core$Maybe$withDefault,
+		'Right',
+		A2(
+			_user$project$Util$orMaybe,
+			flags.rightName,
+			readName('rightname')));
 	var rename = F2(
 		function (name, knight) {
 			return _elm_lang$core$Native_Utils.update(
@@ -16585,33 +16812,86 @@ var _user$project$Main$init = function (flags) {
 		_user$project$Knight$you,
 		A2(
 			_elm_lang$core$Maybe$map,
-			rename('Left'),
+			rename(leftName),
 			A2(
-				_elm_lang$core$Maybe$andThen,
-				_user$project$Knight_Encode$decode,
-				A2(_user$project$Util$queryValue, flags.qs, 'left'))));
+				_user$project$Util$orMaybe,
+				_user$project$Knight_Encode$decode(flags.left),
+				A2(
+					_elm_lang$core$Maybe$andThen,
+					_user$project$Knight_Encode$decode,
+					A2(_user$project$Util$queryValue, flags.qs, 'left')))));
 	var right = A2(
 		_elm_lang$core$Maybe$withDefault,
 		_user$project$Knight$opponent,
 		A2(
 			_elm_lang$core$Maybe$map,
-			rename('Right'),
+			rename(rightName),
 			A2(
-				_elm_lang$core$Maybe$andThen,
-				_user$project$Knight_Encode$decode,
-				A2(_user$project$Util$queryValue, flags.qs, 'right'))));
+				_user$project$Util$orMaybe,
+				_user$project$Knight_Encode$decode(flags.right),
+				A2(
+					_elm_lang$core$Maybe$andThen,
+					_user$project$Knight_Encode$decode,
+					A2(_user$project$Util$queryValue, flags.qs, 'right')))));
 	var model = {
 		path: flags.path,
 		left: left,
 		right: right,
 		state: _user$project$Main$Vs,
-		events: {ctor: '[]'}
+		events: {ctor: '[]'},
+		loadouts: {ctor: '[]'}
 	};
 	return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 };
 var _user$project$Main$Opponent = {ctor: 'Opponent'};
 var _user$project$Main$You = {ctor: 'You'};
 var _user$project$Main$view = function (model) {
+	var buttonText = _elm_lang$core$Native_Utils.eq(model.state, _user$project$Main$Vs) ? 'Share Duel' : 'Share Loadout';
+	var right = {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'right',
+			_1: _user$project$Knight_Encode$encode(model.right)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'rightname',
+				_1: _user$project$Util$btoa(model.right.name)
+			},
+			_1: {ctor: '[]'}
+		}
+	};
+	var left = {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'left',
+			_1: _user$project$Knight_Encode$encode(model.left)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'leftname',
+				_1: _user$project$Util$btoa(model.left.name)
+			},
+			_1: {ctor: '[]'}
+		}
+	};
+	var shareData = function () {
+		var _p8 = model.state;
+		switch (_p8.ctor) {
+			case 'You':
+				return left;
+			case 'Vs':
+				return A2(_elm_lang$core$Basics_ops['++'], left, right);
+			default:
+				return right;
+		}
+	}();
 	var rightEvents = model.events;
 	var leftEvents = model.events;
 	var addEvent = F2(
@@ -16624,8 +16904,8 @@ var _user$project$Main$view = function (model) {
 				});
 		});
 	var stateToLabel = function (state) {
-		var _p1 = state;
-		switch (_p1.ctor) {
+		var _p9 = state;
+		switch (_p9.ctor) {
 			case 'You':
 				return model.left.name;
 			case 'Vs':
@@ -16697,7 +16977,7 @@ var _user$project$Main$view = function (model) {
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Share Loadouts'),
+								_0: _elm_lang$html$Html$text(buttonText),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -16717,29 +16997,12 @@ var _user$project$Main$view = function (model) {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$value(
 													A2(
-														F2(
-															function (x, y) {
-																return A2(_elm_lang$core$Basics_ops['++'], x, y);
-															}),
-														A2(_elm_lang$core$Basics_ops['++'], model.path, '?'),
-														_user$project$Util$querify(
-															{
-																ctor: '::',
-																_0: {
-																	ctor: '_Tuple2',
-																	_0: 'left',
-																	_1: _user$project$Knight_Encode$encode(model.left)
-																},
-																_1: {
-																	ctor: '::',
-																	_0: {
-																		ctor: '_Tuple2',
-																		_0: 'right',
-																		_1: _user$project$Knight_Encode$encode(model.right)
-																	},
-																	_1: {ctor: '[]'}
-																}
-															}))),
+														_elm_lang$core$Basics_ops['++'],
+														model.path,
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															'?',
+															_user$project$Util$querify(shareData)))),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -16763,12 +17026,12 @@ var _user$project$Main$view = function (model) {
 							_1: {ctor: '[]'}
 						},
 						function () {
-							var _p2 = model.state;
-							switch (_p2.ctor) {
+							var _p10 = model.state;
+							switch (_p10.ctor) {
 								case 'You':
 									return {
 										ctor: '::',
-										_0: A2(_user$project$Knight_Form$form, _user$project$Main$EquipLeft, model.left),
+										_0: A4(_user$project$Knight_Form$form, model.loadouts, _user$project$Main$SaveLoadout, _user$project$Main$EquipLeft, model.left),
 										_1: {
 											ctor: '::',
 											_0: A5(
@@ -16821,7 +17084,7 @@ var _user$project$Main$view = function (model) {
 											{ctor: '[]'}),
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Knight_Form$form, _user$project$Main$EquipRight, model.right),
+											_0: A4(_user$project$Knight_Form$form, model.loadouts, _user$project$Main$SaveLoadout, _user$project$Main$EquipRight, model.right),
 											_1: {ctor: '[]'}
 										}
 									};
@@ -16836,16 +17099,60 @@ var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
 	{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})(
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		function (path) {
+		function (left) {
 			return A2(
 				_elm_lang$core$Json_Decode$andThen,
-				function (qs) {
-					return _elm_lang$core$Json_Decode$succeed(
-						{path: path, qs: qs});
+				function (leftName) {
+					return A2(
+						_elm_lang$core$Json_Decode$andThen,
+						function (path) {
+							return A2(
+								_elm_lang$core$Json_Decode$andThen,
+								function (qs) {
+									return A2(
+										_elm_lang$core$Json_Decode$andThen,
+										function (right) {
+											return A2(
+												_elm_lang$core$Json_Decode$andThen,
+												function (rightName) {
+													return _elm_lang$core$Json_Decode$succeed(
+														{left: left, leftName: leftName, path: path, qs: qs, right: right, rightName: rightName});
+												},
+												A2(
+													_elm_lang$core$Json_Decode$field,
+													'rightName',
+													_elm_lang$core$Json_Decode$oneOf(
+														{
+															ctor: '::',
+															_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
+															_1: {
+																ctor: '::',
+																_0: A2(_elm_lang$core$Json_Decode$map, _elm_lang$core$Maybe$Just, _elm_lang$core$Json_Decode$string),
+																_1: {ctor: '[]'}
+															}
+														})));
+										},
+										A2(_elm_lang$core$Json_Decode$field, 'right', _elm_lang$core$Json_Decode$string));
+								},
+								A2(_elm_lang$core$Json_Decode$field, 'qs', _elm_lang$core$Json_Decode$string));
+						},
+						A2(_elm_lang$core$Json_Decode$field, 'path', _elm_lang$core$Json_Decode$string));
 				},
-				A2(_elm_lang$core$Json_Decode$field, 'qs', _elm_lang$core$Json_Decode$string));
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'leftName',
+					_elm_lang$core$Json_Decode$oneOf(
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
+							_1: {
+								ctor: '::',
+								_0: A2(_elm_lang$core$Json_Decode$map, _elm_lang$core$Maybe$Just, _elm_lang$core$Json_Decode$string),
+								_1: {ctor: '[]'}
+							}
+						})));
 		},
-		A2(_elm_lang$core$Json_Decode$field, 'path', _elm_lang$core$Json_Decode$string)));
+		A2(_elm_lang$core$Json_Decode$field, 'left', _elm_lang$core$Json_Decode$string)));
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
