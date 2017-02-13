@@ -5,14 +5,15 @@ import Knight.Bombs
 import Knight.Shield exposing (shields)
 import Knight.Armour exposing (armours)
 import Knight.UV.Form exposing (weaponForm, armourForm, trinketForms)
+import Knight.Encode exposing (encode, decode)
 import Html exposing (Html, div, text, input)
 import Html.Attributes exposing (class, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Util exposing (replace, remove)
 import View.Shortcuts exposing (selectList, item, divisor, button)
 
-form : (Knight -> b) -> Knight -> Html b
-form message knight =
+form : List (String, String) -> (Knight -> b) -> Knight -> Html b
+form loadouts message knight =
   let
     rename name = message {knight | name = name}
     equipShield equip = message {knight | shield = equip}
@@ -20,6 +21,17 @@ form message knight =
     equipArmour equip = message {knight | armour = equip}
     equipWeapons equip = message {knight | weapons = equip}
     equipTrinkets equip = message {knight | trinkets = equip}
+    equipLoadout (name, data) =
+      let
+        rename knight =
+          {knight | name = name}
+        loaded =
+          data
+            |> decode
+            |> Maybe.map rename
+            |> Maybe.withDefault knight
+      in
+        message loaded
     slot message equipment items title uvForm =
       let
         equipPiece piece = message <| {equipment | piece = piece}
@@ -72,6 +84,12 @@ form message knight =
         , value knight.name
         , onInput rename
         ] []
+      , item "Loadout" <| selectList
+        Tuple.first
+        equipLoadout
+        loadouts
+        (knight.name, encode knight)
+      , divisor
       , slot equipShield knight.shield shields "Shield" armourForm
       , divisor
       , slot equipHelmet knight.helmet armours "Helmet" armourForm

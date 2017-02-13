@@ -8,15 +8,5 @@
   <script src="../build/clipboard.min.js"></script>
 </head>
 <body>
-  <script>
-    if(Elm.Main) {
-      Elm.Main.fullscreen(
-        { qs: window.location.search
-        , path: window.location.href
-        })
-      new Clipboard(".clipboard")
-    } else {
-      runElmProgram()
-    }
-  </script>
+  <script src="../build/script.js"></script>
 </body>

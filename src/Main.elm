@@ -16,6 +16,7 @@ import Knight.Encode exposing (decode, encode)
 import Events exposing (Side(Left, Right), Event)
 import Events.View exposing (log)
 import View.Shortcuts exposing (tabs)
+import LocalStorage exposing (lsSave, lsData)
 
 main : Program Flags Model Msg
 main =
@@ -54,6 +55,7 @@ init flags =
       , right = right
       , state = Vs
       , events = []
+      , loadouts = []
       }
   in
     (model, Cmd.none)
@@ -91,7 +93,7 @@ view model =
       , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
-            [ form EquipLeft model.left
+            [ form model.loadouts EquipLeft model.left
             , stats Nothing Left model.left model.right []
             ]
           Vs ->
@@ -101,7 +103,7 @@ view model =
             ]
           Opponent ->
             [ stats Nothing Right model.left model.right []
-            , form EquipRight model.right
+            , form model.loadouts EquipRight model.right
             ]
         )
       ]
@@ -115,17 +117,19 @@ update msg model =
         EquipRight new -> {model | right = new}
         SetEvents new -> {model | events = new}
         SetState new -> {model | state = new}
+        Loadouts new -> { model | loadouts = new}
   in
     (next, Cmd.none)
 
 subscriptions : Model -> Sub Msg
-subscriptions model = Sub.none
+subscriptions model = lsData Loadouts
 
 type Msg
   = EquipLeft Knight
   | EquipRight Knight
   | SetState State
   | SetEvents (List (Side, Event))
+  | Loadouts (List (String, String))
 
 type State
   = You
@@ -138,5 +142,6 @@ type alias Model =
   , right : Knight
   , state : State
   , events : List (Side, Event)
+  , loadouts : List (String, String)
   }
 

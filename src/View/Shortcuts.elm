@@ -16,7 +16,13 @@ selectListExclude exclude label message things current =
   in
     select
       [ on "change" (Json.Decode.map selectThing targetValue) ]
-      (List.map (selectOption exclude label current) things)
+      (
+        option
+          [ disabled True
+          , selected <| not <| List.member current things
+          ] [ text "-- Pick a loadout -- " ]
+        :: List.map (selectOption exclude label current) things
+      )
 
 selectOption excluded label current thing =
   let
