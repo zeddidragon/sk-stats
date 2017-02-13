@@ -13409,6 +13409,7 @@ var _user$project$View_Shortcuts$signal = F5(
 	});
 var _user$project$View_Shortcuts$selectListExclude = F5(
 	function (exclude, label, message, things, current) {
+		var sorted = A2(_elm_lang$core$List$sortBy, label, things);
 		var selectThing = A4(_user$project$View_Shortcuts$signal, message, label, things, current);
 		return A2(
 			_elm_lang$html$Html$select,
@@ -13442,7 +13443,7 @@ var _user$project$View_Shortcuts$selectListExclude = F5(
 				_1: A2(
 					_elm_lang$core$List$map,
 					A3(_user$project$View_Shortcuts$selectOption, exclude, label, current),
-					things)
+					sorted)
 			});
 	});
 var _user$project$View_Shortcuts$selectList = _user$project$View_Shortcuts$selectListExclude(

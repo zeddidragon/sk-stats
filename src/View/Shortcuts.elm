@@ -13,6 +13,7 @@ selectListExclude : List a -> (a -> String) -> (a -> b) -> List a -> a -> Html b
 selectListExclude exclude label message things current =
   let
     selectThing = signal message label things current
+    sorted = List.sortBy label things
   in
     select
       [ on "change" (Json.Decode.map selectThing targetValue) ]
@@ -21,7 +22,7 @@ selectListExclude exclude label message things current =
           [ disabled True
           , selected <| not <| List.member current things
           ] [ text "-- Pick a loadout -- " ]
-        :: List.map (selectOption exclude label current) things
+        :: List.map (selectOption exclude label current) sorted
       )
 
 selectOption excluded label current thing =
