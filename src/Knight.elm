@@ -327,7 +327,7 @@ opponent =
         , WeaponUV (CTR, VeryHigh)
         ]
       }
-    , { piece = Bombs.ash
+    , { piece = Guns.polaris
       , uvs = [ WeaponUV (ASI, VeryHigh) ]
       }
     , { piece = Swords.faust
