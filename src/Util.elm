@@ -1,5 +1,6 @@
 module Util exposing (..)
 
+import Base64
 import List
 import String
 import Tuple
@@ -97,3 +98,16 @@ querify tuples =
     tuples
       |> List.map toQuery
       |> String.join "&"
+
+btoa : String -> String
+btoa string =
+  case Base64.encode string of
+    Result.Ok ret -> strReplace ret "=" ""
+    Result.Err err -> err
+
+orMaybe : Maybe a -> Maybe a -> Maybe a
+orMaybe maybe alternative =
+  case maybe of
+    Nothing -> alternative
+    _ -> maybe
+

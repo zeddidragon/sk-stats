@@ -8,7 +8,8 @@ import Html.Attributes exposing
   , readonly
   , value
   )
-import Util exposing (query, queryValue, querify)
+import Base64
+import Util exposing (query, queryValue, querify, btoa, orMaybe)
 import Knight exposing (Knight)
 import Knight.Form exposing (form)
 import Knight.Stats exposing (stats)
@@ -30,6 +31,10 @@ main =
 type alias Flags =
   { qs : String
   , path : String
+  , left : String
+  , leftName : Maybe String
+  , right : String
+  , rightName : Maybe String
   }
 
 init : Flags -> (Model, Cmd Msg)
@@ -39,15 +44,27 @@ init flags =
       { knight
       | name = name
       }
+    readName attr =
+      queryValue flags.qs attr
+        |> Maybe.map Base64.decode
+        |> Maybe.map (Result.withDefault "Decoded")
+    leftName =
+      readName "leftname"
+        |> orMaybe flags.leftName
+        |> Maybe.withDefault "Left"
+    rightName =
+      readName "rightname"
+        |> orMaybe flags.rightName
+        |> Maybe.withDefault "Right"
     left =
       queryValue flags.qs "left"
         |> Maybe.andThen decode
-        |> Maybe.map (rename "Left")
+        |> Maybe.map (rename leftName)
         |> Maybe.withDefault Knight.you
     right =
       queryValue flags.qs "right"
         |> Maybe.andThen decode
-        |> Maybe.map (rename "Right")
+        |> Maybe.map (rename rightName)
         |> Maybe.withDefault Knight.opponent
     model =
       { path = flags.path
@@ -71,13 +88,19 @@ view model =
     addEvent side event = SetEvents ((side, event) :: model.events)
     leftEvents = model.events
     rightEvents = model.events
-    left = ("left", encode model.left)
-    right = ("right", encode model.right)
+    left =
+      [ ("left", encode model.left)
+      , ("leftname", btoa model.left.name)
+      ]
+    right =
+      [ ("right", encode model.right)
+      , ("rightname", btoa model.right.name)
+      ]
     shareData =
       case model.state of
-        You -> [left]
-        Vs -> [left, right]
-        Opponent -> [right]
+        You -> left
+        Vs -> left ++ right
+        Opponent -> right
     buttonText = if model.state == Vs then "Share Duel" else "Share Loadout"
   in
     div [class "body"]
@@ -92,7 +115,7 @@ view model =
           [ id "url"
           , class "url"
           , readonly True
-          , value <| (++) (model.path ++ "?") <| querify shareData
+          , value <| model.path ++ "?" ++ querify shareData
           ] []
         ]
       , div [ class ("main " ++ toString model.state) ]
@@ -122,11 +145,28 @@ update msg model =
         EquipRight new -> {model | right = new}
         SetEvents new -> {model | events = new}
         SetState new -> {model | state = new}
-        Loadouts new -> { model | loadouts = new}
+        Loadouts pairs ->
+          let
+            new =
+              pairs
+                |> List.filter (\(name, data) -> String.startsWith "loadout|" name)
+                |> List.map (\(name, data)-> (String.dropLeft 8 name, data))
+          in
+            {model | loadouts = new}
         SaveLoadout _ -> model
     cmd =
       case msg of
-        SaveLoadout loadout -> lsSave loadout
+        SaveLoadout (name, data) -> lsSave [("loadout|" ++ name, data)]
+        EquipLeft new ->
+          lsSave
+            [ ("leftName", new.name)
+            , ("left", encode new)
+            ]
+        EquipRight new ->
+          lsSave
+            [ ("rightName", new.name)
+            , ("right", encode new)
+            ]
         _ -> Cmd.none
   in
     (next, cmd)
