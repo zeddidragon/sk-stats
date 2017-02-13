@@ -59,11 +59,13 @@ init flags =
     left =
       queryValue flags.qs "left"
         |> Maybe.andThen decode
+        |> orMaybe (decode flags.left)
         |> Maybe.map (rename leftName)
         |> Maybe.withDefault Knight.you
     right =
       queryValue flags.qs "right"
         |> Maybe.andThen decode
+        |> orMaybe (decode flags.right)
         |> Maybe.map (rename rightName)
         |> Maybe.withDefault Knight.opponent
     model =
