@@ -7,8 +7,8 @@
     })
   var clippy = new Clipboard(".clipboard")
 
-  app.ports.lsSave.subscribe(function(key, value) {
-    localStorage[key] = value
+  app.ports.lsSave.subscribe(function(pair) {
+    localStorage[pair[0]] = pair[1]
     sendData()
   })
 

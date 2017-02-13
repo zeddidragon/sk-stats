@@ -93,7 +93,7 @@ view model =
       , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
-            [ form model.loadouts EquipLeft model.left
+            [ form model.loadouts SaveLoadout EquipLeft model.left
             , stats Nothing Left model.left model.right []
             ]
           Vs ->
@@ -103,7 +103,7 @@ view model =
             ]
           Opponent ->
             [ stats Nothing Right model.left model.right []
-            , form model.loadouts EquipRight model.right
+            , form model.loadouts SaveLoadout EquipRight model.right
             ]
         )
       ]
@@ -118,8 +118,13 @@ update msg model =
         SetEvents new -> {model | events = new}
         SetState new -> {model | state = new}
         Loadouts new -> { model | loadouts = new}
+        SaveLoadout _ -> model
+    cmd =
+      case msg of
+        SaveLoadout loadout -> lsSave loadout
+        _ -> Cmd.none
   in
-    (next, Cmd.none)
+    (next, cmd)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = lsData Loadouts
@@ -130,6 +135,7 @@ type Msg
   | SetState State
   | SetEvents (List (Side, Event))
   | Loadouts (List (String, String))
+  | SaveLoadout (String, String)
 
 type State
   = You

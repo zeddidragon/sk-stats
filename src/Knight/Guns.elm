@@ -276,7 +276,7 @@ permafroster =
 neutralizer : Weapon
 neutralizer =
   { gun
-  | id = "ntr"
+  | id = "neu"
   , name = "Neutralizer"
   , chargeTime = charge.quick
   , attacks =

@@ -12,15 +12,15 @@ import Html.Events exposing (onClick, onInput)
 import Util exposing (replace, remove)
 import View.Shortcuts exposing (selectList, item, divisor, button)
 
-form : List (String, String) -> (Knight -> b) -> Knight -> Html b
-form loadouts message knight =
+form : List (String, String) -> ((String, String) -> b) -> (Knight -> b) -> Knight -> Html b
+form loadouts save equip knight =
   let
-    rename name = message {knight | name = name}
-    equipShield equip = message {knight | shield = equip}
-    equipHelmet equip = message {knight | helmet = equip}
-    equipArmour equip = message {knight | armour = equip}
-    equipWeapons equip = message {knight | weapons = equip}
-    equipTrinkets equip = message {knight | trinkets = equip}
+    rename name = equip {knight | name = name}
+    equipShield slot = equip {knight | shield = slot}
+    equipHelmet slot = equip {knight | helmet = slot}
+    equipArmour slot = equip {knight | armour = slot}
+    equipWeapons slot = equip {knight | weapons = slot}
+    equipTrinkets slot = equip {knight | trinkets = slot}
     equipLoadout (name, data) =
       let
         rename knight =
@@ -31,7 +31,7 @@ form loadouts message knight =
             |> Maybe.map rename
             |> Maybe.withDefault knight
       in
-        message loaded
+        equip loaded
     slot message equipment items title uvForm =
       let
         equipPiece piece = message <| {equipment | piece = piece}
@@ -84,6 +84,10 @@ form loadouts message knight =
         , value knight.name
         , onInput rename
         ] []
+      , div
+        [ class "button"
+        , onClick <| save (knight.name, encode knight)
+        ] [ text "Save Loadout" ]
       , item "Loadout" <| selectList
         Tuple.first
         equipLoadout
