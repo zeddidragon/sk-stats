@@ -71,6 +71,14 @@ view model =
     addEvent side event = SetEvents ((side, event) :: model.events)
     leftEvents = model.events
     rightEvents = model.events
+    left = ("left", encode model.left)
+    right = ("right", encode model.right)
+    shareData =
+      case model.state of
+        You -> [left]
+        Vs -> [left, right]
+        Opponent -> [right]
+    buttonText = if model.state == Vs then "Share Duel" else "Share Loadout"
   in
     div [class "body"]
       [ div [ class "state-tabs" ]
@@ -79,15 +87,12 @@ view model =
         [ div
           [ class "button clipboard"
           , attribute "data-clipboard-target" "#url"
-          ] [ text "Share Loadouts" ]
+          ] [ text buttonText ]
         , input
           [ id "url"
           , class "url"
           , readonly True
-          , value <| (++) (model.path ++ "?") <| querify
-            [ ("left", encode model.left)
-            , ("right", encode model.right)
-            ]
+          , value <| (++) (model.path ++ "?") <| querify shareData
           ] []
         ]
       , div [ class ("main " ++ toString model.state) ]
