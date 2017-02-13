@@ -474,3 +474,10 @@ label.button {
     flex-direction: column-reverse;
   }
 }
+
+body > div[style] {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+}

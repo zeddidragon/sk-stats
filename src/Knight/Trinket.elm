@@ -74,6 +74,13 @@ amulet =
   , effects = [ StatusUV (Curse, Medium) ]
   }
 
+katnip : Trinket
+katnip =
+  { id = "nip"
+  , name = "Purrfect Katnip Pouch"
+  , effects = [ StatusUV (Sleep, Medium) ]
+  }
+
 penta : Trinket
 penta =
   { id = "hp"

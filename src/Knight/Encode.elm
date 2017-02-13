@@ -3,9 +3,12 @@ module Knight.Encode exposing (..)
 import String
 import Knight exposing (Knight)
 import Knight.Swords exposing (sword)
+import Knight.Armour exposing (base, armours)
+import Knight.Shield exposing (shields, aegis)
+import Knight.Trinket
 import Knight.UV exposing (..)
 import Knight.Status exposing (Status(..))
-import Util exposing (index)
+import Util exposing (index, find)
 import Base64
 
 decode : String -> Maybe Knight
@@ -33,44 +36,73 @@ decode code =
                     |> Result.withDefault 0
                     |> (flip Util.atIndex) bonuses
                     |> Maybe.withDefault NegMaximum
+                id = String.dropRight 1 str
+                bonusIds =
+                  [ ("cr", WeaponUV (CTR, strength))
+                  , ("ai", WeaponUV (ASI, strength))
+                  , ("bt", WeaponUV (Beast, strength))
+                  , ("fd", WeaponUV (Fiend, strength))
+                  , ("gn", WeaponUV (Gremlin, strength))
+                  , ("se", WeaponUV (Slime, strength))
+                  , ("ct", WeaponUV (Construct, strength))
+                  , ("ud", WeaponUV (Undead, strength))
+
+                  , ("nl", DefenceUV (Normal, strength))
+                  , ("pg", DefenceUV (Piercing, strength))
+                  , ("el", DefenceUV (Elemental, strength))
+                  , ("sw", DefenceUV (Shadow, strength))
+
+                  , ("fi", StatusUV (Fire, strength))
+                  , ("fr", StatusUV (Freeze, strength))
+                  , ("sh", StatusUV (Shock, strength))
+                  , ("po", StatusUV (Poison, strength))
+                  , ("st", StatusUV (Stun, strength))
+                  , ("cu", StatusUV (Curse, strength))
+                  ]
               in
-                (Fire, strength)
+                case bonusIds |> find (\(bonusId, bonus) -> id == bonusId) of
+                  Just (id, uv) -> Just uv
+                  _ -> Nothing
+            id str =
+              str
+                |> String.split "+"
+                |> List.head
+                |> Maybe.withDefault ""
+            uvs str =
+              str
+                |> String.split "+"
+                |> List.drop 1
+                |> List.filterMap decodeUv
+            piece items str = find (\item -> item.id == id str) items
             decodeWeapon str =
-              let
-                id =
-                  str
-                    |> String.split "+"
-                    |> List.head
-                    |> Maybe.withDefault "sword"
-                piece =
-                  Knight.weapons
-                    |> Util.find (\wpn -> wpn.id == id)
-                    |> Maybe.withDefault sword
-                uvs =
-                  str
-                    |> String.split "+"
-                    |> List.drop 1
-                    |> List.map decodeUv
-              in
-                { piece = piece
-                , uvs = uvs
-                }
-            weapons_ =
-              weapons
-                |> String.split "|"
-                |> List.map decodeWeapon
+              { piece = piece Knight.weapons str |> Maybe.withDefault sword
+              , uvs = uvs str
+              }
+            decodeArmour str =
+              { piece = piece armours str |> Maybe.withDefault base
+              , uvs = uvs str
+              }
+            decodeShield str =
+              { piece = piece shields str |> Maybe.withDefault aegis
+              , uvs = uvs str
+              }
+            decodeTrinket str =
+              piece Knight.Trinket.trinkets str
           in
-            Nothing
-            {-
             Just
               { name = "Encoded"
-              , weapons = weapons_
-              , helmet = helmet_
-              , armour = armour_
-              , shield = shield_
-              , trinkets = trinkets_
+              , weapons = weapons
+                |> String.split "|"
+                |> List.map decodeWeapon
+              , helmet = decodeArmour helmet
+              , armour = decodeArmour armour
+              , shield = decodeShield shield
+              , trinkets = trinkets
+                |> List.head
+                |> Maybe.withDefault ""
+                |> String.split "|"
+                |> List.filterMap decodeTrinket
               }
-            --}
         _ -> Nothing
     _ -> Nothing
 
@@ -86,7 +118,8 @@ encode knight =
         parts =
           case effect of
             WeaponUV (bonus, str)->
-              [ String.left 2 <| toString bonus
+              [ String.left 1 <| toString bonus
+              , String.right 1 <| toString bonus
               , toString <| uvNum str
               ]
             StatusUV (status, str)->
