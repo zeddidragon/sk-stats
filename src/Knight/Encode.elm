@@ -165,6 +165,6 @@ encode knight =
         ]
   in
     case Base64.encode raw of
-      Result.Ok ret -> strReplace raw "=" ""
+      Result.Ok ret -> strReplace ret "=" ""
       Result.Err err -> err
 

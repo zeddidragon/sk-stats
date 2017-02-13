@@ -2,12 +2,17 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="styles.css">
-  <meta viewport="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Spiral Knight Calculator</title>
   <script src="build/elm.js"></script>
+  <script src="build/clipboard.min.js"></script>
 </head>
 <body>
   <script>
-    Elm.Main.fullscreen({qs: window.location.search})
+    Elm.Main.fullscreen(
+      { qs: window.location.search
+      , path: window.location.href
+      })
+    new Clipboard(".clipboard")
   </script>
 </body>

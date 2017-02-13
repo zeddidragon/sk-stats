@@ -203,9 +203,7 @@ stats message side left right events =
 
   in
     List.concat
-      [ [ h3 [] [ text <| Knight.Encode.encode knight ]
-        ]
-      , inflictions
+      [ inflictions
       , [ divisor
         , health |> item "Health"
         , mobility knight |> item "Mobility"

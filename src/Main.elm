@@ -1,6 +1,14 @@
-import Html exposing (Html, programWithFlags, div, node)
-import Html.Attributes exposing (class, attribute, name, content)
-import Util exposing (query, queryValue)
+import Html exposing (Html, programWithFlags, div, node, input, text)
+import Html.Attributes exposing
+  ( id
+  , class
+  , attribute
+  , name
+  , content
+  , readonly
+  , value
+  )
+import Util exposing (query, queryValue, querify)
 import Knight exposing (Knight)
 import Knight.Form exposing (form)
 import Knight.Stats exposing (stats)
@@ -19,21 +27,30 @@ main =
     }
 
 type alias Flags =
-  { qs : String }
+  { qs : String
+  , path : String
+  }
 
 init : Flags -> (Model, Cmd Msg)
 init flags =
   let
+    rename name knight =
+      { knight
+      | name = name
+      }
     left =
       queryValue flags.qs "left"
         |> Maybe.andThen decode
+        |> Maybe.map (rename "Left")
         |> Maybe.withDefault Knight.you
     right =
       queryValue flags.qs "right"
         |> Maybe.andThen decode
+        |> Maybe.map (rename "Right")
         |> Maybe.withDefault Knight.opponent
     model =
-      { left = left
+      { path = flags.path
+      , left = left
       , right = right
       , state = Vs
       , events = []
@@ -56,6 +73,21 @@ view model =
     div [class "body"]
       [ div [ class "state-tabs" ]
         [ tabs stateToLabel toString SetState [You, Vs, Opponent] model.state ]
+      , div [ class "state-url" ]
+        [ div
+          [ class "button clipboard"
+          , attribute "data-clipboard-target" "#url"
+          ] [ text "Share Loadouts" ]
+        , input
+          [ id "url"
+          , class "url"
+          , readonly True
+          , value <| (++) (model.path ++ "?") <| querify
+            [ ("left", encode model.left)
+            , ("right", encode model.right)
+            ]
+          ] []
+        ]
       , div [ class ("main " ++ toString model.state) ]
         ( case model.state of
           You -> 
@@ -101,7 +133,8 @@ type State
   | Vs
 
 type alias Model =
-  { left : Knight
+  { path : String
+  , left : Knight
   , right : Knight
   , state : State
   , events : List (Side, Event)

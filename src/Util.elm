@@ -87,3 +87,13 @@ queryValue qstring key=
     query qstring
       |> find (\(k, v)-> k == key)
       |> toValue
+
+querify : List (String, String) -> String
+querify tuples =
+  let
+    toQuery (a, b) =
+      a ++ "=" ++ b
+  in
+    tuples
+      |> List.map toQuery
+      |> String.join "&"
