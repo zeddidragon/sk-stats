@@ -1,8 +1,10 @@
 import Html exposing (Html, programWithFlags, div, node)
 import Html.Attributes exposing (class, attribute, name, content)
+import Util exposing (query, queryValue)
 import Knight exposing (Knight)
 import Knight.Form exposing (form)
 import Knight.Stats exposing (stats)
+import Knight.Encode exposing (decode, encode)
 import Events exposing (Side(Left, Right), Event)
 import Events.View exposing (log)
 import View.Shortcuts exposing (tabs)
@@ -22,10 +24,17 @@ type alias Flags =
 init : Flags -> (Model, Cmd Msg)
 init flags =
   let
+    left =
+      queryValue flags.qs "left"
+        |> Maybe.andThen decode
+        |> Maybe.withDefault Knight.you
+    right =
+      queryValue flags.qs "right"
+        |> Maybe.andThen decode
+        |> Maybe.withDefault Knight.opponent
     model =
-      { query = ""
-      , left = Knight.you
-      , right = Knight.opponent
+      { left = left
+      , right = right
       , state = Vs
       , events = []
       }
@@ -92,8 +101,7 @@ type State
   | Vs
 
 type alias Model =
-  { query : String
-  , left : Knight
+  { left : Knight
   , right : Knight
   , state : State
   , events : List (Side, Event)

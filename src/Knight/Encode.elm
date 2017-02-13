@@ -8,7 +8,7 @@ import Knight.Shield exposing (shields, aegis)
 import Knight.Trinket
 import Knight.UV exposing (..)
 import Knight.Status exposing (Status(..))
-import Util exposing (index, find)
+import Util exposing (index, find, strReplace)
 import Base64
 
 decode : String -> Maybe Knight
@@ -165,6 +165,6 @@ encode knight =
         ]
   in
     case Base64.encode raw of
-      Result.Ok ret -> raw
+      Result.Ok ret -> strReplace raw "=" ""
       Result.Err err -> err
 
