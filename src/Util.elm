@@ -106,7 +106,7 @@ btoa string =
     Result.Err err -> err
 
 orMaybe : Maybe a -> Maybe a -> Maybe a
-orMaybe maybe alternative =
+orMaybe alternative maybe =
   case maybe of
     Nothing -> alternative
     _ -> maybe
