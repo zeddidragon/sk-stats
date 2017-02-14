@@ -11958,7 +11958,7 @@ var _user$project$Knight_Shield$bts = {
 };
 var _user$project$Knight_Shield$aegis = {
 	id: 'aeg',
-	name: 'Aegis',
+	name: 'Omega Shell',
 	effects: {ctor: '[]'}
 };
 var _user$project$Knight_Shield$shields = {
