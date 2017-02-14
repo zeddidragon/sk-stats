@@ -8571,7 +8571,7 @@ var _truqu$elm_base64$Base64$encode = function (s) {
 };
 
 var _user$project$Util$orMaybe = F2(
-	function (maybe, alternative) {
+	function (alternative, maybe) {
 		var _p0 = maybe;
 		if (_p0.ctor === 'Nothing') {
 			return alternative;
