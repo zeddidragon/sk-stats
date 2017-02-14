@@ -7,7 +7,7 @@ import Knight.Status exposing (..)
 aegis : Shield
 aegis =
   { id = "aeg"
-  , name = "Aegis"
+  , name = "Omega Shell"
   , effects = []
   }
 
