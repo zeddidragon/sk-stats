@@ -23,6 +23,7 @@ type alias Knight =
   , armour: ArmourEquip
   , shield: ShieldEquip
   , trinkets: List Trinket
+  , vita: Int
   }
 
 type alias WeaponEquip =
@@ -43,6 +44,7 @@ type alias ShieldEquip =
 hearts : Knight -> Int
 hearts knight =
   5
+  + knight.vita
   + knight.helmet.piece.hearts
   + knight.armour.piece.hearts
   + (List.sum <| List.map UV.toHearts knight.shield.piece.effects)
@@ -315,6 +317,7 @@ you =
   , helmet = stockArmour
   , armour = stockArmour
   , trinkets = []
+  , vita = 0
   }
 
 opponent : Knight
@@ -344,4 +347,5 @@ opponent =
   , helmet = p2wKat
   , armour = p2wKat
   , trinkets = List.repeat 2 Trinket.penta
+  , vita = 16
   }

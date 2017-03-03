@@ -12355,7 +12355,8 @@ var _user$project$Knight$opponent = {
 	},
 	helmet: _user$project$Knight$p2wKat,
 	armour: _user$project$Knight$p2wKat,
-	trinkets: A2(_elm_lang$core$List$repeat, 2, _user$project$Knight_Trinket$penta)
+	trinkets: A2(_elm_lang$core$List$repeat, 2, _user$project$Knight_Trinket$penta),
+	vita: 16
 };
 var _user$project$Knight$stockArmour = {
 	piece: _user$project$Knight_Armour$cobalt,
@@ -12384,7 +12385,8 @@ var _user$project$Knight$you = {
 	},
 	helmet: _user$project$Knight$stockArmour,
 	armour: _user$project$Knight$stockArmour,
-	trinkets: {ctor: '[]'}
+	trinkets: {ctor: '[]'},
+	vita: 0
 };
 var _user$project$Knight$toDamageBoost = function (uv) {
 	var _p0 = uv;
@@ -12919,7 +12921,7 @@ var _user$project$Knight$attacks = F2(
 		return A2(_elm_lang$core$List$map, boost, piece.attacks);
 	});
 var _user$project$Knight$hearts = function (knight) {
-	return (((5 + knight.helmet.piece.hearts) + knight.armour.piece.hearts) + _elm_lang$core$List$sum(
+	return ((((5 + knight.vita) + knight.helmet.piece.hearts) + knight.armour.piece.hearts) + _elm_lang$core$List$sum(
 		A2(_elm_lang$core$List$map, _user$project$Knight_UV$toHearts, knight.shield.piece.effects))) + _user$project$Knight_Trinket$hearts(knight.trinkets);
 };
 var _user$project$Knight$health = function (knight) {
@@ -12929,9 +12931,9 @@ var _user$project$Knight$weapons = A2(
 	_elm_lang$core$Basics_ops['++'],
 	_user$project$Knight_Swords$swords,
 	A2(_elm_lang$core$Basics_ops['++'], _user$project$Knight_Guns$guns, _user$project$Knight_Bombs$bombs));
-var _user$project$Knight$Knight = F6(
-	function (a, b, c, d, e, f) {
-		return {name: a, weapons: b, helmet: c, armour: d, shield: e, trinkets: f};
+var _user$project$Knight$Knight = F7(
+	function (a, b, c, d, e, f, g) {
+		return {name: a, weapons: b, helmet: c, armour: d, shield: e, trinkets: f, vita: g};
 	});
 var _user$project$Knight$WeaponEquip = F2(
 	function (a, b) {
@@ -14499,7 +14501,11 @@ var _user$project$Knight_Encode$encode = function (knight) {
 					_1: {
 						ctor: '::',
 						_0: trinkets,
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Basics$toString(knight.vita),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -14511,6 +14517,7 @@ var _user$project$Knight_Encode$decode = function (code) {
 	if (_p3.ctor === 'Ok') {
 		var _p4 = A2(_elm_lang$core$String$split, ' ', _p3._0);
 		if ((((_p4.ctor === '::') && (_p4._1.ctor === '::')) && (_p4._1._1.ctor === '::')) && (_p4._1._1._1.ctor === '::')) {
+			var _p8 = _p4._1._1._1._1;
 			var id = function (str) {
 				return A2(
 					_elm_lang$core$Maybe$withDefault,
@@ -14806,7 +14813,16 @@ var _user$project$Knight_Encode$decode = function (code) {
 							A2(
 								_elm_lang$core$Maybe$withDefault,
 								'',
-								_elm_lang$core$List$head(_p4._1._1._1._1))))
+								_elm_lang$core$List$head(_p8)))),
+					vita: A2(
+						_elm_lang$core$Result$withDefault,
+						0,
+						_elm_lang$core$String$toInt(
+							A2(
+								_elm_lang$core$Maybe$withDefault,
+								'0',
+								_elm_lang$core$List$head(
+									A2(_elm_lang$core$List$drop, 1, _p8)))))
 				});
 		} else {
 			return _elm_lang$core$Maybe$Nothing;
@@ -15399,6 +15415,13 @@ var _user$project$Knight_UV_Form$armourForm = A2(
 
 var _user$project$Knight_Form$form = F4(
 	function (loadouts, save, equip, knight) {
+		var padNum = function (num) {
+			return A3(
+				_elm_lang$core$String$padLeft,
+				2,
+				_elm_lang$core$Native_Utils.chr(' '),
+				_elm_lang$core$Basics$toString(num));
+		};
 		var slot = F5(
 			function (message, equipment, items, title, uvForm) {
 				var equipUv = function (uvs) {
@@ -15540,6 +15563,12 @@ var _user$project$Knight_Form$form = F4(
 					_user$project$Knight_Encode$decode(_p1._1)));
 			return equip(loaded);
 		};
+		var equipVita = function (slot) {
+			return equip(
+				_elm_lang$core$Native_Utils.update(
+					knight,
+					{vita: slot}));
+		};
 		var equipTrinkets = function (slot) {
 			return equip(
 				_elm_lang$core$Native_Utils.update(
@@ -15673,11 +15702,30 @@ var _user$project$Knight_Form$form = F4(
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					A2(weaponSlots, equipWeapons, knight),
-					{
-						ctor: '::',
-						_0: _user$project$View_Shortcuts$divisor,
-						_1: A2(_user$project$Knight_UV_Form$trinketForms, equipTrinkets, knight.trinkets)
-					})));
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
+							ctor: '::',
+							_0: _user$project$View_Shortcuts$divisor,
+							_1: A2(_user$project$Knight_UV_Form$trinketForms, equipTrinkets, knight.trinkets)
+						},
+						{
+							ctor: '::',
+							_0: _user$project$View_Shortcuts$divisor,
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_user$project$View_Shortcuts$item,
+									'Vita',
+									A4(
+										_user$project$View_Shortcuts$selectList,
+										padNum,
+										equipVita,
+										A2(_elm_lang$core$List$range, 0, 21),
+										knight.vita)),
+								_1: {ctor: '[]'}
+							}
+						}))));
 	});
 
 var _user$project$Knight_Stats$chargeSpeed = F2(

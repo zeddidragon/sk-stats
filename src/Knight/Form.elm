@@ -21,6 +21,7 @@ form loadouts save equip knight =
     equipArmour slot = equip {knight | armour = slot}
     equipWeapons slot = equip {knight | weapons = slot}
     equipTrinkets slot = equip {knight | trinkets = slot}
+    equipVita slot = equip {knight | vita = slot}
     equipLoadout (name, data) =
       let
         rename knight =
@@ -76,6 +77,10 @@ form loadouts save equip knight =
           else
             []
         )
+    padNum num =
+      num
+        |> toString
+        |> String.padLeft 2 ' '
   in
     div [ class "knight-form" ]
       (
@@ -102,5 +107,9 @@ form loadouts save equip knight =
       ]
       ++ weaponSlots equipWeapons knight
       ++ (divisor :: trinketForms equipTrinkets knight.trinkets)
+      ++ ([ divisor
+          , selectList padNum equipVita (List.range 0  21) knight.vita
+            |> item "Vita"
+         ])
       )
 

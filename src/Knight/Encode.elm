@@ -102,6 +102,12 @@ decode code =
                 |> Maybe.withDefault ""
                 |> String.split "|"
                 |> List.filterMap decodeTrinket
+              , vita = trinkets
+                |> List.drop 1
+                |> List.head
+                |> Maybe.withDefault "0"
+                |> String.toInt
+                |> Result.withDefault 0
               }
         _ -> Nothing
     _ -> Nothing
@@ -162,6 +168,7 @@ encode knight =
         , gear
         , weapons
         , trinkets
+        , toString knight.vita
         ]
   in
     btoa raw
