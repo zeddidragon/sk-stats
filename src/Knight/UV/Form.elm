@@ -35,6 +35,7 @@ statusUvs =
   , Poison
   , Stun
   , Curse
+  , Sleep
   ]
 
 weaponUvs =

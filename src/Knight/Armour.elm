@@ -76,6 +76,15 @@ snarby =
     ]
   }
 
+starlit =
+  { skolver
+  | id = "sth"
+  , name = "Starlit Hunting"
+  , resistances =
+    [ (Stun, -4)
+    , (Sleep, 4)
+    ]
+  }
 
 justifier =
   { skolver
@@ -118,6 +127,20 @@ volcDemo =
   | id = "dem"
   , name = "Volcanic Demo"
   , bonuses = [ (BombCTR, Medium) ]
+  }
+
+starDemo =
+  { starlit
+  | id = "std"
+  , name = "Starlit Demo"
+  , bonuses =
+    [ (BombCTR, Medium)
+    , (Slime, Low)
+    ]
+  , resistances =
+    [ (Stun, -4)
+    , (Sleep, 4)
+    ]
   }
 
 bombastic =
@@ -442,6 +465,7 @@ armours =
   , skolver
   , vog
   , snarby
+  , starlit
 
   , justifier
   , nameless
@@ -452,6 +476,7 @@ armours =
   , bombastic
   , mad
   , mercDemo
+  , starDemo
 
   , jelly
   , queen

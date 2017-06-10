@@ -26,6 +26,7 @@ duration status severity =
         Deathmark -> 5
         Stun -> 5
         Poison -> 15
+        Sleep -> 15
         Curse -> 60
         _ -> 10
   in
@@ -73,3 +74,6 @@ stunFactor : Float -> Float
 stunFactor severity =
   100 - 3 * factor severity
 
+sleepHeal : Float -> Int
+sleepHeal severity =
+  floor <|  40 - 1.47 * factor severity

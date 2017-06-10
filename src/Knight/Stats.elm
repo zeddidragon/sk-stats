@@ -50,7 +50,8 @@ stats message side left right events =
           in
             span [class <| fill ++ " heart " ++ border] []
         damage = Events.totalDamage lockdown opposing left right events
-        remaining = Knight.health knight - ceiling damage
+        health = Knight.health knight
+        remaining = health - ceiling damage
         remainingHearts = remaining // 40
       in
         div [ class "row" ] (
@@ -58,6 +59,7 @@ stats message side left right events =
           , div [ class "value" ]
             [ remaining
               |> Basics.max 0
+              |> Basics.min health
               |> toText
             ]
           ]

@@ -64,6 +64,7 @@ damage lockdown offenderSide left right history (side, event) =
             case status of
               Fire -> toFloat <| Knight.Status.fireTotal severity
               Shock -> defend (dMod * defence Elemental) Knight.Status.shockDamage
+              Sleep -> toFloat <| -1 * Knight.Status.sleepHeal severity
               _ -> 0
         _ -> 0
 
@@ -85,10 +86,13 @@ totalDamage lockdown offenderSide left right history =
   let
     dmg = damage lockdown offenderSide left right
     recurse = totalDamage lockdown offenderSide left right
+    defender = if offenderSide == Left then right else left
   in
     case history of
       [] -> 0
       x::xs -> dmg xs x + recurse xs
+        |> Basics.max 0
+        |> Basics.min (toFloat <| Knight.health defender)
 
 statuses : Side -> Knight -> Knight -> List (Side, Event) -> List (Status, Float)
 statuses offenderSide left right history =

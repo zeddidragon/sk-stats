@@ -68,6 +68,7 @@ log message events left right =
               spasmDamage = Knight.Status.shockDamage
               spasmDuration = Knight.Status.spasm severity
               stun = Knight.Status.stunFactor severity
+              sleep = Knight.Status.sleepHeal severity
               description =
               (
                   div []
@@ -145,18 +146,29 @@ log message events left right =
                   Curse ->
                     [ div []
                       [ text "Curse "
-                      , span [ class "status-effect" ] [ toText cursedWeapons ]
+                      , span [ class "status-effect" ]
+                        [ toText cursedWeapons ]
                       , text " random weapons"
                       ]
                     , div []
                       [ text "Curse "
-                      , span [ class "status-effect" ] [ toText cursedVials ]
+                      , span [ class "status-effect" ]
+                        [ toText cursedVials ]
                       , text " random vial slots"
                       ]
                     , div []
                       [ text "Suffer "
-                      , span [ class "status-effect" ] [ toText curseDamage ]
+                      , span [ class "status-effect" ]
+                        [ toText curseDamage ]
                       , text " damage if used"
+                      ]
+                    ]
+                  Sleep ->
+                    [ div []
+                      [ text "Resting heals "
+                      , span [ class "status-effect" ]
+                        [ toText <| sleep ]
+                      , text " HP"
                       ]
                     ]
                   Deathmark ->

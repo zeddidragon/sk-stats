@@ -99,6 +99,14 @@ stagger =
   , status = Just Stun
   }
 
+tantrum : Weapon
+tantrum =
+  { ash
+  | id = "tt"
+  , name = "Torpor Tantrum"
+  , status = Just Sleep
+  }
+
 graviton : Weapon
 graviton =
   { bomb
@@ -223,7 +231,7 @@ salt =
 bombs : List Weapon
 bombs =
   [nitro, irontech, bab, dbb]
-  ++ [ash, shiver, venom, tempest, stagger]
+  ++ [ash, shiver, venom, tempest, stagger, tantrum]
   ++ (graviton :: vortexes)
   ++ [dr]
   ++ (sss :: ssb :: shards)

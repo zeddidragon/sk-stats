@@ -38,11 +38,22 @@ civ =
   , name = "Cold Iron Vanquisher"
   , attacks =
     [ (Basic, attacks.civ)
-    , (Basic, attacks.civHeavy)
+    , (Heavy, attacks.civHeavy)
     , (Charge, attacks.swordLightChargeFinish)
     ]
   , bonuses =
     [ (Undead, High) ]
+  }
+
+amputator : Weapon
+amputator =
+  { civ
+  | id = "amp"
+  , name = "Amputator"
+  , attacks = civ.attacks ++
+    [ (Special, attacks.blaster) ]
+  , bonuses =
+    [ (Slime, High) ]
   }
 
 dreams : Weapon
@@ -327,6 +338,7 @@ swords =
   [ leviathan
   , civ
   , dreams
+  , amputator
   , flourish
   , btb
   , rigadoon
