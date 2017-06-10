@@ -97,7 +97,7 @@ totalDamage lockdown offenderSide left right history =
 statuses : Side -> Knight -> Knight -> List (Side, Event) -> List (Status, Float)
 statuses offenderSide left right history =
   let
-    statuses = [Fire, Freeze, Poison, Shock, Stun, Curse, Deathmark]
+    statuses = [Fire, Freeze, Poison, Shock, Stun, Sleep, Curse, Deathmark]
     isStatus status (side, event) =
       case event of 
         Infliction (s, strength) ->
