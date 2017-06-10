@@ -8753,6 +8753,8 @@ var _user$project$Knight_Status$duration = F2(
 					return 5;
 				case 'Poison':
 					return 15;
+				case 'Sleep':
+					return 15;
 				case 'Curse':
 					return 60;
 				default:
@@ -8777,6 +8779,10 @@ var _user$project$Knight_Status$curseDamage = function (severity) {
 };
 var _user$project$Knight_Status$stunFactor = function (severity) {
 	return 100 - (3 * _user$project$Knight_Status$factor(severity));
+};
+var _user$project$Knight_Status$sleepHeal = function (severity) {
+	return _elm_lang$core$Basics$floor(
+		40 - (1.47 * _user$project$Knight_Status$factor(severity)));
 };
 var _user$project$Knight_Status$Random = {ctor: 'Random'};
 var _user$project$Knight_Status$Deathmark = {ctor: 'Deathmark'};
@@ -9125,7 +9131,7 @@ var _user$project$Knight_Swords$civ = _elm_lang$core$Native_Utils.update(
 			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Basic, _1: _user$project$Knight_Values$attacks.civ},
 			_1: {
 				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Basic, _1: _user$project$Knight_Values$attacks.civHeavy},
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Values$attacks.civHeavy},
 				_1: {
 					ctor: '::',
 					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.swordLightChargeFinish},
@@ -9136,6 +9142,25 @@ var _user$project$Knight_Swords$civ = _elm_lang$core$Native_Utils.update(
 		bonuses: {
 			ctor: '::',
 			_0: {ctor: '_Tuple2', _0: _user$project$Knight_UV$Undead, _1: _user$project$Knight_UV$High},
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Knight_Swords$amputator = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Swords$civ,
+	{
+		id: 'amp',
+		name: 'Amputator',
+		attacks: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$Knight_Swords$civ.attacks,
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.blaster},
+				_1: {ctor: '[]'}
+			}),
+		bonuses: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_UV$Slime, _1: _user$project$Knight_UV$High},
 			_1: {ctor: '[]'}
 		}
 	});
@@ -9572,62 +9597,66 @@ var _user$project$Knight_Swords$swords = {
 			_0: _user$project$Knight_Swords$dreams,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Knight_Swords$flourish,
+				_0: _user$project$Knight_Swords$amputator,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Knight_Swords$btb,
+					_0: _user$project$Knight_Swords$flourish,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Knight_Swords$rigadoon,
+						_0: _user$project$Knight_Swords$btb,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Knight_Swords$flamberge,
+							_0: _user$project$Knight_Swords$rigadoon,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Knight_Swords$hunting,
+								_0: _user$project$Knight_Swords$flamberge,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Knight_Swords$dvs,
+									_0: _user$project$Knight_Swords$hunting,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Knight_Swords$suda,
+										_0: _user$project$Knight_Swords$dvs,
 										_1: {
 											ctor: '::',
-											_0: _user$project$Knight_Swords$triglav,
+											_0: _user$project$Knight_Swords$suda,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Knight_Swords$hammer,
+												_0: _user$project$Knight_Swords$triglav,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Knight_Swords$combuster,
+													_0: _user$project$Knight_Swords$hammer,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Knight_Swords$glacius,
+														_0: _user$project$Knight_Swords$combuster,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Knight_Swords$voltedge,
+															_0: _user$project$Knight_Swords$glacius,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Knight_Swords$acheron,
+																_0: _user$project$Knight_Swords$voltedge,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Knight_Swords$obsidian,
+																	_0: _user$project$Knight_Swords$acheron,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Knight_Swords$avenger,
+																		_0: _user$project$Knight_Swords$obsidian,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Knight_Swords$faust,
+																			_0: _user$project$Knight_Swords$avenger,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Knight_Swords$fang,
+																				_0: _user$project$Knight_Swords$faust,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Knight_Swords$winmillion,
+																					_0: _user$project$Knight_Swords$fang,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Knight_Swords$faust4star,
-																						_1: {ctor: '[]'}
+																						_0: _user$project$Knight_Swords$winmillion,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Knight_Swords$faust4star,
+																							_1: {ctor: '[]'}
+																						}
 																					}
 																				}
 																			}
@@ -10319,6 +10348,13 @@ var _user$project$Knight_Bombs$stagger = _elm_lang$core$Native_Utils.update(
 		name: 'Stagger Storm',
 		status: _elm_lang$core$Maybe$Just(_user$project$Knight_Status$Stun)
 	});
+var _user$project$Knight_Bombs$tantrum = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Bombs$ash,
+	{
+		id: 'tt',
+		name: 'Torpor Tantrum',
+		status: _elm_lang$core$Maybe$Just(_user$project$Knight_Status$Sleep)
+	});
 var _user$project$Knight_Bombs$graviton = _elm_lang$core$Native_Utils.update(
 	_user$project$Knight_Bombs$bomb,
 	{
@@ -10551,7 +10587,11 @@ var _user$project$Knight_Bombs$bombs = A2(
 						_1: {
 							ctor: '::',
 							_0: _user$project$Knight_Bombs$stagger,
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: _user$project$Knight_Bombs$tantrum,
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
@@ -10691,6 +10731,45 @@ var _user$project$Knight_Armour$skolver = _elm_lang$core$Native_Utils.update(
 			ctor: '::',
 			_0: {ctor: '_Tuple2', _0: _user$project$Knight_UV$SwordDmg, _1: _user$project$Knight_UV$Medium},
 			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Knight_Armour$starlit = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Armour$skolver,
+	{
+		id: 'sth',
+		name: 'Starlit Hunting',
+		resistances: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Status$Stun, _1: -4},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Status$Sleep, _1: 4},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$Knight_Armour$starDemo = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Armour$starlit,
+	{
+		id: 'std',
+		name: 'Starlit Demo',
+		bonuses: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_UV$BombCTR, _1: _user$project$Knight_UV$Medium},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_UV$Slime, _1: _user$project$Knight_UV$Low},
+				_1: {ctor: '[]'}
+			}
+		},
+		resistances: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Status$Stun, _1: -4},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Status$Sleep, _1: 4},
+				_1: {ctor: '[]'}
+			}
 		}
 	});
 var _user$project$Knight_Armour$justifier = _elm_lang$core$Native_Utils.update(
@@ -11677,98 +11756,106 @@ var _user$project$Knight_Armour$armours = A2(
 						_0: _user$project$Knight_Armour$snarby,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Knight_Armour$justifier,
+							_0: _user$project$Knight_Armour$starlit,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Knight_Armour$nameless,
+								_0: _user$project$Knight_Armour$justifier,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Knight_Armour$shadowsun,
+									_0: _user$project$Knight_Armour$nameless,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Knight_Armour$deadshot,
+										_0: _user$project$Knight_Armour$shadowsun,
 										_1: {
 											ctor: '::',
-											_0: _user$project$Knight_Armour$volcDemo,
+											_0: _user$project$Knight_Armour$deadshot,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Knight_Armour$bombastic,
+												_0: _user$project$Knight_Armour$volcDemo,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Knight_Armour$mad,
+													_0: _user$project$Knight_Armour$bombastic,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Knight_Armour$mercDemo,
+														_0: _user$project$Knight_Armour$mad,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Knight_Armour$jelly,
+															_0: _user$project$Knight_Armour$mercDemo,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Knight_Armour$queen,
+																_0: _user$project$Knight_Armour$starDemo,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Knight_Armour$merc,
+																	_0: _user$project$Knight_Armour$jelly,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Knight_Armour$gray,
+																		_0: _user$project$Knight_Armour$queen,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Knight_Armour$divine,
+																			_0: _user$project$Knight_Armour$merc,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Knight_Armour$chaos,
+																				_0: _user$project$Knight_Armour$gray,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Knight_Armour$skelly,
+																					_0: _user$project$Knight_Armour$divine,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Knight_Armour$ironmight,
+																						_0: _user$project$Knight_Armour$chaos,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Knight_Armour$volcPlate,
+																							_0: _user$project$Knight_Armour$skelly,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Knight_Armour$ancient,
+																								_0: _user$project$Knight_Armour$ironmight,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Knight_Armour$virulisk,
+																									_0: _user$project$Knight_Armour$volcPlate,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Knight_Armour$salamander,
+																										_0: _user$project$Knight_Armour$ancient,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Knight_Armour$arcane,
+																											_0: _user$project$Knight_Armour$virulisk,
 																											_1: {
 																												ctor: '::',
-																												_0: _user$project$Knight_Armour$dragon,
+																												_0: _user$project$Knight_Armour$salamander,
 																												_1: {
 																													ctor: '::',
-																													_0: _user$project$Knight_Armour$silver,
+																													_0: _user$project$Knight_Armour$arcane,
 																													_1: {
 																														ctor: '::',
-																														_0: _user$project$Knight_Armour$valkyrie,
+																														_0: _user$project$Knight_Armour$dragon,
 																														_1: {
 																															ctor: '::',
-																															_0: _user$project$Knight_Armour$fallen,
+																															_0: _user$project$Knight_Armour$silver,
 																															_1: {
 																																ctor: '::',
-																																_0: _user$project$Knight_Armour$heavenly,
+																																_0: _user$project$Knight_Armour$valkyrie,
 																																_1: {
 																																	ctor: '::',
-																																	_0: _user$project$Knight_Armour$kat,
+																																	_0: _user$project$Knight_Armour$fallen,
 																																	_1: {
 																																		ctor: '::',
-																																		_0: _user$project$Knight_Armour$claw,
+																																		_0: _user$project$Knight_Armour$heavenly,
 																																		_1: {
 																																			ctor: '::',
-																																			_0: _user$project$Knight_Armour$eye,
+																																			_0: _user$project$Knight_Armour$kat,
 																																			_1: {
 																																				ctor: '::',
-																																				_0: _user$project$Knight_Armour$hiss,
+																																				_0: _user$project$Knight_Armour$claw,
 																																				_1: {
 																																					ctor: '::',
-																																					_0: _user$project$Knight_Armour$seerus,
-																																					_1: {ctor: '[]'}
+																																					_0: _user$project$Knight_Armour$eye,
+																																					_1: {
+																																						ctor: '::',
+																																						_0: _user$project$Knight_Armour$hiss,
+																																						_1: {
+																																							ctor: '::',
+																																							_0: _user$project$Knight_Armour$seerus,
+																																							_1: {ctor: '[]'}
+																																						}
+																																					}
 																																				}
 																																			}
 																																		}
@@ -13016,11 +13103,15 @@ var _user$project$Events$statuses = F4(
 							_0: _user$project$Knight_Status$Stun,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Knight_Status$Curse,
+								_0: _user$project$Knight_Status$Sleep,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Knight_Status$Deathmark,
-									_1: {ctor: '[]'}
+									_0: _user$project$Knight_Status$Curse,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Knight_Status$Deathmark,
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}
@@ -13110,6 +13201,9 @@ var _user$project$Events$damage = F6(
 							_user$project$Events$defend,
 							dMod * defence(_user$project$Knight_UV$Elemental),
 							_user$project$Knight_Status$shockDamage);
+					case 'Sleep':
+						return _elm_lang$core$Basics$toFloat(
+							-1 * _user$project$Knight_Status$sleepHeal(severity));
 					default:
 						return 0;
 				}
@@ -13180,6 +13274,7 @@ var _user$project$Events$damage = F6(
 	});
 var _user$project$Events$totalDamage = F5(
 	function (lockdown, offenderSide, left, right, history) {
+		var defender = _elm_lang$core$Native_Utils.eq(offenderSide, _user$project$Events$Left) ? right : left;
 		var recurse = A4(_user$project$Events$totalDamage, lockdown, offenderSide, left, right);
 		var dmg = A4(_user$project$Events$damage, lockdown, offenderSide, left, right);
 		var _p24 = history;
@@ -13187,7 +13282,14 @@ var _user$project$Events$totalDamage = F5(
 			return 0;
 		} else {
 			var _p25 = _p24._1;
-			return A2(dmg, _p25, _p24._0) + recurse(_p25);
+			return A2(
+				_elm_lang$core$Basics$min,
+				_elm_lang$core$Basics$toFloat(
+					_user$project$Knight$health(defender)),
+				A2(
+					_elm_lang$core$Basics$max,
+					0,
+					A2(dmg, _p25, _p24._0) + recurse(_p25)));
 		}
 	});
 var _user$project$Events$Recovery = function (a) {
@@ -13629,6 +13731,7 @@ var _user$project$Events_View$log = F4(
 						var curseDamage = _user$project$Knight_Status$curseDamage(severity);
 						var spasmDuration = _user$project$Knight_Status$spasm(severity);
 						var stun = _user$project$Knight_Status$stunFactor(severity);
+						var sleep = _user$project$Knight_Status$sleepHeal(severity);
 						var description = {
 							ctor: '::',
 							_0: A2(
@@ -14065,6 +14168,38 @@ var _user$project$Events_View$log = F4(
 													_1: {ctor: '[]'}
 												}
 											}
+										};
+									case 'Sleep':
+										return {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Resting heals '),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$span,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$class('status-effect'),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: _user$project$View_Shortcuts$toText(sleep),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html$text(' HP'),
+															_1: {ctor: '[]'}
+														}
+													}
+												}),
+											_1: {ctor: '[]'}
 										};
 									case 'Deathmark':
 										return {
@@ -15003,7 +15138,11 @@ var _user$project$Knight_UV_Form$statusUvs = {
 					_1: {
 						ctor: '::',
 						_0: _user$project$Knight_Status$Curse,
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _user$project$Knight_Status$Sleep,
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -16245,8 +16384,9 @@ var _user$project$Knight_Stats$stats = F5(
 		}();
 		var knight = _elm_lang$core$Native_Utils.eq(side, _user$project$Events$Left) ? left : right;
 		var health = function () {
+			var health = _user$project$Knight$health(knight);
 			var damage = A5(_user$project$Events$totalDamage, lockdown, opposing, left, right, events);
-			var remaining = _user$project$Knight$health(knight) - _elm_lang$core$Basics$ceiling(damage);
+			var remaining = health - _elm_lang$core$Basics$ceiling(damage);
 			var remainingHearts = (remaining / 40) | 0;
 			var hearts = _user$project$Knight$hearts(knight);
 			var golds = (_elm_lang$core$Native_Utils.cmp(hearts, 60) > 0) ? (hearts - 60) : 0;
@@ -16300,7 +16440,10 @@ var _user$project$Knight_Stats$stats = F5(
 							{
 								ctor: '::',
 								_0: _user$project$View_Shortcuts$toText(
-									A2(_elm_lang$core$Basics$max, 0, remaining)),
+									A2(
+										_elm_lang$core$Basics$min,
+										health,
+										A2(_elm_lang$core$Basics$max, 0, remaining))),
 								_1: {ctor: '[]'}
 							}),
 						_1: {ctor: '[]'}
