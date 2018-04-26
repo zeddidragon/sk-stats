@@ -188,7 +188,7 @@ obsidian =
   , name = "Obsidian Carbine"
   , status = Just Poison
   , inflictions =
-    [ (Shot, Slight, Moderate)
+    [ (Shot, Slight, Minor)
     , (Charge, Fair, Moderate)
     ]
   }
@@ -251,7 +251,7 @@ polaris =
     , (Charge, attacks.blasterCharge)
     ]
   , inflictions =
-    [ (Shot, Good, Moderate)
+    [ (Shot, Good, Minor)
     , (Heavy, Good, Moderate)
     , (Charge, Good, Moderate)
     ]
@@ -296,7 +296,7 @@ biohazard =
     , (Special, attacks.driver)
     ]
   , inflictions =
-    [ (Charge, Good, Moderate)
+    [ (Charge, Good, Minor)
     , (Special, Fair, Moderate)
     ]
   }
@@ -343,7 +343,7 @@ mixmasters =
         , (Charge, attacks.driverCharge)
         ]
       , inflictions =
-        [ (Shot, Good, Moderate)
+        [ (Shot, Good, Minor)
         , (Charge, Good, Moderate)
         ]
       }

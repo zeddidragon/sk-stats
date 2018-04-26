@@ -66,8 +66,21 @@ dreams =
     , (Basic, attacks.civHeavy)
     , (Charge, attacks.swordLightChargeFinish)
     ]
+  , status = Just Stun
   , bonuses =
     [ (Undead, Medium) ]
+  , inflictions =
+    [ (Charge, Good, Moderate) ]
+  }
+
+csaber : Weapon
+csaber =
+  { leviathan
+  | id = "csaber"
+  , name = "Celestial Saber"
+  , status = Just Fire
+  , inflictions =
+    [ (Charge, Good, Moderate) ]
   }
 
 flourish : Weapon
@@ -338,6 +351,7 @@ swords =
   [ leviathan
   , civ
   , dreams
+  , csaber
   , amputator
   , flourish
   , btb
