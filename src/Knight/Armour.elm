@@ -458,6 +458,16 @@ silver =
   , bonuses = [ (Undead, Medium) ]
   }
 
+vitasuit =
+  { base
+  | id = "vit"
+  , name = "Vitasuit Deluxe"
+  , defences =
+    [ (Normal, defences.vita)
+    ]
+  , hearts = 7
+  }
+
 armours =
   [ cobalt
   , crusader
@@ -510,6 +520,8 @@ armours =
   , hiss
   
   , seerus
+
+  , vitasuit
   ] ++ gunnerSets
 
 gunnerSets =

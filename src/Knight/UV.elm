@@ -76,6 +76,7 @@ uvMax = 25.6
 
 defences =
   { base = 125 / 2
+  , vita = 127 / 2
   , class = 142 / 2
   , special = 150 / 2
   , plate = 200 / 2
