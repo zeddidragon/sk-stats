@@ -8512,34 +8512,51 @@ var _truqu$elm_base64$Base64$toCharList = function (bitList) {
 	};
 	return A2(_elm_lang$core$List$concatMap, toChars, bitList);
 };
-var _truqu$elm_base64$Base64$toTupleList = function (list) {
-	var _p6 = list;
-	if (_p6.ctor === '::') {
-		if (_p6._1.ctor === '::') {
-			if (_p6._1._1.ctor === '::') {
-				return {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: _p6._0, _1: _p6._1._0, _2: _p6._1._1._0},
-					_1: _truqu$elm_base64$Base64$toTupleList(_p6._1._1._1)
-				};
-			} else {
-				return {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: _p6._0, _1: _p6._1._0, _2: -1},
-					_1: {ctor: '[]'}
-				};
+var _truqu$elm_base64$Base64$toTupleList = function () {
+	var toTupleListHelp = F2(
+		function (acc, list) {
+			toTupleListHelp:
+			while (true) {
+				var _p6 = list;
+				if (_p6.ctor === '::') {
+					if (_p6._1.ctor === '::') {
+						if (_p6._1._1.ctor === '::') {
+							var _v5 = {
+								ctor: '::',
+								_0: {ctor: '_Tuple3', _0: _p6._0, _1: _p6._1._0, _2: _p6._1._1._0},
+								_1: acc
+							},
+								_v6 = _p6._1._1._1;
+							acc = _v5;
+							list = _v6;
+							continue toTupleListHelp;
+						} else {
+							return {
+								ctor: '::',
+								_0: {ctor: '_Tuple3', _0: _p6._0, _1: _p6._1._0, _2: -1},
+								_1: acc
+							};
+						}
+					} else {
+						return {
+							ctor: '::',
+							_0: {ctor: '_Tuple3', _0: _p6._0, _1: -1, _2: -1},
+							_1: acc
+						};
+					}
+				} else {
+					return acc;
+				}
 			}
-		} else {
-			return {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: _p6._0, _1: -1, _2: -1},
-				_1: {ctor: '[]'}
-			};
-		}
-	} else {
-		return {ctor: '[]'};
-	}
-};
+		});
+	return function (_p7) {
+		return _elm_lang$core$List$reverse(
+			A2(
+				toTupleListHelp,
+				{ctor: '[]'},
+				_p7));
+	};
+}();
 var _truqu$elm_base64$Base64$toCodeList = function (string) {
 	return A2(
 		_elm_lang$core$List$map,
@@ -9346,6 +9363,33 @@ var _user$project$Knight_Swords$dvs = _elm_lang$core$Native_Utils.update(
 			{ctor: '_Tuple2', _0: _user$project$Knight_Types$Slight, _1: _user$project$Knight_Types$Strong},
 			_user$project$Knight_Swords$hunting.attacks)
 	});
+var _user$project$Knight_Swords$turbillion = _elm_lang$core$Native_Utils.update(
+	_user$project$Knight_Swords$sword,
+	{
+		id: 'trb',
+		name: 'Turbillion',
+		attacks: {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Basic, _1: _user$project$Knight_Values$attacks.swordLight},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Shot, _1: _user$project$Knight_Values$attacks.antigua},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Heavy, _1: _user$project$Knight_Values$attacks.swordLightFinish},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.swordLightCharge},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.driver},
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	});
 var _user$project$Knight_Swords$suda = _elm_lang$core$Native_Utils.update(
 	_user$project$Knight_Swords$sword,
 	{
@@ -9639,44 +9683,48 @@ var _user$project$Knight_Swords$swords = {
 											_0: _user$project$Knight_Swords$dvs,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Knight_Swords$suda,
+												_0: _user$project$Knight_Swords$turbillion,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Knight_Swords$triglav,
+													_0: _user$project$Knight_Swords$suda,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Knight_Swords$hammer,
+														_0: _user$project$Knight_Swords$triglav,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Knight_Swords$combuster,
+															_0: _user$project$Knight_Swords$hammer,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Knight_Swords$glacius,
+																_0: _user$project$Knight_Swords$combuster,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Knight_Swords$voltedge,
+																	_0: _user$project$Knight_Swords$glacius,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Knight_Swords$acheron,
+																		_0: _user$project$Knight_Swords$voltedge,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Knight_Swords$obsidian,
+																			_0: _user$project$Knight_Swords$acheron,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Knight_Swords$avenger,
+																				_0: _user$project$Knight_Swords$obsidian,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Knight_Swords$faust,
+																					_0: _user$project$Knight_Swords$avenger,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Knight_Swords$fang,
+																						_0: _user$project$Knight_Swords$faust,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Knight_Swords$winmillion,
+																							_0: _user$project$Knight_Swords$fang,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Knight_Swords$faust4star,
-																								_1: {ctor: '[]'}
+																								_0: _user$project$Knight_Swords$winmillion,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Knight_Swords$faust4star,
+																									_1: {ctor: '[]'}
+																								}
 																							}
 																						}
 																					}
@@ -9786,7 +9834,7 @@ var _user$project$Knight_Guns$cryo = _elm_lang$core$Native_Utils.update(
 	_user$project$Knight_Guns$magma,
 	{
 		id: 'cry',
-		name: 'Cryo Driver',
+		name: 'Hail Driver',
 		status: _elm_lang$core$Maybe$Just(_user$project$Knight_Status$Freeze)
 	});
 var _user$project$Knight_Guns$storm = _elm_lang$core$Native_Utils.update(
@@ -10009,6 +10057,7 @@ var _user$project$Knight_Guns$permafroster = _elm_lang$core$Native_Utils.update(
 	{
 		id: 'pf',
 		name: 'Permafroster',
+		damageType: _user$project$Knight_UV$Shadow,
 		status: _elm_lang$core$Maybe$Just(_user$project$Knight_Status$Freeze)
 	});
 var _user$project$Knight_Guns$neutralizer = _elm_lang$core$Native_Utils.update(
