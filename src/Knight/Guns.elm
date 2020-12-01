@@ -308,7 +308,7 @@ neutralizer =
         , chargeTime = charge.quick
         , attacks =
             [ ( Charge, attacks.neutralizer )
-            , ( Special, attacks.driver )
+            , ( Special, attacks.neutralizerBlast )
             ]
     }
 

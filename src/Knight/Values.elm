@@ -63,6 +63,7 @@ attacks =
   , magnusCharge = 616 / 1.24
 
   , neutralizer = 657 / 1.24
+  , neutralizerBlast = 657 / 1.24 / 2.45
   
   , tortofist = 252 / 1.24
 
