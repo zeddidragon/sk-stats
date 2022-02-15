@@ -65,11 +65,16 @@ mobility knight =
       case uv of
         WeaponUV (bonus, strength) -> (bonus, strength)
         _ -> (Dmg, Low)
+    uvs =
+      []
+      ++ knight.shield.piece.effects
+      ++ Trinket.effects knight.trinkets
     bonuses =
       List.concat
         [ knight.helmet.piece.bonuses
         , knight.armour.piece.bonuses
         , List.map toBonus knight.shield.piece.effects
+        , List.map toBonus uvs
         ]
     boost =
       bonuses

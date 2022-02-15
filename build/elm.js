@@ -9095,7 +9095,7 @@ var _user$project$Knight_Types$Shot = {ctor: 'Shot'};
 var _user$project$Knight_Types$Heavy = {ctor: 'Heavy'};
 var _user$project$Knight_Types$Basic = {ctor: 'Basic'};
 
-var _user$project$Knight_Values$attacks = {sword: 415 / 1.24, swordFinish: 477 / 1.24, swordCharge: 623 / 1.24, swordChargeFinish: 668 / 1.24, swordSpecial: 268 / 1.24, civ: 315, civHeavy: 353, swordLight: 361 / 1.24, swordLightFinish: 415 / 1.24, swordLightCharge: 541 / 1.24, swordLightChargeFinish: 591 / 1.24, swordHeavy: 477 / 1.24, swordHeavyFinish: 548 / 1.24, swordHeavyCharge: 668 / 1.24, swordHeavyChargeFinish: 715 / 1.24, brandish: 609 / 1.24, brandishFinish: 711 / 1.24, brandishCharge: 959 / 1.24, brandishSpecial: 447 / 1.24, brandishHeavy: 656 / 1.24, brandishHeavyFinish: 774 / 1.24, brandishHeavyCharge: 1040 / 1.24, brandishHeavySpecial: 484 / 1.24, fang: 570 / 1.24, fangFinish: 671 / 1.24, fangCharge: 904 / 1.24, blaster: 314 / 1.25, blasterCharge: 535 / 1.24, nova: 339 / 1.24, novaCharge: 576 / 1.24, driver: 297 / 1.24, driverCharge: 504 / 1.24, antigua: 231 / 1.24, antiguaCharge: 392 / 1.24, pepper: (231 / 1.24) * 0.88, pepperCharge: (391 / 1.24) * 0.88, magnus: 362 / 1.24, magnusCharge: 616 / 1.24, neutralizer: 657 / 1.24, tortofist: 252 / 1.24, nitro: 446 / 1.24, irontech: 479 / 1.24, bab: 512 / 1.24, haze: 392 / 1.24, graviton: 24 / 1.24, gravitonCollapse: 425 / 1.24, dr: 183 / 1.24, shardCore: 249 / 1.24, shardPure: 298 / 1.24, shardStatus: 273 / 1.24, shardOld: 593 / 1.24, saltOld: 305};
+var _user$project$Knight_Values$attacks = {sword: 415 / 1.24, swordFinish: 477 / 1.24, swordCharge: 623 / 1.24, swordChargeFinish: 668 / 1.24, swordSpecial: 268 / 1.24, civ: 315, civHeavy: 353, swordLight: 361 / 1.24, swordLightFinish: 415 / 1.24, swordLightCharge: 541 / 1.24, swordLightChargeFinish: 591 / 1.24, swordHeavy: 477 / 1.24, swordHeavyFinish: 548 / 1.24, swordHeavyCharge: 668 / 1.24, swordHeavyChargeFinish: 715 / 1.24, brandish: 609 / 1.24, brandishFinish: 711 / 1.24, brandishCharge: 959 / 1.24, brandishSpecial: 447 / 1.24, brandishHeavy: 656 / 1.24, brandishHeavyFinish: 774 / 1.24, brandishHeavyCharge: 1040 / 1.24, brandishHeavySpecial: 484 / 1.24, fang: 570 / 1.24, fangFinish: 671 / 1.24, fangCharge: 904 / 1.24, blaster: 314 / 1.25, blasterCharge: 535 / 1.24, nova: 339 / 1.24, novaCharge: 576 / 1.24, driver: 297 / 1.24, driverCharge: 504 / 1.24, antigua: 231 / 1.24, antiguaCharge: 392 / 1.24, pepper: (231 / 1.24) * 0.88, pepperCharge: (391 / 1.24) * 0.88, magnus: 362 / 1.24, magnusCharge: 616 / 1.24, neutralizer: 657 / 1.24, neutralizerBlast: (657 / 1.24) / 2.45, tortofist: 252 / 1.24, nitro: 446 / 1.24, irontech: 479 / 1.24, bab: 512 / 1.24, haze: 392 / 1.24, graviton: 24 / 1.24, gravitonCollapse: 425 / 1.24, dr: 183 / 1.24, shardCore: 249 / 1.24, shardPure: 298 / 1.24, shardStatus: 273 / 1.24, shardOld: 593 / 1.24, saltOld: 305};
 var _user$project$Knight_Values$charge = {quick: 1, normal: 2, $long: 3, painful: 6, irontech: 2.5};
 
 var _user$project$Knight_Swords$everyAttack = F2(
@@ -10071,7 +10071,7 @@ var _user$project$Knight_Guns$neutralizer = _elm_lang$core$Native_Utils.update(
 			_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Charge, _1: _user$project$Knight_Values$attacks.neutralizer},
 			_1: {
 				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.driver},
+				_0: {ctor: '_Tuple2', _0: _user$project$Knight_Types$Special, _1: _user$project$Knight_Values$attacks.neutralizerBlast},
 				_1: {ctor: '[]'}
 			}
 		}
@@ -12169,6 +12169,59 @@ var _user$project$Knight_Shield$shields = {
 	}
 };
 
+var _user$project$Knight_Trinket$note = {
+	id: 'note',
+	name: 'Misplaced Promissory Note',
+	effects: {
+		ctor: '::',
+		_0: _user$project$Knight_UV$DefenceUV(
+			{ctor: '_Tuple2', _0: _user$project$Knight_UV$Normal, _1: _user$project$Knight_UV$High}),
+		_1: {ctor: '[]'}
+	}
+};
+var _user$project$Knight_Trinket$daybreaker = {
+	id: 'dayb',
+	name: 'Daybreaker Band',
+	effects: {
+		ctor: '::',
+		_0: _user$project$Knight_UV$Hearts(1),
+		_1: {
+			ctor: '::',
+			_0: _user$project$Knight_UV$StatusUV(
+				{ctor: '_Tuple2', _0: _user$project$Knight_Status$Sleep, _1: _user$project$Knight_UV$Low}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Knight_UV$WeaponUV(
+					{ctor: '_Tuple2', _0: _user$project$Knight_UV$CTR, _1: _user$project$Knight_UV$Low}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Knight_UV$WeaponUV(
+						{ctor: '_Tuple2', _0: _user$project$Knight_UV$Slime, _1: _user$project$Knight_UV$Low}),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	}
+};
+var _user$project$Knight_Trinket$somna = {
+	id: 'somna',
+	name: 'Somnabulist\'s Totem',
+	effects: {
+		ctor: '::',
+		_0: _user$project$Knight_UV$Hearts(4),
+		_1: {
+			ctor: '::',
+			_0: _user$project$Knight_UV$StatusUV(
+				{ctor: '_Tuple2', _0: _user$project$Knight_Status$Sleep, _1: _user$project$Knight_UV$Low}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Knight_UV$WeaponUV(
+					{ctor: '_Tuple2', _0: _user$project$Knight_UV$MSI, _1: _user$project$Knight_UV$Low}),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
 var _user$project$Knight_Trinket$solstice = {
 	id: 'sol',
 	name: 'Grand Solstice Ring',
@@ -12185,6 +12238,20 @@ var _user$project$Knight_Trinket$solstice = {
 					{ctor: '_Tuple2', _0: _user$project$Knight_Status$Freeze, _1: _user$project$Knight_UV$Low}),
 				_1: {ctor: '[]'}
 			}
+		}
+	}
+};
+var _user$project$Knight_Trinket$autumn = {
+	id: 'autumn',
+	name: 'Gift of Autumn',
+	effects: {
+		ctor: '::',
+		_0: _user$project$Knight_UV$Hearts(4),
+		_1: {
+			ctor: '::',
+			_0: _user$project$Knight_UV$StatusUV(
+				{ctor: '_Tuple2', _0: _user$project$Knight_Status$Freeze, _1: _user$project$Knight_UV$Low}),
+			_1: {ctor: '[]'}
 		}
 	}
 };
@@ -12415,7 +12482,27 @@ var _user$project$Knight_Trinket$trinkets = {
 															_1: {
 																ctor: '::',
 																_0: _user$project$Knight_Trinket$skelly,
-																_1: {ctor: '[]'}
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Knight_Trinket$note,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Knight_Trinket$autumn,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Knight_Trinket$solstice,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Knight_Trinket$daybreaker,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Knight_Trinket$somna,
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}
+																	}
+																}
 															}
 														}
 													}
@@ -12621,6 +12708,13 @@ var _user$project$Knight$sum = A2(
 		}),
 	0);
 var _user$project$Knight$mobility = function (knight) {
+	var uvs = A2(
+		_elm_lang$core$Basics_ops['++'],
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			knight.shield.piece.effects,
+			_user$project$Knight_Trinket$effects(knight.trinkets)));
 	var toBonus = function (uv) {
 		var _p3 = uv;
 		if ((_p3.ctor === 'WeaponUV') && (_p3._0.ctor === '_Tuple2')) {
@@ -12639,7 +12733,11 @@ var _user$project$Knight$mobility = function (knight) {
 				_1: {
 					ctor: '::',
 					_0: A2(_elm_lang$core$List$map, toBonus, knight.shield.piece.effects),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$core$List$map, toBonus, uvs),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		});

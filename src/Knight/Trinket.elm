@@ -144,6 +144,16 @@ slash =
   , effects = [ WeaponUV (SwordDmg, Medium) ]
   }
 
+autumn : Trinket
+autumn =
+  { id = "autumn"
+  , name = "Gift of Autumn"
+  , effects =
+    [ Hearts 4
+    , StatusUV (Freeze, Low)
+    ]
+  }
+
 solstice : Trinket
 solstice =
   { id = "sol"
@@ -153,6 +163,37 @@ solstice =
     , StatusUV (Fire, Low)
     , StatusUV (Freeze, Low)
     ]
+  }
+
+somna : Trinket
+somna =
+  { id = "somna"
+  , name = "Somnabulist's Totem"
+  , effects =
+    [ Hearts 4
+    , StatusUV (Sleep, Low)
+    , WeaponUV (MSI, Low)
+    ]
+  }
+
+daybreaker : Trinket
+daybreaker =
+  { id = "dayb"
+  , name = "Daybreaker Band"
+  , effects =
+    [ Hearts 1
+    , StatusUV (Sleep, Low)
+    , WeaponUV (CTR, Low)
+    , WeaponUV (Slime, Low)
+    ]
+  }
+
+note : Trinket
+note =
+  { id = "note"
+  , name = "Misplaced Promissory Note"
+  , effects =
+    [ DefenceUV (Normal, High) ]
   }
 
 trinkets =
@@ -172,5 +213,10 @@ trinkets =
   , jelly
   , crystal
   , skelly
+  , note
+  , autumn
+  , solstice
+  , daybreaker
+  , somna
   ]
 
