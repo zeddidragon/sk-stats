@@ -85,6 +85,13 @@ penta : Trinket
 penta =
   { id = "hp"
   , name = "Penta-Heart Pendant"
+  , effects = [ Hearts 5 ]
+  }
+
+love : Trinket
+love =
+  { id = "love"
+  , name = "True Love Locket"
   , effects = [ Hearts 6 ]
   }
 
@@ -198,6 +205,7 @@ note =
 
 trinkets =
   [ penta
+  , love
   , slash
   , strike
   , sword

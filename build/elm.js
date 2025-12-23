@@ -12335,12 +12335,21 @@ var _user$project$Knight_Trinket$bomb = {
 		_1: {ctor: '[]'}
 	}
 };
+var _user$project$Knight_Trinket$love = {
+	id: 'love',
+	name: 'True Love Locket',
+	effects: {
+		ctor: '::',
+		_0: _user$project$Knight_UV$Hearts(6),
+		_1: {ctor: '[]'}
+	}
+};
 var _user$project$Knight_Trinket$penta = {
 	id: 'hp',
 	name: 'Penta-Heart Pendant',
 	effects: {
 		ctor: '::',
-		_0: _user$project$Knight_UV$Hearts(6),
+		_0: _user$project$Knight_UV$Hearts(5),
 		_1: {ctor: '[]'}
 	}
 };
@@ -12439,65 +12448,69 @@ var _user$project$Knight_Trinket$trinkets = {
 	_0: _user$project$Knight_Trinket$penta,
 	_1: {
 		ctor: '::',
-		_0: _user$project$Knight_Trinket$slash,
+		_0: _user$project$Knight_Trinket$love,
 		_1: {
 			ctor: '::',
-			_0: _user$project$Knight_Trinket$strike,
+			_0: _user$project$Knight_Trinket$slash,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Knight_Trinket$sword,
+				_0: _user$project$Knight_Trinket$strike,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Knight_Trinket$trueshot,
+					_0: _user$project$Knight_Trinket$sword,
 					_1: {
 						ctor: '::',
-						_0: _user$project$Knight_Trinket$draw,
+						_0: _user$project$Knight_Trinket$trueshot,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Knight_Trinket$handgun,
+							_0: _user$project$Knight_Trinket$draw,
 							_1: {
 								ctor: '::',
-								_0: _user$project$Knight_Trinket$boom,
+								_0: _user$project$Knight_Trinket$handgun,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Knight_Trinket$bomb,
+									_0: _user$project$Knight_Trinket$boom,
 									_1: {
 										ctor: '::',
-										_0: _user$project$Knight_Trinket$wetstone,
+										_0: _user$project$Knight_Trinket$bomb,
 										_1: {
 											ctor: '::',
-											_0: _user$project$Knight_Trinket$hearthstone,
+											_0: _user$project$Knight_Trinket$wetstone,
 											_1: {
 												ctor: '::',
-												_0: _user$project$Knight_Trinket$wyrmwood,
+												_0: _user$project$Knight_Trinket$hearthstone,
 												_1: {
 													ctor: '::',
-													_0: _user$project$Knight_Trinket$laurel,
+													_0: _user$project$Knight_Trinket$wyrmwood,
 													_1: {
 														ctor: '::',
-														_0: _user$project$Knight_Trinket$jelly,
+														_0: _user$project$Knight_Trinket$laurel,
 														_1: {
 															ctor: '::',
-															_0: _user$project$Knight_Trinket$crystal,
+															_0: _user$project$Knight_Trinket$jelly,
 															_1: {
 																ctor: '::',
-																_0: _user$project$Knight_Trinket$skelly,
+																_0: _user$project$Knight_Trinket$crystal,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Knight_Trinket$note,
+																	_0: _user$project$Knight_Trinket$skelly,
 																	_1: {
 																		ctor: '::',
-																		_0: _user$project$Knight_Trinket$autumn,
+																		_0: _user$project$Knight_Trinket$note,
 																		_1: {
 																			ctor: '::',
-																			_0: _user$project$Knight_Trinket$solstice,
+																			_0: _user$project$Knight_Trinket$autumn,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Knight_Trinket$daybreaker,
+																				_0: _user$project$Knight_Trinket$solstice,
 																				_1: {
 																					ctor: '::',
-																					_0: _user$project$Knight_Trinket$somna,
-																					_1: {ctor: '[]'}
+																					_0: _user$project$Knight_Trinket$daybreaker,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Knight_Trinket$somna,
+																						_1: {ctor: '[]'}
+																					}
 																				}
 																			}
 																		}
